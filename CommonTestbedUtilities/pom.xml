@@ -16,6 +16,7 @@
 		<module>EAC2</module>
 		<module>BouncyCastleTLS</module>
 		<module>CVC</module>
+                <module>GTSimControl</module>
 	</modules>
 
 	<dependencies>

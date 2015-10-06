@@ -24,7 +24,7 @@ public class EIDServerWebServer {
     
     private boolean attached = false;
     
-    private Object messageSource = null;
+    private Object parent = null;
     
     private String hostname = null;
     private int port = -1;
@@ -34,10 +34,10 @@ public class EIDServerWebServer {
     
     private final Status paosResponseCode;
     
-    public EIDServerWebServer(ITestData testData, boolean isAttached, Object messageSource) {
+    public EIDServerWebServer(ITestData testData, boolean isAttached, Object parent) {
         this.testData = testData;
         this.attached = isAttached;
-        this.messageSource = messageSource;
+        this.parent = parent;
         
         if(isAttached) {
             this.hostname = testData.getEServiceHost();
@@ -154,20 +154,20 @@ public class EIDServerWebServer {
                     nextMessage = sessionData.getDIDAuthenticate1();
                 
                 resp_message = new Response(paosResponseCode, c_PAOS_MIME_TYPE, nextMessage, testData.chunkedTransfer());
-                testData.sendMessageToCallbacks(TestStep.START_PAOS, res, sourceComponent, messageSource);
+                testData.sendMessageToCallbacks(TestStep.START_PAOS, res, sourceComponent, parent);
             } else if (handler.isInitializeResponse()) {
                 EvaluateResult res = Evaluator
                         .createOrderedOccurenceResult("InitializeFrameworkResponse", testData.getInitFrameworkEvaluationConfig(), handler);
                 sessionData.setInitializeResponse(handler.getInitializeResponse());
                 
                 resp_message = new Response(paosResponseCode, c_PAOS_MIME_TYPE, sessionData.getDIDAuthenticate1(), testData.chunkedTransfer());
-                testData.sendMessageToCallbacks(TestStep.INITIALIZE_FRAMEWORK, res, sourceComponent, messageSource);
+                testData.sendMessageToCallbacks(TestStep.INITIALIZE_FRAMEWORK, res, sourceComponent, parent);
             } else if (handler.isDIDAuthenticate1Response()) {
                 EvaluateResult res = Evaluator.createOrderedOccurenceResult("DIDAuthenticateResponse", testData.getAuth1EvaluationConfig(), handler);
                 sessionData.setDIDAuthenticate1Response(handler.getDIDAuthenticate1Response());
                 
                 resp_message = new Response(paosResponseCode, c_PAOS_MIME_TYPE, sessionData.getDIDAuthenticate2(), testData.chunkedTransfer());
-                testData.sendMessageToCallbacks(TestStep.EAC1, res, sourceComponent, messageSource);
+                testData.sendMessageToCallbacks(TestStep.EAC1, res, sourceComponent, parent);
             } else if (handler.isDIDAuthenticate2Response(testData.getECardDIDAuthenticate3Template() != null)) {
                 EvaluateResult res = Evaluator.createOrderedOccurenceResult("DIDAuthenticateResponse", testData.getAuth2EvaluationConfig(), handler);
                 sessionData.setDIDAuthenticate2Response(handler.getDIDAuthenticate2Response());
@@ -180,13 +180,13 @@ public class EIDServerWebServer {
                     nextMessage = sessionData.getTransmit(0);
                 
                 resp_message = new Response(paosResponseCode, c_PAOS_MIME_TYPE, nextMessage, testData.chunkedTransfer());
-                testData.sendMessageToCallbacks(TestStep.EAC2, res, sourceComponent, messageSource);
+                testData.sendMessageToCallbacks(TestStep.EAC2, res, sourceComponent, parent);
             } else if (handler.isDIDAuthenticate3Response()) {
                 EvaluateResult res = Evaluator.createOrderedOccurenceResult("DIDAuthenticateResponse", testData.getAuth3EvaluationConfig(), handler);
                 sessionData.setDIDAuthenticate3Response(handler.getDIDAuthenticate3Response());
                 
                 resp_message = new Response(paosResponseCode, c_PAOS_MIME_TYPE, sessionData.getTransmit(0), testData.chunkedTransfer());
-                testData.sendMessageToCallbacks(TestStep.EAC3, res, sourceComponent, messageSource);
+                testData.sendMessageToCallbacks(TestStep.EAC3, res, sourceComponent, parent);
             } else if (handler.isTransmitResponse()) {
                 EvaluateResult res = Evaluator.createOrderedOccurenceResult("TransmitResponse", testData.getTransmitEvaluationConfig(), handler);
                 sessionData.addTransmitResponse(handler.getTransmitResponse());
@@ -194,17 +194,17 @@ public class EIDServerWebServer {
                 if ((transmits != null) && (sessionData.getTransmitResponses().size() < sessionData.getTransmits().size())) {
                     resp_message = new Response(paosResponseCode, c_PAOS_MIME_TYPE, sessionData.getTransmit(sessionData.getTransmitResponses().size()),
                             testData.chunkedTransfer());
-                    testData.sendMessageToCallbacks(TestStep.TRANSMIT, res, sourceComponent, messageSource);
+                    testData.sendMessageToCallbacks(TestStep.TRANSMIT, res, sourceComponent, parent);
                 } else {
                     resp_message = new Response(Status.OK, NanoHTTPD.c_SOAP_MIME_TYPE, sessionData.getStartPAOSResponse(), testData.chunkedTransfer());
-                    testData.sendMessageToCallbacks(TestStep.TRANSMIT, res, sourceComponent, messageSource);
+                    testData.sendMessageToCallbacks(TestStep.TRANSMIT, res, sourceComponent, parent);
                     
                     // with last transmit, server send PAOS_RESPONSE to client.
                     // As this is also defined as TestStep, do another
                     // notification here.
                     // TODO: last-transmit+PaosResponse (?)
                     // callback nach hinten wenn transmit mit 9000 zurueck kommt
-                    testData.sendMessageToCallbacks(TestStep.START_PAOS_RESPONSE, res, sourceComponent, messageSource);
+                    testData.sendMessageToCallbacks(TestStep.START_PAOS_RESPONSE, res, sourceComponent, parent);
                 }
             } else {
                 isErrorResponse = handler.isErrorResponse();

@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.03.05 um 09:35:13 AM CET 
+// Generiert: 2015.07.24 um 04:29:34 PM CEST 
 //
 
 
@@ -21,9 +21,11 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;simpleType name="RSAAlgorithms">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *     &lt;enumeration value="SHA1withRSA"/>
  *     &lt;enumeration value="SHA224withRSA"/>
  *     &lt;enumeration value="SHA256withRSA"/>
  *     &lt;enumeration value="SHA384withRSA"/>
+ *     &lt;enumeration value="SHA512withRSA"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -33,12 +35,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum RSAAlgorithms {
 
+    @XmlEnumValue("SHA1withRSA")
+    SHA_1_WITH_RSA("SHA1withRSA"),
     @XmlEnumValue("SHA224withRSA")
     SHA_224_WITH_RSA("SHA224withRSA"),
     @XmlEnumValue("SHA256withRSA")
     SHA_256_WITH_RSA("SHA256withRSA"),
     @XmlEnumValue("SHA384withRSA")
-    SHA_384_WITH_RSA("SHA384withRSA");
+    SHA_384_WITH_RSA("SHA384withRSA"),
+    @XmlEnumValue("SHA512withRSA")
+    SHA_512_WITH_RSA("SHA512withRSA");
     private final String value;
 
     RSAAlgorithms(String v) {

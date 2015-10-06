@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.03.05 um 09:35:13 AM CET 
+// Generiert: 2015.07.24 um 04:29:34 PM CEST 
 //
 
 
@@ -37,6 +37,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GeneralNamesType }
+     * 
+     */
+    public GeneralNamesType createGeneralNamesType() {
+        return new GeneralNamesType();
+    }
+
+    /**
+     * Create an instance of {@link CRLDistributionPointsType }
+     * 
+     */
+    public CRLDistributionPointsType createCRLDistributionPointsType() {
+        return new CRLDistributionPointsType();
+    }
+
+    /**
      * Create an instance of {@link CertificateDefinitions }
      * 
      */
@@ -58,6 +74,22 @@ public class ObjectFactory {
      */
     public SignatureAlgorithmTypeEC createSignatureAlgorithmTypeEC() {
         return new SignatureAlgorithmTypeEC();
+    }
+
+    /**
+     * Create an instance of {@link SignatureAlgorithmTypeDSA }
+     * 
+     */
+    public SignatureAlgorithmTypeDSA createSignatureAlgorithmTypeDSA() {
+        return new SignatureAlgorithmTypeDSA();
+    }
+
+    /**
+     * Create an instance of {@link DistributionPointType }
+     * 
+     */
+    public DistributionPointType createDistributionPointType() {
+        return new DistributionPointType();
     }
 
     /**
@@ -130,6 +162,22 @@ public class ObjectFactory {
      */
     public DnType createDnType() {
         return new DnType();
+    }
+
+    /**
+     * Create an instance of {@link GeneralNamesType.GeneralName }
+     * 
+     */
+    public GeneralNamesType.GeneralName createGeneralNamesTypeGeneralName() {
+        return new GeneralNamesType.GeneralName();
+    }
+
+    /**
+     * Create an instance of {@link CRLDistributionPointsType.DistributionPoint }
+     * 
+     */
+    public CRLDistributionPointsType.DistributionPoint createCRLDistributionPointsTypeDistributionPoint() {
+        return new CRLDistributionPointsType.DistributionPoint();
     }
 
 }

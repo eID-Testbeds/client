@@ -50,6 +50,14 @@ public enum Logger implements IModuleLogger {
         return new Log4JWrapper(logger, prefix);
     }
     
+    public JavaLogWrapper getJavaLogger() {
+        return new JavaLogWrapper(logger);
+    }
+
+    public JavaLogWrapper getJavaLogger(String prefix) {
+        return new JavaLogWrapper(logger, prefix);
+    }
+    
     public void setLogLevels(Map<EventType,LogLevel> levels) {
         Set<EventType> eventTypes = levels.keySet();
         for (EventType eventType : eventTypes) 

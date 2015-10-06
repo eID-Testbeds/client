@@ -16,11 +16,11 @@ public class EServiceWebServer {
     
     protected ITestData testData;
 
-    private Object messageSource = null;
+    private Object parent = null;
     
-    public EServiceWebServer(ITestData testData, Object messageSource) {
+    public EServiceWebServer(ITestData testData, Object parent) {
         this.testData = testData;
-        this.messageSource = messageSource;
+        this.parent = parent;
     }
 
     public Response serve(HTTPSession httpReq, Logger logger) {
@@ -47,6 +47,12 @@ public class EServiceWebServer {
             Integer redirectorNumber = testData.getEServiceRedirectorTCTokenNumber();
             
             if (uri.equals("/") || uri.equals("/" + testData.getEServiceIndexPageURL())) {
+                if(parent instanceof EService) {
+                    ((EService)parent).skipFirstICSTest = false;
+                }
+                else if(parent instanceof AttachedEIDServer) {
+                    ((AttachedEIDServer)parent).skipFirstICSTest = false;
+                }
                 resp_message = new Response(testData.getEServiceIndexPage(), testData.chunkedTransfer());
             } else if (uri.equals("/" + testData.getEServiceTCTokenURL())) {
                 ITestSession session = testData.getNewSession();
@@ -58,7 +64,7 @@ public class EServiceWebServer {
                     resp_message = new Response(Status.NOT_FOUND, "Error 404", testData.chunkedTransfer());
                     logger.logState("Client found no Token: session - " + session.getSessionID());
                 }
-                testData.sendMessageToCallbacks(TestStep.TC_TOKEN, tcToken, sourceComponent, messageSource);
+                testData.sendMessageToCallbacks(TestStep.TC_TOKEN, tcToken, sourceComponent, parent);
             } else if (uri.equals("/" + testData.getEServiceRefreshPageURL())) {
                 logger.logState("EServiceWebpage refresh page called");
                 resp_message = new Response(testData.getEServiceRefreshPage(), testData.chunkedTransfer());
@@ -66,10 +72,10 @@ public class EServiceWebServer {
                 // If no browsersimulator is used, the final step BROWSER_REDIRECT can not be detected via browsersimulator.
                 // Instead, the resulting request from the BROWSER to the REFRESH_ADDRESS must be handled.
                 if(testData.getTestType() != null && testData.getTestType() == Type.BROWSER && sourceComponent == SourceComponent.BROWSER) {
-                    testData.sendMessageToCallbacks(TestStep.REDIRECT_BROWSER, httpReq, sourceComponent, messageSource);
+                    testData.sendMessageToCallbacks(TestStep.REDIRECT_BROWSER, httpReq, sourceComponent, parent);
                 }
                 else {
-                    testData.sendMessageToCallbacks(TestStep.REFRESH_ADDRESS, httpReq, sourceComponent, messageSource);
+                    testData.sendMessageToCallbacks(TestStep.REFRESH_ADDRESS, httpReq, sourceComponent, parent);
                 }
             } else if (uri.equals("/" + testData.getEServiceCommunicationErrorPageURL())) {
                 logger.logState("EServiceWebpage communication error page called");
@@ -78,10 +84,10 @@ public class EServiceWebServer {
                 // If no browsersimulator is used, the final step BROWSER_REDIRECT can not be detected via browsersimulator.
                 // Instead, the resulting request from the BROWSER to the COMMUNICATION_ERROR_ADDRESS must be handled.
                 if(testData.getTestType() != null && testData.getTestType() == Type.BROWSER && sourceComponent == SourceComponent.BROWSER) {
-                    testData.sendMessageToCallbacks(TestStep.REDIRECT_BROWSER, httpReq, sourceComponent, messageSource);
+                    testData.sendMessageToCallbacks(TestStep.REDIRECT_BROWSER, httpReq, sourceComponent, parent);
                 }
                 else {
-                    testData.sendMessageToCallbacks(TestStep.COMMUNICATION_ERROR_ADDRESS, httpReq, sourceComponent, messageSource);
+                    testData.sendMessageToCallbacks(TestStep.COMMUNICATION_ERROR_ADDRESS, httpReq, sourceComponent, parent);
                 }
             } else if ((redirectorNumber != null) && (uri.equals("/" + testData.getEServiceRedirectURL()))) {
                 // Redirect
@@ -90,7 +96,7 @@ public class EServiceWebServer {
                 String[] redirectorInfo = testData.getRedirectorsInfoTCToken().get(redirectorNumber);
                 String target = redirectorInfo[0];
                 
-                testData.sendMessageToCallbacks(TestStep.TC_TOKEN_REDIRECT, target, sourceComponent, messageSource);
+                testData.sendMessageToCallbacks(TestStep.TC_TOKEN_REDIRECT, target, sourceComponent, parent);
                 int statusCode = Integer.parseInt(testData.getRedirectorTCTokenStatus(redirectorNumber));
                 Status status = null;
                 switch (statusCode) {
@@ -142,7 +148,7 @@ public class EServiceWebServer {
                 // String[] redirectorInfo = testData.getRedirectorsInfoTCToken().get(redirectorNumber);
                 // String target = redirectorInfo[0];
                 
-                testData.sendMessageToCallbacks(TestStep.REFRESH_ADDRESS_REDIRECT, target, sourceComponent, messageSource);
+                testData.sendMessageToCallbacks(TestStep.REFRESH_ADDRESS_REDIRECT, target, sourceComponent, parent);
                 // int statusCode = Integer.parseInt(testData.getRedirectorTCTokenStatus(redirectorNumber));
                 Status status = null;
                 switch (statusCode) {

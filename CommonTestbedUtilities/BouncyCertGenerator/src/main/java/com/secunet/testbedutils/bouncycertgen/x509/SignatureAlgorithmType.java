@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.03.05 um 09:35:13 AM CET 
+// Generiert: 2015.07.24 um 04:29:34 PM CEST 
 //
 
 
@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;choice>
  *         &lt;element name="ECDSA" type="{http://www.secunet.com}signatureAlgorithmTypeEC"/>
  *         &lt;element name="RSA" type="{http://www.secunet.com}signatureAlgorithmTypeRSA"/>
+ *         &lt;element name="DSA" type="{http://www.secunet.com}signatureAlgorithmTypeDSA"/>
  *       &lt;/choice>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,7 +38,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "signatureAlgorithmType", propOrder = {
     "ecdsa",
-    "rsa"
+    "rsa",
+    "dsa"
 })
 public class SignatureAlgorithmType {
 
@@ -45,6 +47,8 @@ public class SignatureAlgorithmType {
     protected SignatureAlgorithmTypeEC ecdsa;
     @XmlElement(name = "RSA")
     protected SignatureAlgorithmTypeRSA rsa;
+    @XmlElement(name = "DSA")
+    protected SignatureAlgorithmTypeDSA dsa;
 
     /**
      * Ruft den Wert der ecdsa-Eigenschaft ab.
@@ -92,6 +96,30 @@ public class SignatureAlgorithmType {
      */
     public void setRSA(SignatureAlgorithmTypeRSA value) {
         this.rsa = value;
+    }
+
+    /**
+     * Ruft den Wert der dsa-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link SignatureAlgorithmTypeDSA }
+     *     
+     */
+    public SignatureAlgorithmTypeDSA getDSA() {
+        return dsa;
+    }
+
+    /**
+     * Legt den Wert der dsa-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SignatureAlgorithmTypeDSA }
+     *     
+     */
+    public void setDSA(SignatureAlgorithmTypeDSA value) {
+        this.dsa = value;
     }
 
 }

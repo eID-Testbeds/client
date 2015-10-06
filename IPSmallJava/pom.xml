@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.secunet.eidclient</groupId>
   <artifactId>ipsmall-java</artifactId>
-  <version>1.2-beta-4</version>
+  <version>1.2-beta-6</version>
   <name>eID-Client Conformance Testbed</name>
   <properties>
     <ipsmalljava.directory>${project.build.directory}/IPSmallJava</ipsmalljava.directory>
@@ -307,6 +307,11 @@
     <dependency>
       <groupId>com.secunet</groupId>
       <artifactId>testbedutils-CVC</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.secunet</groupId>
+      <artifactId>testbedutils-GTSimControl</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

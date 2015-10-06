@@ -41,6 +41,8 @@ public interface ITestData {
         tls12
     }
     
+    public String getValue(String key);
+    
     /**
      * TestCase Stuff
      */
@@ -108,7 +110,9 @@ public interface ITestData {
     
     public byte[] getEIDServiceAuxData();
     
-    public byte[] getSimulatedCard_CVCA();
+    public byte[] getSimulatedCard_Trustpoint1();
+    
+    public byte[] getSimulatedCard_Trustpoint2();
     
     public void setPSKCallback(IPublishPSK pskCallback);
     
@@ -382,21 +386,21 @@ public interface ITestData {
      */
     public boolean useModifiedSSL();
     
-    /*
-     * The HTTP response that will be send to the client for PAOS requests
+    /**
+     * The HTTP response that will be sent to the client for PAOS requests
      */
     public int getPaosRequestResponseCode();
     
     // FIXME remove this once the connection handling is fixed (JIRA EIDCLIENTC-69)
     public boolean tcTokenDisconnect();
     
-    /*
-     * Get if result is indeterminable (if if automatic result was positive).
+    /**
+     * Get flag if result is indeterminable (if automatic result was positive).
      */
     public boolean getResultIndeterminable();
     
-    /*
-     * Get reason if state was indeterminable.
+    /**
+     * Get reason why state is indeterminable.
      */
     public String getResultIndeterminableReason();
     
@@ -405,8 +409,16 @@ public interface ITestData {
      * test run until user confirms. This gives time to abort online-authentication.
      * 
      * See config.properties, testcase.eac1.confirm=false
-     * 
-     * @return
      */
     public boolean isEac1ConfirmDialog();
+    
+    /**
+     * This is true if the remote card simulation should be reset at start of a test case.
+     */
+    public boolean isCardSimulationResetAtStart();
+
+    /**
+     * Get the configurationIdentifier to indicate to the remote card simulation which card should be simulated.
+     */
+    public String getCardSimulationConfigurationIdentifier();
 }

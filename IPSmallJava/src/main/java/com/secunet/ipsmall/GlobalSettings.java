@@ -7,7 +7,7 @@ import java.io.File;
  */
 public class GlobalSettings {
 	private static final String TOGEN_PROPERTIES_FILE_NAME = "testobject.properties";
-	private static final String DEFAULT_PROPERTIES_FILE_NAME = "testbed.properties";
+	private static final String DEFAULT_PROPERTIES_FILE_NAME = "testbed_default.properties";
 	private static final String SESSION_PROPERTIES_FILE_NAME = "session.properties";
 	private static final String CLIENT_PROPERTIES_FILE_NAME = "client.properties";
 	private static final String TESTCASE_PROPERTIES_FILE_NAME = "config.properties";

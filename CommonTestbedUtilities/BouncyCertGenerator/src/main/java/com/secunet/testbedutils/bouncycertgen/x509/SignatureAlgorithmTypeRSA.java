@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.03.05 um 09:35:13 AM CET 
+// Generiert: 2015.07.24 um 04:29:34 PM CEST 
 //
 
 
@@ -27,8 +27,12 @@ import javax.xml.bind.annotation.XmlValue;
  *       &lt;attribute name="keylength" default="2048">
  *         &lt;simpleType>
  *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}int">
+ *             &lt;enumeration value="512"/>
+ *             &lt;enumeration value="768"/>
  *             &lt;enumeration value="1024"/>
+ *             &lt;enumeration value="1536"/>
  *             &lt;enumeration value="2048"/>
+ *             &lt;enumeration value="3072"/>
  *             &lt;enumeration value="4096"/>
  *           &lt;/restriction>
  *         &lt;/simpleType>

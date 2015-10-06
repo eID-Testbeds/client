@@ -1,5 +1,6 @@
 package com.secunet.ipsmall.eval;
 
+import com.secunet.ipsmall.IPSmallManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -111,7 +112,12 @@ public class Evaluator {
             
             if ("FILE_CARDACCESS".equals(contentRegEx)) {
                 try {
-                    DataBuffer file = new DataBuffer(config.getEFCardAccessFile());
+                    byte[] rawFile = IPSmallManager.getInstance().getCardSimulator().getCurrentEFCardAccess();
+                    if (rawFile == null) {
+                        Logger.XMLEval.logState("Could not load FILE_CARDACCESS from simulator, loading from testcase configuration ...", LogLevel.Debug);
+                        rawFile = config.getEFCardAccessFile();
+                    }
+                    DataBuffer file = new DataBuffer(rawFile);
                     contentRegEx = "^" + toLowerOrUpperCase(file.asHexBinary());
                 } catch (Exception ignore) {
                     Logger.XMLEval.logConformity(ConformityResult.failed, "Could not load FILE_CARDACCESS, so the evaluation will not check the content of it", LogLevel.Warn);
@@ -119,7 +125,12 @@ public class Evaluator {
                 }
             } else if ("FILE_CARDSECURITY".equals(contentRegEx)) {
                 try {
-                    DataBuffer file = new DataBuffer(config.getEFCardSecurityFile());
+                    byte[] rawFile = IPSmallManager.getInstance().getCardSimulator().getCurrentEFCardSecurity();
+                    if (rawFile == null) {
+                        Logger.XMLEval.logState("Could not load FILE_CARDSECURITY from simulator, loading from testcase configuration ...", LogLevel.Debug);
+                        rawFile = config.getEFCardSecurityFile();
+                    }
+                    DataBuffer file = new DataBuffer(rawFile);
                     contentRegEx = "^" + toLowerOrUpperCase(file.asHexBinary());
                 } catch (Exception ignore) {
                     Logger.XMLEval.logConformity(ConformityResult.failed, "Could not load FILE_CARDSECURITY, so the evaluation will not check the content of it", LogLevel.Warn);

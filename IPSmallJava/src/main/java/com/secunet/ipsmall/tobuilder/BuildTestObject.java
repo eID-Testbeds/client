@@ -147,9 +147,10 @@ public class BuildTestObject {
         
         // initialize test object setups
         ArrayList<ITestObjectSetup> toSetups = new ArrayList<>();
-        toSetups.add(new CertificateSetup(settings)); // generate certificates.								// 1.
-        toSetups.add(new ResolveReferenceTestcasesSetup(settings)); // resolve reference testcases.					// 2.
-        toSetups.add(new ProfileSetup(settings)); // deactivate profiles.								// 3.
+        toSetups.add(new DefaultTestcaseSetup(settings)); // update default testcase.							// 1.
+        toSetups.add(new CertificateSetup(settings)); // generate certificates.								// 2.
+        toSetups.add(new ResolveReferenceTestcasesSetup(settings)); // resolve reference testcases.					// 3.
+        toSetups.add(new ProfileSetup(settings)); // deactivate profiles.								// 4.
 
         toSetups.add(new ModuleC1AlgorithmSetup(settings)); // deactivated undefined EAC algorithms in module C1.
         toSetups.add(new ModuleC3LinkCertificateSetup(settings)); // set link certificates for module C3.

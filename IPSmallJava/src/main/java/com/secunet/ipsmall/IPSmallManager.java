@@ -1,5 +1,6 @@
 package com.secunet.ipsmall;
 
+import com.secunet.ipsmall.cardsimulation.CardSimulationRemoteControl;
 import java.awt.EventQueue;
 import java.awt.Rectangle;
 import java.io.File;
@@ -19,7 +20,6 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import com.secunet.ipsmall.cardsimulation.GTCardSimCtrl;
 import com.secunet.ipsmall.exception.GeneralException;
 import com.secunet.ipsmall.log.DualLogOutputStream;
 import com.secunet.ipsmall.log.IModuleLogger.ConformityResult;
@@ -27,6 +27,8 @@ import com.secunet.ipsmall.log.IModuleLogger.EnvironmentClassification;
 import com.secunet.ipsmall.log.IModuleLogger.EventType;
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.log.Logger;
+import com.secunet.ipsmall.remotetestcasecontrol.RemoteTestcaseControlWS;
+import com.secunet.ipsmall.remotetestcasecontrol.TestResultSync;
 import com.secunet.ipsmall.test.FileBasedTestData;
 import com.secunet.ipsmall.test.ITestData;
 import com.secunet.ipsmall.test.ITestData.ExpectedTestStepKey;
@@ -38,9 +40,10 @@ import com.secunet.ipsmall.ui.MainFrame;
 import com.secunet.ipsmall.ui.UIUtils;
 import com.secunet.ipsmall.util.CommonUtil;
 import com.secunet.ipsmall.util.FileUtils;
-import com.secunet.testbedutils.cvc.cvcertificate.DataBuffer;
 import com.secunet.testbedutils.utilities.JaxBUtil;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+import java.util.Enumeration;
+import javax.xml.ws.Endpoint;
 
 /**
  * Main Class of the Application and Managment Interface for the UI to
@@ -65,14 +68,8 @@ public class IPSmallManager implements ITestProtocolCallback {
     public static final String c_CLIENT_VERSION = "version";
     public static final String c_CLIENT_PLATFORM = "platform";
 
-    public static final String c_SIM = "application.cardsimulation";
-    public static final String c_SIM_GT_WORKSPACE = "application.cardsimulation.globaltester.workspace";
-    public static final String c_SIM_GT_HOST = "application.cardsimulation.globaltester.host";
-    public static final String c_SIM_GT_PORT_SERVICE = "application.cardsimulation.globaltester.port.service";
-    public static final String c_SIM_GT_PORT_RESULTS = "application.cardsimulation.globaltester.port.results";
-    public static final String c_SIM_GT_PORT_APDU = "application.cardsimulation.globaltester.port.apdu";
-    public static final String c_SIM_REMOTEPCSC_HOST = "application.cardsimulation.remotepcsc.host";
-    public static final String c_SIM_REMOTEPCSC_PORT = "application.cardsimulation.remotepcsc.port";
+    public static final String c_RTCWS_HOST = "application.rtc.host";
+    public static final String c_RTCWS_PORT = "application.rtc.port";
 
     /**
      * Filename to store project state information
@@ -117,12 +114,14 @@ public class IPSmallManager implements ITestProtocolCallback {
     /**
      * card simulation
      */
-    private GTCardSimCtrl cardSimulator = null;
+    private CardSimulationRemoteControl cardSimulator = null;
 
     /**
      * flag to indicate initialization state
      */
     private boolean initialized = false;
+    
+    private TestResultSync currentResult;
 
     /**
      * singleton
@@ -159,7 +158,7 @@ public class IPSmallManager implements ITestProtocolCallback {
             defaultProperties.load(input);
         } catch (Exception ex) {
             sessionProperties = new Properties();
-            Logger.Global.logState("Unable to load " + GlobalSettings.getSessionPropertiesFileName() + ": " + ex.getMessage(), LogLevel.Warn);
+            Logger.Global.logState("Session properties not loaded from " + GlobalSettings.getSessionPropertiesFileName() + ": " + ex.getMessage(), LogLevel.Debug);
         }
 
         // merge properties
@@ -173,51 +172,19 @@ public class IPSmallManager implements ITestProtocolCallback {
 
         loadLoggingProfile(getLoggingProfileFileName());
 
-        String simulationType = applicationProperties.getProperty(c_SIM, "none");
+        // init card simulation remote control
+        cardSimulator = new CardSimulationRemoteControl(applicationProperties);
 
-        String gtWorkspacePath = applicationProperties.getProperty(c_SIM_GT_WORKSPACE, "");
+        // publish web service for testcase remote control
+        String rtcHost = applicationProperties.getProperty(c_RTCWS_HOST, "0.0.0.0");
+        int rtcPort = Integer.parseInt(applicationProperties.getProperty(c_RTCWS_PORT, "4321"));
+        String rtcAddress = "http://" + rtcHost + ":" + rtcPort + "/rtc";
+        Endpoint rtcWS = Endpoint.create(new RemoteTestcaseControlWS());
+        rtcWS.publish(rtcAddress);
+        Logger.Global.logState("Started RTC web service at: " + rtcAddress);
 
-        String gtHost = applicationProperties.getProperty(c_SIM_GT_HOST, "gt-simulator.secunet.de");
-        int gtPortService = Integer.parseInt(applicationProperties.getProperty(c_SIM_GT_PORT_SERVICE, "6789"));
-        int gtPortResults = Integer.parseInt(applicationProperties.getProperty(c_SIM_GT_PORT_RESULTS, "6788"));
-        int gtPortAPDU = Integer.parseInt(applicationProperties.getProperty(c_SIM_GT_PORT_APDU, "9876"));
-
-        String remotePCSCHost = applicationProperties.getProperty(c_SIM_REMOTEPCSC_HOST, "pcscemulator.secunet.de");
-        int remotePCSCPort = Integer.parseInt(applicationProperties.getProperty(c_SIM_REMOTEPCSC_PORT, "1234"));
-
-        switch (simulationType) {
-            case "GT_PersonalizeOnly":
-                if (!CommonUtil.isDirectoryAccessible(gtWorkspacePath)) {
-                    throw new GeneralException("Can't load directory: " + c_SIM_GT_WORKSPACE + "=" + gtWorkspacePath);
-                }
-                cardSimulator = new GTCardSimCtrl(gtWorkspacePath);
-
-                break;
-
-            case "GT_HW":
-                if (!CommonUtil.isDirectoryAccessible(gtWorkspacePath)) {
-                    throw new GeneralException("Can't load directory: " + c_SIM_GT_WORKSPACE + "=" + gtWorkspacePath);
-                }
-                cardSimulator = new GTCardSimCtrl(gtWorkspacePath, gtHost, gtPortService, gtPortResults);
-
-                break;
-            case "GT_RemotePCSC":
-                if (!CommonUtil.isDirectoryAccessible(gtWorkspacePath)) {
-                    throw new GeneralException("Can't load directory: " + c_SIM_GT_WORKSPACE + "=" + gtWorkspacePath);
-                }
-                cardSimulator = new GTCardSimCtrl(gtWorkspacePath, gtHost, gtPortService, gtPortResults, gtPortAPDU, remotePCSCHost, remotePCSCPort);
-
-                break;
-            case "GT_OnlyRemotePCSC":
-                cardSimulator = new GTCardSimCtrl(gtHost, gtPortAPDU, remotePCSCHost, remotePCSCPort);
-
-                break;
-            case "none":
-            default:
-                cardSimulator = null;
-                break;
-        }
-
+        currentResult = new TestResultSync();
+        
         initialized = true;
     }
 
@@ -261,6 +228,10 @@ public class IPSmallManager implements ITestProtocolCallback {
 
         return result;
     }
+    
+    public TestResultSync getResult() {
+        return currentResult;
+    }
 
     public Properties getProperties() {
         return applicationProperties;
@@ -278,7 +249,7 @@ public class IPSmallManager implements ITestProtocolCallback {
         return mainFrame;
     }
 
-    public GTCardSimCtrl getCardSimulator() {
+    public CardSimulationRemoteControl getCardSimulator() {
         return cardSimulator;
     }
 
@@ -289,15 +260,33 @@ public class IPSmallManager implements ITestProtocolCallback {
      */
     private boolean saveProperties() {
         boolean result = false;
-        try {
-    		// Only works if file already exists.
-        	/*URL resourceUrl = Thread.currentThread().getContextClassLoader().getResource(GlobalSettings.getSessionPropertiesFileName());
-             OutputStream output = new FileOutputStream(new File(resourceUrl.toURI()));
-             applicationProperties.store(output, null);*/
 
-            FileWriter writer = new FileWriter(new File(GlobalSettings.getConfigDir(), GlobalSettings.getSessionPropertiesFileName()));
-            applicationProperties.store(writer, null);
+        // copy properties to new object!
+        Properties saveProperties = new Properties();
+        saveProperties.putAll(applicationProperties);
 
+        // load default properties to get only changes
+        Properties defaultProperties = new Properties();
+        try (FileInputStream input = new FileInputStream(new File(GlobalSettings.getConfigDir(), GlobalSettings.getDefaultPropertiesFileName()))) {
+            defaultProperties.load(input);
+        } catch (Exception ex) {
+            defaultProperties = new Properties();
+            Logger.Global.logState("Unable to load " + GlobalSettings.getDefaultPropertiesFileName() + ": " + ex.getMessage(), LogLevel.Warn);
+        }
+
+        // delete unchanged values
+        Enumeration<Object> keys = saveProperties.keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object defaultValue = defaultProperties.get(key);
+            // removes key-value-pair form save properties, if values are identical.
+            if (defaultValue != null) {
+                saveProperties.remove(key, defaultValue);
+            }
+        }
+
+        try (FileWriter writer = new FileWriter(new File(GlobalSettings.getConfigDir(), GlobalSettings.getSessionPropertiesFileName()))) {
+            saveProperties.store(writer, null);
             result = true;
         } catch (Exception e) {
             Logger.Global.logException(e);
@@ -392,19 +381,14 @@ public class IPSmallManager implements ITestProtocolCallback {
      */
     public synchronized void startTestcase(ITestData testdata) throws Exception {
         if (!(testdata instanceof FileBasedTestData)) {
-            throw new UnsupportedOperationException("Currently only testcases of type FileBasedTestData are supported");
+            throw new UnsupportedOperationException("Currently only testcases of type FileBasedTestData are supported.");
+        }
+        if (!testdata.getTestEnabled()) {
+            throw new IllegalArgumentException("Testcase is not enabled.");
         }
         FileBasedTestData fileBasedTestData = (FileBasedTestData) testdata;
         if (fileBasedTestData == null || project.getTestcase(fileBasedTestData.getTestName()) == null) {
-            throw new IllegalArgumentException("Unkown testcase or null");
-        }
-
-        // starting simulator if exists
-        if (cardSimulator != null) {
-            cardSimulator.initCard(new DataBuffer(testdata.getSimulatedCard_CVCA()), testdata.getSimulatedCardDate(),
-                    "GT Scripts ePA EAC2 Reader BSI/testsuites/Data/CFG.CERTS.TA/CFG.DFLT.EAC.IS",
-                    "GT Scripts ePA EAC2 Reader BSI/testsuites/Data/CFG.CERTS.TA/CFG.DFLT.EAC.AT", "");
-            cardSimulator.start();
+            throw new IllegalArgumentException("Unkown testcase or null.");
         }
 
         try {
@@ -433,6 +417,10 @@ public class IPSmallManager implements ITestProtocolCallback {
 
             testServer.start();
 
+            // starting simulator if exists
+            if (cardSimulator != null) {
+                cardSimulator.start(testdata);
+            }
         } catch (Exception ex) {
             stopAndDismissServer();
             Logger.TestRunner.logState("Couldn't start server:" + ex, LogLevel.Fatal);
@@ -461,7 +449,7 @@ public class IPSmallManager implements ITestProtocolCallback {
             if (tests.exists() && tests.isDirectory()) {
 
                 Logger.Global.logState("Loading testcases from: " + tests.getAbsolutePath(), LogLevel.Info);
-	            // TODO: if this takes to long in the calling Swing EDT, move it
+                // TODO: if this takes to long in the calling Swing EDT, move it
                 // into a swing worker
 
                 try {
@@ -618,7 +606,7 @@ public class IPSmallManager implements ITestProtocolCallback {
                     }
                     getProject().addTestcase(data);
                     data.addTestProtocolCallback(this);
-                    
+
                     // restore state of testcase
                     getProject().updateState(data.getTestName(), state);
                 }
@@ -656,6 +644,7 @@ public class IPSmallManager implements ITestProtocolCallback {
             Logger.TestRunner.logState("Canceling execution of testcase " + project.getRunningTestcaseId());
             stopAndDismissServer();
             getProject().updateState(project.getRunningTestcaseId(), TestState.Idle);
+            currentResult.notifyResult(null);
         } else {
             throw new IllegalArgumentException("Given testcase is not currently running");
         }
@@ -779,6 +768,7 @@ public class IPSmallManager implements ITestProtocolCallback {
                     getProject().updateState(getProject().getRunningTestcaseId(), TestState.Undetermined);
                     break;
             }
+            currentResult.notifyResult(result);
 
             UIUtils.showInfoDialogs(testData.getTestMessagesEnd());
 

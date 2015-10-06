@@ -31,14 +31,6 @@
 	</TestStep>
 	<TestStep>
 		<Command>
-			<Text></Text>
-		</Command>
-		<ExpectedResult>
-			<Text>The element "Version" is conform to the requirements of [TR-03112].</Text>
-		</ExpectedResult>
-	</TestStep>
-	<TestStep>
-		<Command>
 			<Text>The eID-Server invokes "DIDAuthenticate_EAC1InputType".</Text>
 		</Command>
 		<Description>The message "DIDAuthenticate_EAC1InputType" contains the parameters "Certificate" and "CertificateDescription".</Description>

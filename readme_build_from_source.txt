@@ -10,5 +10,6 @@
 Build erstellen:
 
 0. (optional) build_from_source.sh mit dos2unix in Cygwin-Terminal konvertieren.
-1. build_from_source.sh in Cygwin-Terminal ausführen
-2. SpecificTestObject manuell erzeugen und beifuegen.
+1. (optional) Cygwinpacket xmlstarlet
+2. build_from_source.sh in Cygwin-Terminal ausführen
+3. SpecificTestObject manuell erzeugen und beifuegen.

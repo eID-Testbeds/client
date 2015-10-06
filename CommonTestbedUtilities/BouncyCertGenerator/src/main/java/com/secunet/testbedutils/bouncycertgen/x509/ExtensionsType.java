@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.03.05 um 09:35:13 AM CET 
+// Generiert: 2015.07.24 um 04:29:34 PM CEST 
 //
 
 
@@ -10,6 +10,7 @@ package com.secunet.testbedutils.bouncycertgen.x509;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -23,11 +24,12 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
- *         &lt;element name="basicConstraints" type="{http://www.secunet.com}basicConstraintsType" minOccurs="0"/>
+ *         &lt;element name="basicConstraints" type="{http://www.secunet.com}basicConstraintsType"/>
  *         &lt;element name="keyUsage" type="{http://www.secunet.com}keyUsageType" minOccurs="0"/>
  *         &lt;element name="extendedKeyUsage" type="{http://www.secunet.com}extendedKeyUsageType" minOccurs="0"/>
  *         &lt;element name="subjectAltName" type="{http://www.secunet.com}altNameType" minOccurs="0"/>
  *         &lt;element name="issuerAltName" type="{http://www.secunet.com}altNameType" minOccurs="0"/>
+ *         &lt;element name="cRLDistributionPoints" type="{http://www.secunet.com}cRLDistributionPointsType" minOccurs="0"/>
  *       &lt;/all>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,11 +44,14 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ExtensionsType {
 
+    @XmlElement(required = true)
     protected BasicConstraintsType basicConstraints;
     protected KeyUsageType keyUsage;
     protected ExtendedKeyUsageType extendedKeyUsage;
     protected AltNameType subjectAltName;
     protected AltNameType issuerAltName;
+    @XmlElement(name = "cRLDistributionPoints")
+    protected CRLDistributionPointsType crlDistributionPoints;
 
     /**
      * Ruft den Wert der basicConstraints-Eigenschaft ab.
@@ -166,6 +171,30 @@ public class ExtensionsType {
      */
     public void setIssuerAltName(AltNameType value) {
         this.issuerAltName = value;
+    }
+
+    /**
+     * Ruft den Wert der crlDistributionPoints-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link CRLDistributionPointsType }
+     *     
+     */
+    public CRLDistributionPointsType getCRLDistributionPoints() {
+        return crlDistributionPoints;
+    }
+
+    /**
+     * Legt den Wert der crlDistributionPoints-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link CRLDistributionPointsType }
+     *     
+     */
+    public void setCRLDistributionPoints(CRLDistributionPointsType value) {
+        this.crlDistributionPoints = value;
     }
 
 }
