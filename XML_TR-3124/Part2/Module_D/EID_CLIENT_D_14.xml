@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_14" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_14</Title>
+	<Version>1.2</Version>
+	<Purpose>This test evaluates the user interface in case of a communication error where the refresh URL cannot be determined.</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Finalize the Online-Authentication following the steps from <Link target="EID_CLIENT_A4_06"/>.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The failure to determine a valid "refreshURL" is signaled clearly and unambiguously to the user by the eID-Client.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

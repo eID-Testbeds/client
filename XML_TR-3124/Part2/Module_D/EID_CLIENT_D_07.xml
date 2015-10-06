@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_07" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_07</Title>
+	<Version>1.2</Version>
+	<Purpose>This test evaluates the user interface in case the connection establishment fails.</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Perform the test cases from the Module E - Cryptography.</Text>
+		</Command>
+		
+		<ExpectedResult>
+			<Text>In case the connection establishment fails, the eID-Client provides a clear interface which informs the user about the failure.</Text>
+		</ExpectedResult>
+     </TestStep>
+</TestCase>

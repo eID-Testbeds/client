@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_06" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_06</Title>
+	<Version>1.2</Version>
+	<Purpose>This unit evaluates the user interface informing about the current status of the Online-Authentication.</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Complete the Online-Authentication according to <Link target="EID_CLIENT_A4_01"/> and evaluate the GUI of the eID-Client.</Text>
+		</Command>
+
+		<ExpectedResult>
+			<Text>The user can any time clearly determine the current status of the Online-Authentication using the feedback provided by the eID-Client.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

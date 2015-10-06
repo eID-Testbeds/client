@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cvcert.xsd">
+
+	<keys>
+		<key name="CERT_CV_CVCA_1_KEY" create="false">
+			<filePrivateKey>./CVCA/DECVCAeIDCT00001.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/DECVCAeIDCT00001.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_CVCA_2_FOR_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./certs/CERT_CV_CVCA_2_FOR_KEY.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_LINK_2_A_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./certs/CERT_CV_LINK_2_A_KEY.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		<key name="CERT_CV_LINK_2_B_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./certs/CERT_CV_LINK_2_B_KEY.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_DV_2_A_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./certs/CERT_CV_DV_2_A_KEY.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		<key name="CERT_CV_DV_2_B_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./certs/CERT_CV_DV_2_B_KEY.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_TERM_2_A_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./certs/CERT_CV_TERM_2_A_KEY.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		<key name="CERT_CV_TERM_2_B_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./certs/CERT_CV_TERM_2_B_KEY.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		<key name="CERT_CV_TERM_2_C_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./certs/CERT_CV_TERM_2_C_KEY.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+	</keys>
+	
+	<!-- CERT_CV_LINK_2_A  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCT00001</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_2_A_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL020A</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_CVCA_1_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_LINK_2_A.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_CVCA_2_B  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL020A</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_2_A_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL020A</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_2_A_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_CVCA_2_B.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_LINK_2_B  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAfor00001</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_2_B_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL020B</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_CVCA_2_FOR_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_LINK_2_B.cvcert</outputFile>
+	</cert>
+
+ 	<!-- CERT_CV_DV_2_A -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL020A</certAuthRef>
+		<publicKey>CERT_CV_DV_2_A_KEY</publicKey>
+		<certHolderRef>DEDVeIDCT0020A</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>DV_FOREIGN</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-90</effDateOffset>
+		<expDateOffset>270</expDateOffset>
+		<signKey>CERT_CV_LINK_2_A_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_2_A.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_DV_2_B -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL020B</certAuthRef>
+		<publicKey>CERT_CV_DV_2_B_KEY</publicKey>
+		<certHolderRef>DEDVeIDCT0020B</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>DV_FOREIGN</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-90</effDateOffset>
+		<expDateOffset>270</expDateOffset>
+		<signKey>CERT_CV_LINK_2_B_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_2_B.cvcert</outputFile>
+	</cert>
+
+	
+	<!-- CERT_CV_TERM_2_A -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DEDVeIDCT0020A</certAuthRef>
+		<publicKey>CERT_CV_TERM_2_A_KEY</publicKey>
+		<certHolderRef>DEATeIDCT0020A</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>TERMINAL</role>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG9>true</readDG9>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>0</effDateOffset>
+		<expDateOffset>90</expDateOffset>
+		<extensions>
+			<description>
+				<issuerName>secunet</issuerName>
+				<subjectName>TestLabor: CERT_CV_TERM_2_A</subjectName>
+				<subjectURL>https://eservice-idp-test.secunet.de:443</subjectURL>
+				<fileTermsOfUsage>./defaultTermsOfUsage.txt</fileTermsOfUsage>
+				<commCerts>
+					<fileCommCert>./certs/CERT_TLS_ESERVICE_1.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_ESERVICE_1_NSOP.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_EIDSERVER_1.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_A.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_B.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_C.der</fileCommCert>
+				</commCerts>
+				<fileDescription>./certs/CERT_CV_TERM_2_A_DESC.bin</fileDescription>
+			</description>
+			<terminalSector>
+				<fileSectorPublicKey>./certs/SectorKey.bin</fileSectorPublicKey>
+			</terminalSector>
+		</extensions>
+		<signKey>CERT_CV_DV_2_A_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_2_A.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_TERM_2_B -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DEDVeIDCT0020A</certAuthRef>
+		<publicKey>CERT_CV_TERM_2_B_KEY</publicKey>
+		<certHolderRef>DEATeIDCT0020B</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>TERMINAL</role>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG9>true</readDG9>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-2</effDateOffset>
+		<expDateOffset>1</expDateOffset>
+		<extensions>
+			<description>
+				<issuerName>secunet</issuerName>
+				<subjectName>TestLabor: CERT_CV_TERM_2_B</subjectName>
+				<subjectURL>https://eservice-idp-test.secunet.de:443</subjectURL>
+				<fileTermsOfUsage>./defaultTermsOfUsage.txt</fileTermsOfUsage>
+				<commCerts>
+					<fileCommCert>./certs/CERT_TLS_ESERVICE_1.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_ESERVICE_1_NSOP.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_EIDSERVER_1.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_A.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_B.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_C.der</fileCommCert>
+				</commCerts>
+				<fileDescription>./certs/CERT_CV_TERM_2_B_DESC.bin</fileDescription>
+			</description>
+			<terminalSector>
+				<fileSectorPublicKey>./certs/SectorKey.bin</fileSectorPublicKey>
+			</terminalSector>
+		</extensions>
+		<signKey>CERT_CV_DV_2_A_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_2_B.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_TERM_2_C -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DEDVeIDCT0020A</certAuthRef>
+		<publicKey>CERT_CV_TERM_2_C_KEY</publicKey>
+		<certHolderRef>DEATeIDCT0020C</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>TERMINAL</role>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG9>true</readDG9>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>0</effDateOffset>
+		<expDateOffset>90</expDateOffset>
+		<extensions>
+			<description>
+				<issuerName>secunet</issuerName>
+				<subjectName>TestLabor: CERT_CV_TERM_2_C</subjectName>
+				<subjectURL>https://eservice-idp-test.secunet.de:443</subjectURL>
+				<fileTermsOfUsage>./defaultTermsOfUsage.txt</fileTermsOfUsage>
+				<commCerts>
+					<fileCommCert>./certs/CERT_TLS_ESERVICE_1.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_ESERVICE_1_NSOP.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_EIDSERVER_1.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_A.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_B.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_C.der</fileCommCert>
+				</commCerts>
+				<fileDescription>./certs/CERT_CV_TERM_2_C_DESC.bin</fileDescription>
+			</description>
+			<terminalSector>
+				<fileSectorPublicKey>./certs/SectorKey.bin</fileSectorPublicKey>
+			</terminalSector>
+		</extensions>
+		<signKey>CERT_CV_DV_2_A_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_2_C.cvcert</outputFile>
+	</cert>
+
+</root>

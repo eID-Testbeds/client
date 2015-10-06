@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_B_14" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_B_14</Title>
+	<Version>1.2</Version>
+	<Purpose>This test checks the behavior of the eID-Client in case a mandatory element "EphemeralPublicKey" of the EAC2InputType message is missing.</Purpose>
+	<Profile>EAC</Profile><Profile>PAOS</Profile>
+	<Reference>TR-03112-6, Section 3.2.5 "Transmit"</Reference>
+	<Reference>TR-03112-7, Section 2.6 "StartPAOS"</Reference>
+	<Reference>TR-03112-7, Section 3.6 "Extended Access Control"</Reference>
+	<Reference>TR-03124-1, Section 2.5.3 "Online-Authentication"</Reference>
+	<Precondition>A single card reader is connected to the eID-Client system.</Precondition>
+	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>
+	<Precondition>The eID-Card has the following trust point(s): [CERT_CV_CVCA_1] from [CERT_SET_1].</Precondition>
+	<Precondition>If applicable, the eID-Client has the following trust point(s): [CERT_CV_CVCA_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eID-Client has been activated and the communication channels TLS-1, TLS-1-2 and TLS-2 have been established.</Precondition>
+	<Precondition>The eService uses the TLS server certificate [CERT_TLS_ESERVICE_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eID-Server uses the TLS server certificate [CERT_TLS_EIDSERVER_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eService has sent a default TC Token to the eID-Client.</Precondition>
+	<Precondition>The eID-Client and the eID-Server have established PAOS communication.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>The eID-Server invokes "DIDAuthenticate_EAC1InputType".</Text>
+		</Command>
+		<Description>The message "DIDAuthenticate_EAC1InputType" contains the parameters "Certificate" and "CertificateDescription".</Description>
+		<Description>The certificate chain from [CERT_SET_1] is sent in given order: [CERT_CV_TERM_1_A], [CERT_CV_DV_1_A].</Description>
+		<Description>The certificate description corresponds to [CERT_CV_TERM_1_A].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client displays EAC data received from the eID-Server before the user enters his PIN.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client requests the PIN.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Do not change CertificateHolderAuthorizationTemplate and enter the correct PIN of the eID-Card.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The eID-Client responds with the message "DIDAuthenticateResponse_EAC1OutputType".</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The message contains at least the following elements: "Result", "EFCardAccess", "IDPICC" and "Challenge".</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The element "Result" contains exactly one element "ResultMajor" which equals /resultmajor#ok.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The element "EFCardAccess" matches the card file EF.CardAccess.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>The eID-Server creates a valid signature of the received challenge using [CERT_CV_TERM_1_A] and invokes "DIDAuthenticate_EAC2InputType".</Text>
+		</Command>
+		<Description>The message "DIDAuthenticate_EAC2InputType" only contains the parameter "Signature".</Description>
+		<Description>The element "Signature" contains the calculated signature for Terminal Authentication.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client aborts the Online-Authentication and indicates an error.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client starts establishment of a TLS session (i. e. performs a TLS handshake without HTTP interaction) to the server of the refresh URL to retrieve the server certificate of this server. </Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The URL used by the eID-Client matches the "RefreshAddress" element from the TC Token.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>The eService accepts the connection TLS-1-2.</Text>
+		</Command>
+		<Description>The eService uses the same TLS server certificate as used for the initial TLS-1-2 connection.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client directs the browser to the "RefreshAddress".</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>In case of a web server based Client-Interface, the eID-Client uses "303 See Other" for the redirection.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The direction includes an additional URL-Parameter "ResultMajor=error&amp;ResultMinor=res_min", where res_min is "clientError" or another suitable error description.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_10" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_10</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case verifies the eID-Client to advise the user about the current value of the retry counter of the PIN if the PIN verification fails.</Purpose>
+	<Profile>UI_OFFLINE</Profile>
+	<Reference>TR-03124-1, Chapter 3 "Functional Requirements for an eID-Client"</Reference>
+	<Precondition>The card reader in use has neither display, nor PIN-Pad.</Precondition>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<Precondition>Active eID-Card with the PIN already set.</Precondition>
+	<Precondition>The current PIN of the eID-Card is known.</Precondition>
+	<Precondition>The PIN retry counter of the eID-Card is 3.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Start the procedure of changing the PIN. When requested, enter [PIN_NOK] and [PIN_TMP] as the new PIN.</Text>
+		</Command>
+		<Description>[PIN_NOK] is a wrong PIN for the eID-Card.</Description>
+		<Description>[PIN_TMP] is a temporary user PIN.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client returns an error message regarding the [PIN_NOK] being wrong.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The user is informed about the current value of the retry counter of the PIN, which is 2.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The user is enabled to retry PIN verification.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Repeat the procedure of changing the PIN. When requested, enter [PIN] and [PIN_TMP] as the new PIN.</Text>
+		</Command>
+		<Description>[PIN] is the correct current PIN of the eID-Card.</Description>
+		<Description>[PIN_TMP] is a temporary user PIN.</Description>
+		<ExpectedResult>
+			<Text>[PIN] is successfully verified and accepted by the eID-Client. No error returned.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>In order to resume the PIN and retry counter, repeat the procedure of changing the PIN using the current PIN. Use [PIN_TMP] as current PIN and [PIN] as the new PIN.</Text>
+		</Command>
+		<Description>[PIN_TMP] is the correct current PIN for the eID-Card.</Description>
+		<ExpectedResult>
+			<Text>[PIN_TMP] is successfully verified and accepted by the eID-Client. No error returned.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

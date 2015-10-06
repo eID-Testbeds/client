@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://bsi.bund.de/TR03124" xmlns="http://bsi.bund.de/TR03124" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:complexType name="Profile">
+		<xs:annotation>
+			<xs:documentation>A profile defines the scope for which a part of the test plan is applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LinkData">
+				<xs:sequence>
+					<xs:element name="Name" type="xs:string"/>
+					<xs:element name="Description" type="xs:string"/>
+				</xs:sequence>
+				<xs:attribute name="type" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>Optionally, profiles can be grouped by this attribute.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Certificate">
+		<xs:annotation>
+			<xs:documentation>The Certificate type defines elements specifying a specific CV certificate used in the test scenarios.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LinkData">
+				<xs:sequence>
+					<xs:element name="Purpose" type="Hypertext"/>
+					<xs:element name="Version" type="xs:string"/>
+					<xs:element name="CertificateContent">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:choice>
+									<xs:sequence>
+										<xs:annotation>
+											<xs:documentation>If the certificate has a (regular) signer, its certificate is linked and the corresponding elements become optional.</xs:documentation>
+										</xs:annotation>
+										<xs:element name="SignerCertificate" type="LinkIDType"/>
+										<xs:element name="CertificateAuthorityReference" type="xs:string" minOccurs="0"/>
+										<xs:element name="SigningKey" type="xs:string" minOccurs="0"/>
+									</xs:sequence>
+									<xs:sequence>
+										<xs:annotation>
+											<xs:documentation>If the certificate has no signer it could link to, all elements must be given explicitly.</xs:documentation>
+										</xs:annotation>
+										<xs:element name="CertificateAuthorityReference" type="xs:string"/>
+										<xs:element name="SigningKey" type="xs:string"/>
+									</xs:sequence>
+								</xs:choice>
+								<xs:element name="CertificateHolderReference" type="xs:string"/>
+								<xs:element name="CertificateHolderAuthorization" type="xs:string"/>
+								<xs:element name="CertificateEffectiveDate" type="xs:string"/>
+								<xs:element name="CertificateExpirationDate" type="xs:string"/>
+								<xs:element name="PublicKey" type="xs:string"/>
+								<xs:element name="CertificateExtension" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Reference">
+		<xs:annotation>
+			<xs:documentation>A reference refers to external documents and specifications a TR03124 document is based on.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LinkData">
+				<xs:sequence>
+					<xs:element name="Content" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TestHierarchy" abstract="true">
+		<xs:annotation>
+			<xs:documentation>This is the abstract base type of all test parts, usually in separate files.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Text" type="FormattedContent" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This optional element contains descriptive document content that will be printed right before the test object.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="LinkIDType" use="required">
+			<xs:annotation>
+				<xs:documentation>ID of the test part.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TestHierarchyReference">
+		<xs:annotation>
+			<xs:documentation>This is the base type of all references to separate files of the test specification. It only contains a file name.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="TestLayer" type="TestLayer">
+		<xs:annotation>
+			<xs:documentation>This is the root element of a test layer XML file.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TestLayer">
+		<xs:annotation>
+			<xs:documentation>The test layer covers all test scenarios for a single test object abstraction level. There could be one or more test plans within a single specification.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TestHierarchy">
+				<xs:sequence>
+					<xs:element name="TestUnit" type="TestHierarchyReference" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>This element refers to the test units. There could be one or more test units within a single specification.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TestUnit" type="TestUnit">
+		<xs:annotation>
+			<xs:documentation>This is the root element of a test unit XML file.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TestUnit">
+		<xs:annotation>
+			<xs:documentation>The test unit covers all test scenarios for a single test functionality There could be one or more test unit within a single specification</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TestHierarchy">
+				<xs:sequence>
+					<xs:element name="TestCase" type="TestHierarchyReference" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>This element refers to the test cases. There could be one or more test cases within a single test unit.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TestCase" type="TestCase">
+		<xs:annotation>
+			<xs:documentation>This is the root element of a test case XML file.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TestCase">
+		<xs:annotation>
+			<xs:documentation>The test case the testing procedure for a single test scenario. There could be one or more test case within a single test unit</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TestHierarchy">
+				<xs:sequence>
+					<xs:element name="Title" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Title of the test case.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:sequence>
+							<xs:element name="Version" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Current version of the test case.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Purpose" type="Hypertext"/>
+							<xs:element name="Profile" type="LinkIDType" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Links to all relevant profiles</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Reference" type="LinkIDType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Reference to any kind of specification this test case is based on</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Precondition" type="Hypertext" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="TestStep" type="ActionStep" maxOccurs="unbounded"/>
+							<xs:element name="Postcondition" type="Hypertext" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="MetaData" type="KeyValueType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>These optional elements contain meta information in form of key-value pairs, e.g. if a test case is destructive.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:sequence>
+							<xs:annotation>
+								<xs:documentation>A deleted or moved test case only contains a comment.</xs:documentation>
+							</xs:annotation>
+							<xs:element name="Comment" type="Hypertext">
+								<xs:annotation>
+									<xs:documentation>The comment element explains the deletion or movement of this test case.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ActionStep">
+		<xs:annotation>
+			<xs:documentation>The action step represents one single step inside a sequence of tasks, e.g. within test cases.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Command" type="Command">
+				<xs:annotation>
+					<xs:documentation>The Command represents the actual action that is performed within a single step.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TechnicalCommand" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The technical command can optionally be used to specify a technical reprensentation of the command to be able to process the step automatically by some testing suite.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestDataReference" type="LinkIDType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>If the step refers to some predefined test data, such as certificates, the data element is referred using this element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="Hypertext" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The description adds further information about the command that is performed in the step.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpectedResult" type="Result" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The expected result denotes the behaviour of the test object in order to pass the test.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Command">
+		<xs:annotation>
+			<xs:documentation>The Command represents the actual action that is performed within a single test step.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Text" type="Hypertext"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="APDUCommand">
+		<xs:annotation>
+			<xs:documentation>The APDUcommand is a special kind of command containing a specific ISO 7816 APDU to be send to the test object.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Command">
+				<xs:sequence>
+					<xs:element name="APDU" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Result">
+		<xs:annotation>
+			<xs:documentation>The Result represents the actual result that is expected within a single test step.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Text" type="Hypertext"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="APDUResult">
+		<xs:annotation>
+			<xs:documentation>The APDU result is a special kind of result containing a specific ISO 7816 APDU to be received from the test object.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Result">
+				<xs:sequence>
+					<xs:element name="APDU" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KeyValueType">
+		<xs:annotation>
+			<xs:documentation>This type contains arbitrary information in form of key-value pairs.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="key" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>The key that describes these data.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="Routine">
+		<xs:annotation>
+			<xs:documentation>A routine is a parametrized sequence of actions. It is defined once and usually called multiple times throughout a test document.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TestHierarchy">
+				<xs:sequence>
+					<xs:element name="Title" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Title of the routine.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Purpose" type="Hypertext"/>
+					<xs:element name="Reference" type="LinkIDType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Reference to any kind of specification this routine is based on.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Parameter" type="KeyValueType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>These optional elements contain parameters of the routine in form of key-value pairs. The key attribute identifies the parameter, the text content is its default value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RoutineStep" type="ActionStep" maxOccurs="unbounded"/>
+					<xs:element name="MetaData" type="KeyValueType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>These optional elements contain meta information in form of key-value pairs.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RoutineCall">
+		<xs:annotation>
+			<xs:documentation>This type defines a call of a routine. It contains the target routine's ID and parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Parameter" type="KeyValueType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>These optional elements contain parameters of the routine in form of key-value pairs. The key attribute identifies the parameter, the text content is its actual value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="target" type="LinkIDType" use="required">
+			<xs:annotation>
+				<xs:documentation>This attribute identifies the routine to be called.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="RoutineCall" type="RoutineCall">
+		<xs:annotation>
+			<xs:documentation>A formatting element that represents a call of a routine.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Table">
+		<xs:annotation>
+			<xs:documentation>A formatting element that represents data in form of a table. It consits of multiple rows.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Row" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>A row consits of multiple cells.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Cell" type="Hypertext" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>A cell contains the table's text content and/or links to test objects.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="NonTextBlockAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Image">
+		<xs:annotation>
+			<xs:documentation>A formatting element that represents an image loaded from a file.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attributeGroup ref="NonTextBlockAttributes"/>
+			<xs:attribute name="file" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Name and path of the image file.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Heading">
+		<xs:annotation>
+			<xs:documentation>A formatting element that represents a text heading.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="level" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>The level attribute influences the chapter numbering.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Paragraph" type="Hypertext">
+		<xs:annotation>
+			<xs:documentation>A formatting element that represents a text paragraph. It contains plain text and/or links to objects.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Enumeration">
+		<xs:annotation>
+			<xs:documentation>A formatting element that represents a special text paragraph consisting of enumerated text items.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Item" type="Hypertext" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="List">
+		<xs:annotation>
+			<xs:documentation>A formatting element that represents a special text paragraph consisting of listed text items.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Item" type="Hypertext" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="NonTextBlockAttributes">
+		<xs:annotation>
+			<xs:documentation>All non-textual content must be explained by textual attributes.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="caption" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Caption text of the non-textual element.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="alternativeText" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>This text, that describes the non-textual element, will be used alternatively if the element can not be presented properly.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:group name="FormattedTextGroup">
+		<xs:annotation>
+			<xs:documentation>This group lists all formatting  text elements.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="Heading"/>
+			<xs:element ref="Paragraph"/>
+			<xs:element ref="Enumeration"/>
+			<xs:element ref="List"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="FormattedContentGroup">
+		<xs:annotation>
+			<xs:documentation>This group lists all formatting elements.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="Table"/>
+			<xs:element ref="Image"/>
+			<xs:group ref="FormattedTextGroup"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="FormattedContent">
+		<xs:annotation>
+			<xs:documentation>This type describes formatted document content. Only formatting elements are allowed, no plain text content.</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="FormattedContentGroup"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="FormattedText">
+		<xs:annotation>
+			<xs:documentation>This type describes formatted text. Only formatting text elements are allowed, no plain text content.</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="FormattedTextGroup" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Hypertext" mixed="true">
+		<xs:annotation>
+			<xs:documentation>This type defines plain text content that may contain links to test objects.</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="Link"/>
+			<xs:element ref="RoutineCall"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="Link" type="Link">
+		<xs:annotation>
+			<xs:documentation>A formatting element that represents a link to a test object.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Link" mixed="true">
+		<xs:annotation>
+			<xs:documentation>The link type is the base type of any kind of element that is refering to a link data type. The text content defines the textual representation of the link. If empty, the linked object defines its representation.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="target" type="LinkIDType" use="required">
+			<xs:annotation>
+				<xs:documentation>ID of the object that link refers to.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="LinkData">
+		<xs:annotation>
+			<xs:documentation>The link data type is the base type of any kind of data that is referred by links.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="id" type="LinkIDType" use="required"/>
+		<xs:attribute name="linkText" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>This optional attribute contains the text that will be printed if this object is linked somewhere in the text document. If unset, the id attribute will be printed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="LinkIDType">
+		<xs:annotation>
+			<xs:documentation>Type used by all ID attributes and elements.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="Profiles" type="Profiles">
+		<xs:annotation>
+			<xs:documentation>This is the root element of the profiles XML file.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Profiles">
+		<xs:annotation>
+			<xs:documentation>This type collects all profiles in a single structure.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TestHierarchy">
+				<xs:sequence>
+					<xs:element name="Profile" type="Profile" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Certificates" type="Certificates">
+		<xs:annotation>
+			<xs:documentation>This is the root element of the certificates XML file.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Certificates">
+		<xs:annotation>
+			<xs:documentation>This type collects all certificates in a single structure.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TestHierarchy">
+				<xs:sequence>
+					<xs:element name="Certificate" type="Certificate" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="References" type="References">
+		<xs:annotation>
+			<xs:documentation>This is the root element of the references XML file.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="References">
+		<xs:annotation>
+			<xs:documentation>This type collects all references in a single structure.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TestHierarchy">
+				<xs:sequence>
+					<xs:element name="Reference" type="Reference" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Routines" type="Routines">
+		<xs:annotation>
+			<xs:documentation>This is the root element of the routines XML file.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Routines">
+		<xs:annotation>
+			<xs:documentation>This type collects all routines in a single structure.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TestHierarchy">
+				<xs:sequence>
+					<xs:element name="Routine" type="Routine" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Document" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Abstract base type for a BSI TR03124 document.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VersionHistory">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Version" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="VersionID" type="xs:string"/>
+									<xs:element name="Date" type="xs:date"/>
+									<xs:element name="Editor" type="xs:string"/>
+									<xs:element name="Description" type="xs:string"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Text" type="FormattedContent" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This optional element contains descriptive document content that will be printed right after the document version and before further test objects.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

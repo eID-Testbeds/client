@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cvcert.xsd">
+
+	<keys>
+		
+		<!-- use keys of CVCA certificate for this link CA  -->
+		<key name="CERT_CV_CVCA_4_1_KEY">
+			<filePrivateKey>./CVCA/DECVCAeIDCT00001.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/DECVCAeIDCT00001.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_LINK_4_1_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./CVCA/CERT_CV_LINK_4_1_KEY.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/CERT_CV_LINK_4_1.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_LINK_4_2_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./CVCA/CERT_CV_LINK_4_2_KEY.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/CERT_CV_LINK_4_2.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_LINK_4_3_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./CVCA/CERT_CV_LINK_4_3_KEY.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/CERT_CV_LINK_4_3.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_LINK_4_4_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./CVCA/CERT_CV_LINK_4_4_KEY.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/CERT_CV_LINK_4_4.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_LINK_4_5_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./CVCA/CERT_CV_LINK_4_5_KEY.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/CERT_CV_LINK_4_5.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+		<key name="CERT_CV_LINK_4_6_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+			<filePrivateKey>./CVCA/CERT_CV_LINK_4_6_KEY.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/CERT_CV_LINK_4_6.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		
+	</keys>
+
+	<!-- CERT_CV_LINK_4_1  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCT00001</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_1_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0401</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_CVCA_4_1_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_LINK_4_1.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_CVCA_4_2  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0401</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_1_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0401</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_1_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_CVCA_4_2.cvcert</outputFile>
+	</cert>
+	
+	
+	<!-- CERT_CV_LINK_4_2  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0401</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_2_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0402</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_1_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_LINK_4_2.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_CVCA_4_3  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0402</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_2_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0402</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_2_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_CVCA_4_3.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_LINK_4_3  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0402</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_3_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0403</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_2_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_LINK_4_3.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_CVCA_4_4  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0403</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_3_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0403</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_3_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_CVCA_4_4.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_LINK_4_4  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0403</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_4_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0404</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_3_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_LINK_4_4.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_CVCA_4_5  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0404</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_4_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0404</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_4_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_CVCA_4_5.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_LINK_4_5  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0404</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_5_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0405</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_4_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_LINK_4_5.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_CVCA_4_6  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0405</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_5_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0405</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_5_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_CVCA_4_6.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_LINK_4_6  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0405</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_6_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0406</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_5_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_LINK_4_6.cvcert</outputFile>
+	</cert>
+	
+	<!-- CERT_CV_CVCA_4_7  -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCTL0406</certAuthRef>
+		<publicKey domainParam="true">CERT_CV_LINK_4_6_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCTL0406</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>CERT_CV_LINK_4_6_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/CERT_CV_CVCA_4_7.cvcert</outputFile>
+	</cert>
+	
+</root>

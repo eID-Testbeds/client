@@ -1,0 +1,15 @@
+Anschrift:
+    secunet Security Networks AG
+    Kronprinzenstraße 30
+    45128 Essen
+
+E-Mail-Adresse:
+    info@secunet.com
+
+Zweck des Auslesevorgangs:
+    Konformitätstests nach BSI TR-03124-2
+
+Zuständige Datenschutzbehörde:
+    Test-Datenschutzbehörde
+    Test-Strasse 1
+    12345 Test-Ort

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_11" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_11</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case evaluates the user interface of the eID-Client providing the PIN-Management.</Purpose>
+	<Profile>UI_OFFLINE</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Initiate the PIN-Management.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The PIN-Management starts in a dedicated window different from the browser window.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The user interface is clearly distinguishable from the web browser window by the user.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

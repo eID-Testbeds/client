@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_A4_11" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_A4_11</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case checks the behavior of the eID-Client in case the user aborts Online-Authentication after PIN entry.</Purpose>
+	<Profile>OA</Profile>
+	<Reference>TR-03124-1, Section 2.5.3 "Online-Authentication"</Reference>
+	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
+	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>
+	<Precondition>The eID-Card has the following trust point(s): [CERT_CV_CVCA_1] from [CERT_SET_1].</Precondition>
+	<Precondition>If applicable, the eID-Client has the following trust point(s): [CERT_CV_CVCA_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eID-Client has been activated and the communication channels TLS-1, TLS-1-2 and TLS-2 have been established.</Precondition>
+	<Precondition>The eService uses the TLS server certificate [CERT_TLS_ESERVICE_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eID-Server uses the TLS server certificate [CERT_TLS_EIDSERVER_1] from [CERT_SET_1].</Precondition>	
+	<Precondition>The eService has sent a default TC Token to the eID-Client.</Precondition>
+	<Precondition>The eID-Client and the eID-Server have established PAOS communication.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>The eID-Server invokes "DIDAuthenticate_EAC1InputType".</Text>
+		</Command>
+		<Description>The message "DIDAuthenticate_EAC1InputType" contains the parameters "Certificate" and "CertificateDescription".</Description>
+		<Description>The certificate chain from [CERT_SET_1] is sent in given order: [CERT_CV_TERM_1_A], [CERT_CV_DV_1_A].</Description>
+		<Description>The certificate description corresponds to [CERT_CV_TERM_1_A].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client displays EAC data received from the eID-Server before the user enters his PIN.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client requests the PIN.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Do not change CertificateHolderAuthorizationTemplate and enter the correct PIN of the eID-Card. Abort Online-Authentication immediately after PIN entry.</Text>
+		</Command>	
+		<ExpectedResult>
+			<Text>The eID-Client directs the browser to the "RefreshAddress".</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>In case of a web server based Client-Interface, the eID-Client uses "303 See Other" for the redirection.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The direction includes an additional URL-Parameter "ResultMajor=error&amp;ResultMinor=res_min", where res_min is "cancellationByUser".</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

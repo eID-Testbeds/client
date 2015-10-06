@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_A1_08" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_A1_08</Title>
+	<Version>1.2</Version>
+	<Purpose>Positive test of the action to open the User Interface in case the Module is not set.</Purpose>
+	<Profile>OA</Profile>
+	<Profile>ACTION_SHOWUI</Profile>
+	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Invoke the eID-Client via the "ClientURL".</Text>
+		</Command>
+		<Description>Use parameter "?ShowUI=".</Description>
+		<Description>Note that the value for Module is missing.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client is activated and opens the default view of the UI.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

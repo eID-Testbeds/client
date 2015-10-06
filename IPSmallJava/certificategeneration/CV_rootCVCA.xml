@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cvcert.xsd">
+
+	<keys>	
+		<key name="DECVCAeIDCT00001_KEY" create="true"> <!-- WARNING: create="true" overwrites existing keys! -->
+			<filePrivateKey>./CVCA/DECVCAeIDCT00001.pkcs8</filePrivateKey>
+			<filePublicKey>./CVCA/DECVCAeIDCT00001.bin</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+	</keys>
+
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DECVCAeIDCT00001</certAuthRef>
+		<publicKey domainParam="true">DECVCAeIDCT00001_KEY</publicKey>
+		<certHolderRef>DECVCAeIDCT00001</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>-365</effDateOffset>
+		<expDateOffset>1095</expDateOffset>
+		<signKey>DECVCAeIDCT00001_KEY</signKey>
+		<outputFile createAdditionalHexFile="true">./CVCA/DECVCAeIDCT00001.cvcert</outputFile>
+	</cert>
+
+</root>

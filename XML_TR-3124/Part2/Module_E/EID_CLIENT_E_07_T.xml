@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_E_07_T" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_E_07_T</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case checks the behavior of the eID-Client in case the eID-Server offers only SSL/TLS versions during the TLS-2 handshake that are not conforming to [TR-03124-1].</Purpose>
+	<Profile>CRYPTO</Profile>
+	<Reference>TR-03116-4, Chapter 2 "Vorgaben für SSL/TLS"</Reference>
+	<Reference>TR-03124-1, Section 2.5 "Online-Authentication"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
+	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>
+	<Precondition>Choose the TLS version for the eID-Server which is not conform to the [TR-03124-1].</Precondition>
+	
+	<TestStep>
+		<Command>
+			<Text>Invoke the eID-Client via the "ClientURL".</Text>
+		</Command>
+		<Description>Use parameter "tcTokenURL=[ENC_TC_TOKEN_URL]".</Description>
+		<Description>[ENC_TC_TOKEN_URL] is a properly encoded [TC_TOKEN_URL].</Description>
+		<Description>[TC_TOKEN_URL] is a valid https-URL where the TC Token can be retrieved by the eID-Client.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client is activated and starts establishment of channel TLS-1-2 to the TC Token Provider.</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>The TC Token Provider accepts the connection TLS-1-2.</Text>
+		</Command>
+		<Description>The TC Token Provider uses TLS server certificate [CERT_TLS_ESERVICE_3_A] from [CERT_SET_3].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client submits a HTTP GET to [TC_TOKEN_URL] via the channel TLS-1-2.</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>Check if the eID-Client requests the TC Token via the provided URL and respond to the eID-Client with a valid TC Token.</Text>
+		</Command>
+		<Description>The HTTP response containing TC Token has "Content-Type: text/xml" and "charset=utf-8". The response does not contain any further content besides TC Token. </Description>
+		<Description>TC Token contains the default parameters.</Description>
+		<Description>Parameter "PSK" is randomly set to value [PSK].</Description>
+		<Description>Parameter "SessionIdentifier" is randomly set to value [SID].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client starts establishment of channel TLS-2 to the eID-Server.</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>The eID-Server accepts the connection TLS-2.</Text>
+		</Command>
+		<Description>The eID-Server only offers SSL/TLS versions not conforming to the [TR-03124-1] during the initial handshake.</Description>
+		<Description>The eID-Server uses TLS server certificate [CERT_TLS_EIDSERVER_3_A] from [CERT_SET_3].</Description>
+		<ExpectedResult>
+			<Text>The TLS-2 channel is not established.</Text>
+        </ExpectedResult>
+        <ExpectedResult>
+			<Text>The connection establishment is aborted by the eID-Client.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client directs the browser to the "RefreshAddress".</Text>
+		</ExpectedResult>		
+		<ExpectedResult>
+			<Text>In case of a web server based Client-Interface, the eID-Client uses "303 See Other" for the redirection.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The direction includes an additional URL-Parameter "ResultMajor=error&amp;ResultMinor=res_min", where res_min is "trustedChannelEstablishmentFailed" or "clientError".</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+</TestCase>

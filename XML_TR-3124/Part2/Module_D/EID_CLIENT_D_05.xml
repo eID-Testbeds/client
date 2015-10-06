@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_05" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_05</Title>
+	<Version>1.2</Version>
+	<Purpose>This test evaluates that the texts to denote the access rights displayed by the eID-Client conform not to [TR-03119].</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Follow the Online-Authentication as described in <Link target="EID_CLIENT_B_01"/> until the access rights are displayed. Use the eService certificate [CERT_CV_TERM_1_B] instead of [CERT_CV_TERM_1_A].</Text>
+		</Command>
+		<Description>In deviation to EID_CLIENT_B_01 also use the element "AuthenticatedAuxiliaryData" in DIDAuthenticateEAC1InputType.</Description>
+		<Description>The element "AuthenticatedAuxiliaryData" contains a valid date for the age verification.</Description>
+		<Description>The element "AuthenticatedAuxiliaryData" contains a valid date for the document validity check.</Description>
+		<Description>The element "AuthenticatedAuxiliaryData" contains a valid municipality ID.</Description>
+		<Description>Note that the certificate [CERT_CV_TERM_1_B] in combination with the AuthenticatedAuxiliaryData grants access to any data group and special function displayable in the user interface.</Description>
+		<ExpectedResult>
+			<Text>For each access right displayed to the user, the corresponding text from [TR-03119], Section A.5.1. is used to denote the access right. In particular, access rights for which no text is available in [TR-03119] are not displayed by the eID-Client.</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>Finalize the Online-Authentication.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>TRUE</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

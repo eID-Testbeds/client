@@ -1,0 +1,176 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.secunet.eidclient</groupId>
+  <artifactId>ipsmall-browser-simulator</artifactId>
+  <version>1.0.0</version>
+  <name>IPSmallBrowserSimulator</name>
+  <properties>
+		<ipsmalljava.directory>${project.build.directory}/IPSmallJava</ipsmalljava.directory>
+		<browsersimulator.directory>${project.build.directory}/browsersimulator</browsersimulator.directory>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+	</properties>
+	
+	
+	<build>		
+		<plugins>
+		
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArguments>
+			            <bootclasspath>${java.home}\lib\rt.jar${path.separator}${java.home}/lib/jce.jar</bootclasspath>
+			        </compilerArguments>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>				
+					<execution>
+						<id>copy-files</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${browsersimulator.directory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>scripts</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}</directory>
+									<filtering>false</filtering>
+									<includes>
+							          <include>NOTICE.txt</include>
+							          <include>LICENSE.txt</include>
+							        </includes>
+								</resource>								
+							</resources>
+						</configuration>
+					</execution>					
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.5.3</version>				
+				<executions>
+					
+					<execution>
+						<id>make-browsersimulator-jar</id>
+						<configuration>
+							<descriptorRefs>
+						        <descriptorRef>jar-with-dependencies</descriptorRef>
+						      </descriptorRefs>
+						      <finalName>browsersimulator</finalName>
+        					  <appendAssemblyId>false</appendAssemblyId>
+        					  <outputDirectory>${browsersimulator.directory}</outputDirectory>
+						      <archive>
+						        <manifest>
+						          <mainClass>com.secunet.ipsmall.browser.simulator.BrowserSimulator</mainClass>
+						        </manifest>
+						      </archive>
+						</configuration>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>						
+					</execution>
+
+                    <execution>
+                        <id>make-browsersimulator-zip</id>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/assembly/browsersimulator.zip.xml</descriptor>
+                            </descriptors>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <finalName>browsersimulator_${maven.build.timestamp}</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+									
+				</executions>
+			</plugin>
+			
+			<!-- skip generation of default .jar -->
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <version>2.6</version>
+		        <executions>
+		          <execution>
+		            <id>default-jar</id>
+		            <phase/>
+		          </execution>
+		        </executions>
+		    </plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-install-plugin</artifactId>
+		        <version>2.5.2</version>
+		        <executions>
+		          <execution>
+		            <id>default-install</id>
+		            <phase/>
+		          </execution>
+		        </executions>
+		    </plugin>
+		     
+		</plugins>		
+	</build>
+	
+	<dependencies>
+
+	<dependency>
+		<groupId>commons-codec</groupId>
+		<artifactId>commons-codec</artifactId>
+		<version>1.6</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-logging</groupId>
+		<artifactId>commons-logging</artifactId>
+		<version>1.1.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>fluent-hc</artifactId>
+		<version>4.2.5</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>4.2.5</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient-cache</artifactId>
+		<version>4.2.5</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpcore</artifactId>
+		<version>4.2.4</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpmime</artifactId>
+		<version>4.2.5</version>
+	</dependency>
+	<dependency>
+		<groupId>com.secunet.eidclient</groupId>
+		<artifactId>ipsmall-java</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+	</dependencies>
+	
+</project>

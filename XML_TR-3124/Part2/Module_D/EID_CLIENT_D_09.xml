@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_09" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_09</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case evaluates the user interface of the eID-Client regarding the PIN-Pad functionality if the card reader has secure PIN entry.</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Reference>TR-03124-1, Section 4.3 "Functionalities"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<Precondition>The card reader connected has secure PIN entry.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Complete the Online-Authentication according to <Link target="EID_CLIENT_A4_01"/>.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The eID-Client advised the user to use the secure PIN entry of the card reader.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The keyboard of the host of the eID-Client could not be used to enter the PIN.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

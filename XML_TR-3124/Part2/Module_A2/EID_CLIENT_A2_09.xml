@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_A2_09" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_A2_09</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case checks the behavior of the eID-Client in case the retrieval of the TC Token fails. Instead of the TC Token the redirector responds with "404 Not Found".</Purpose>
+	<Profile>OA</Profile>
+	<Reference>TR-03124-1, Section 2.5 "Online-Authentication"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
+	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>
+	
+	<TestStep>
+		<Command>
+			<Text>Invoke the eID-Client via the "ClientURL".</Text>
+		</Command>
+		<Description>Use parameter "tcTokenURL=[ENC_TC_TOKEN_URL]".</Description>
+		<Description>[ENC_TC_TOKEN_URL] is a properly encoded [TC_TOKEN_URL].</Description>
+		<Description>[TC_TOKEN_URL] is a valid https-URL where the eID-Client expects to retrieve the TC Token.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client is activated and starts establishment of channel TLS-1-2 to the TC Token Provider.</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>The TC Token Provider accepts the connection TLS-1-2.</Text>
+		</Command>
+		<Description>The TC Token Provider uses TLS server certificate [CERT_TLS_ESERVICE_3_A] from [CERT_SET_3].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client submits a HTTP GET to [TC_TOKEN_URL] via the channel TLS-1-2.</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>Check if the eID-Client requests the TC Token via the provided URL and respond to the eID-Client with a redirect "303 See Other".</Text>
+		</Command>
+		
+		<Description>The redirect location is [TC_TOKEN_URL_REDIRECT].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client redirects to the URL given in the “Location" of the redirect via the channel TLS-1-2.</Text>
+		</ExpectedResult>
+	</TestStep>	
+	
+	<TestStep>
+		<Command>
+			<Text>Check if the eID-Client requests the TC Token via the URL given in the “Location" of the redirect and respond with an HTTP error “404 Not Found".</Text>
+		</Command>
+		<Description>The server certificate used is [CERT_TLS_REDIRECT_1_A] from [CERT_SET_1]. </Description>
+		<ExpectedResult>
+			<Text>The eID-Client returns a error “Not Found" to the browser. In case of a web server based Client-Interface, the HTTP erro code is "404 Not Found".</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+</TestCase>

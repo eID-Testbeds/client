@@ -1,0 +1,11 @@
+<TCTokenType>
+  <ServerAddress>https://{eidservice.hostname}:{eidservice.port}</ServerAddress>
+  <SessionIdentifier>{ecard.sessionid}</SessionIdentifier>
+  <RefreshAddress>https://{eservice.hostname}:{eservice.port}/{eservice.refresh.urlpath}</RefreshAddress>
+  <CommunicationErrorAddress>https://{eservice.hostname}:{eservice.port}/{eservice.communicationerror.urlpath}</CommunicationErrorAddress>
+  <Binding>urn:liberty:paos:2006-08</Binding>
+  <PathSecurity-Protocol>urn:ietf:rfc:4279</PathSecurity-Protocol>
+  <PathSecurity-Parameters>
+    <PSK>{ecard.sessionpsk}</PSK>
+  </PathSecurity-Parameters>
+</TCTokenType>

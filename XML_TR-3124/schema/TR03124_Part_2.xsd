@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://bsi.bund.de/TR03124" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://bsi.bund.de/TR03124" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="TR03124Schema.xsd"/>
+	<xs:element name="TR_03124_PART_2">
+		<xs:annotation>
+			<xs:documentation>The root element of document TR03124 Part 2.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="Document">
+					<xs:sequence>
+						<xs:element name="References" type="TestHierarchyReference">
+							<xs:annotation>
+								<xs:documentation>The References element defines any kind of external specification that is used as base for this test specification.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="TestProfiles" type="TestHierarchyReference"/>
+						<xs:element name="CertificateDefinition" type="TestHierarchyReference"/>
+						<xs:element name="Module" type="TestHierarchyReference" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>This element refers to the test modules. There could be one or more test modules within a single specification.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

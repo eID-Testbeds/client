@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_04" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_04</Title>
+	<Version>1.2</Version>
+	<Purpose>This test unit evaluates the data from the eService CV certificate presented to the user.</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Follow the Online-Authentication as described in <Link target="EID_CLIENT_B_01"/> until the data from the eService CV certificate is presented to the user.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The eID-Client presents the data from the eService CV certificate in the user interface.</Text>
+		</ExpectedResult>
+		
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Check that the presented data corresponds with the certificate [CERT_CV_TERM_1_A] used during the Terminal Authentication.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>TRUE</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>Finalize the Online-Authentication.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>TRUE</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

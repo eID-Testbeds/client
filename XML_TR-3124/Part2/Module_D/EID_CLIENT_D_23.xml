@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_23" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_23</Title>
+	<Version>1.2</Version>
+	<Purpose>This test unit evaluates the possibility for the user to restrict the access rights requested by the eService (CHAT restriction) contained in OptionalCHAT.</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Profile>PRESELECT_RIGHTS</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Follow the Online-Authentication as described in <Link target="EID_CLIENT_B_01"/> until the access rights are displayed. In deviation to EID_CLIENT_B_01 also use the elements "AuthenticatedAuxiliaryData" and "RequiredCHAT" in DIDAuthenticateEAC1InputType.</Text>
+		</Command>
+		<Description>The element "OptionalCHAT" contains the access rights only for [DGROUP_A] and [DGROUP_B].</Description>
+		<Description>The element "AuthenticatedAuxiliaryData" contains a valid date for the age verification.</Description>
+		<Description>The element "AuthenticatedAuxiliaryData" contains a valid date for the document validity check.</Description>
+		<Description>The element "AuthenticatedAuxiliaryData" contains a valid community ID.</Description>
+		<ExpectedResult>
+			<Text>The access rights contained in the CHAT of the eService certificate are displayed.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client has preselected all access rights given in the OptionalCHAT element of the EAC1InputType displayed in the user interface.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client allows the user to deselect all access rights granted by the eService certificate.</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>Finalize the Online-Authentication.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>TRUE</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_A4_09" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_A4_09</Title>
+	<Version>1.2</Version>
+	<Purpose>This test checks the behavior of the eID-Client in case of an error, but the "CommunicationErrorAddress" element is not included in the TC Token.</Purpose>
+	<Profile>OA</Profile>
+	<Reference>TR-03124-1, Section 2.5.4 "Return to the web-session"</Reference>
+	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
+	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>
+	<Precondition>The eService has sent a default TC Token to the eID-Client, except for the element "RefreshAddress", which is [RADDRESS_NSOP_1]. Further, the TC Token does not include "CommunicationErrorAddress".</Precondition>
+	<Precondition>The eID-Client has been activated and the communication channels TLS-1, TLS-1-2 and TLS-2 have been established.</Precondition>
+	<Precondition>The eService uses the certificate [CERT_TLS_ESERVICE_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eID-Server uses the certificate [CERT_TLS_EIDSERVER_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eID-Server has sent the CV certificate chain from [CERT_SET_1] in given order: [CERT_CV_TERM_1_A], [CERT_CV_DV_1_A].</Precondition>
+	<Precondition>The eID-Client and the eID-Server have successfully performed PAOS communication.</Precondition>
+
+	<TestStep>
+		<Command>
+			<Text>To finalize PAOS connection, the eID-Server sends the message "StartPAOSResponse".</Text>
+		</Command>
+		<Description>The result code returned in "StartPAOSResponse" is /resultmajor#ok.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client starts establishment of a TLS connection to [RADDRESS_NSOP_1] and performs a HTTP GET.</Text>
+		</ExpectedResult>
+
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>The end point provided in the refresh URL accepts the connection and responds with "404 Not Found".</Text>
+		</Command>
+		<Description>The server certificate used is [CERT_TLS_REDIRECT_1_A] from [CERT_SET_1].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client conveys an error "Bad Request" to the browser. In case of a web server based Client-Interface, the HTTP error code is "400 Bad Request". </Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

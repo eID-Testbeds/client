@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_02" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_02</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case evaluates the mandatory information from the Phase 1 of the EAC protocol displayed to the user prior to the PIN entry.</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Invoke the Online-Authentication including age verification as described in <Link target="EID_CLIENT_B_05"/>.</Text>
+		</Command>
+		<Description>The age verification is initiated by the "AuthenticatedAuxiliaryData" element used in the EAC1InputType message.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client extracts the data transmitted from the eID-Service during the Phase 1 of the EAC and presents it to the user.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client displays the holder of the certificate as contained in the "CertificateDescription" (SubjectName and SubjectURL).</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client displays the intended comparison data from "AuthenticatedAuxiliaryData" for age verification.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The age verification data shown to the user is the same as the data requested by the eID-Server during the Terminal Authentication in "AuthenticatedAuxiliaryData".</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The user is required to enter the PIN of the eID-Card after the data was presented.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Finalize the Online-Authentication.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>TRUE</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

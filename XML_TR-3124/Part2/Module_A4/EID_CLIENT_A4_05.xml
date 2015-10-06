@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_A4_05" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_A4_05</Title>
+	<Version>1.2</Version>
+	<Purpose>Positive test describing the eID-Client returning to the web-session following the redirects.</Purpose>
+	<Profile>OA</Profile>
+	<Reference>TR-03124-1, Section 2.5.4 "Return to the web-session"</Reference>
+	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
+	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>
+	<Precondition>The eService has sent a default TC Token to the eID-Client, except for the element "RefreshAddress", which is [RADDRESS_NSOP_1].</Precondition>
+	<Precondition>The eID-Client has been activated and the communication channels TLS-1, TLS-1-2 and TLS-2 have been established.</Precondition>
+	<Precondition>The eService uses the certificate [CERT_TLS_ESERVICE_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eID-Server uses the certificate [CERT_TLS_EIDSERVER_1] from [CERT_SET_1].</Precondition>
+	<Precondition>The eID-Server has sent the CV certificate chain from [CERT_SET_1] in given order: [CERT_CV_TERM_1_A], [CERT_CV_DV_1_A].</Precondition>
+	<Precondition>The eID-Client and the eID-Server have successfully performed PAOS communication.</Precondition>
+	
+	<TestStep>
+		<Command>
+			<Text>To finalize PAOS connection, the eID-Server sends the message "StartPAOSResponse".</Text>
+		</Command>
+		<Description>The result code returned in "StartPAOSResponse" is "/resultmajor#ok".</Description>
+		<ExpectedResult>
+			<Text>The eID-Client starts establishment of a TLS connection to the "RefreshAddress" element from the TC Token and performs a HTTP GET.</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>The end point provided in the refresh URL accepts the connection and responds with a redirect "302 Found".</Text>
+		</Command>
+		<Description>The server certificate used is [CERT_TLS_REDIRECT_1_A] from [CERT_SET_1].</Description>
+		<Description>The redirect location is [RADDRESS_NSOP_2].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client starts establishment of a TLS connection to [RADDRESS_NSOP_2] and performs a HTTP GET.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>The end point provided in the redirect accepts the connection and responds with a redirect "303 See Other".</Text>
+		</Command>
+		<Description>The server certificate used is [CERT_TLS_REDIRECT_1_B] from [CERT_SET_1].</Description>
+		<Description>The redirect location is [RADDRESS_NSOP_3].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client starts establishment of a TLS connection to [RADDRESS_NSOP_3] and performs a HTTP GET.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>The end point provided in the redirect accepts the connection and responds with a redirect "307 Temporary Redirect".</Text>
+		</Command>
+		<Description>The server certificate used is [CERT_TLS_REDIRECT_1_C] from [CERT_SET_1].</Description>
+		<Description>The redirect location is conform to the Same-origin policy according to [RFC6454] with the "subjectURL" contained in the "CertificateDescription" extension of the eService certificate.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client starts establishment of a TLS connection to the provided URL and performs a HTTP GET.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>The end point provided in the redirect accepts the connection and responds with a redirect "302 Found".</Text>
+		</Command>
+		<Description>The eService uses TLS server certificate [CERT_TLS_ESERVICE_1] from [CERT_SET_1].</Description>
+		<Description>The redirect location is [RADDRESS].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client either starts establishment of a TLS-1-2 connection (i. e. performs a TLS handshake without HTTP interaction) to [RADDRESS] to retrieve the server certificate of the communication partner or the eID-Client directs the browser to the eService. The redirection uses [RADDRESS]..</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>CONDITIONAL, if the eID-Client proceeds with first option (establishment of a TLS-1-2 connection): The eService accepts the connection TLS-1-2.</Text>
+		</Command>
+		<Description>The eService uses TLS server certificate [CERT_TLS_ESERVICE_1] from [CERT_SET_1].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client directs the browser to the eService. The direction uses [RADDRESS].</Text>
+		</ExpectedResult>
+	</TestStep>
+	
+	<TestStep>
+		<Command>
+			<Text>In case of a web server based Client-Interface, check whether the eID-Client returns "303 See Other" with the determined refresh URL.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>TRUE</Text>
+		</ExpectedResult>
+	</TestStep>
+
+	<TestStep>
+		<Command>
+			<Text>Check whether the direction URL has an additional parameter "ResultMajor=ok".</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>TRUE</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_C3_03" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_C3_03</Title>
+	<Version>1.2</Version>
+	<Purpose>Positive test that checks the ability of the eID-Client to built a suitable certificate chain for Terminal Authentication if the ICC contains an old trust point and the eID-Server sends no additional link certificates in EAC1InputType.</Purpose>
+	<Profile>EAC</Profile>
+	<Profile>PAOS</Profile>
+	<Profile>CCH</Profile>
+	<Profile>NO_PREVERIFICATION</Profile>
+	<Reference>TR-03112-7, Section 2.6 "StartPAOS"</Reference>
+	<Reference>TR-03112-7, Section 3.6 "Extended Access Control"</Reference>
+	<Reference>TR-03124-1, Section 2.5.3 "Online-Authentication"</Reference>
+	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
+	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>
+	<Precondition>The eID-Card has the following trust point(s): [CERT_CV_CVCA_4_r] from [CERT_SET_4].</Precondition>
+	<Precondition>The eID-Client has been activated and the communication channels TLS-1, TLS-1-2 and TLS-2 have been established.</Precondition>
+	<Precondition>The eService uses the TLS server certificate [CERT_TLS_ESERVICE_4_A] from [CERT_SET_4].</Precondition>
+	<Precondition>The eID-Server uses the TLS server certificate [CERT_TLS_EIDSERVER_4_A] from [CERT_SET_4].</Precondition>
+	<Precondition>The eService has sent a default TC Token to the eID-Client.</Precondition>
+	<Precondition>The eID-Client and the eID-Server have established PAOS communication.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>The eID-Server invokes "DIDAuthenticate_EAC1InputType".</Text>
+		</Command>
+		<Description>The message "DIDAuthenticate_EAC1InputType" contains the parameters "Certificate" and "CertificateDescription".</Description>
+		<Description>The certificate chain from [CERT_SET_4] is sent in given order: [CERT_CV_TERM_4_A], [CERT_CV_DV_4_A].</Description>
+		<Description>The certificate description corresponds to [CERT_CV_TERM_4_A].</Description>
+		<ExpectedResult>
+			<Text>The eID-Client displays EAC data received from the eID-Server before the user enters his PIN.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client requests the PIN.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Do not change CertificateHolderAuthorizationTemplate and enter the correct PIN of the eID-Card.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The eID-Client responds with the message "DIDAuthenticateResponse_EAC1OutputType".</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The message contains at least the following elements: "Result", "CertificationAuthorityReference", "EFCardAccess", "IDPICC" and "Challenge".</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The element "Result" contains exactly one element "ResultMajor" which equals /resultmajor#ok.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The element "EFCardAccess" matches the card file EF.CardAccess.</Text>
+		</ExpectedResult>		
+		<ExpectedResult>
+		  <Text>The element "CertificationAuthorityReference" contains a reference to the certificate [CERT_CV_CVCA_4_r].</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>The eID-Server generates a fresh key pair for Chip Authentication using valid domain parameters, creates a valid signature of the received challenge using [CERT_CV_TERM_4_A] and invokes "DIDAuthenticate_EAC2InputType".</Text>
+		</Command>
+		<Description>The message "DIDAuthenticate_EAC2InputType" contains the parameters "Certificate", "EphemeralPublicKey" and "Signature".</Description>
+		<Description>The element "Certificate" contains the required link certificates [CERT_CV_LINK_4_s-1], ... , [CERT_CV_LINK_4_r].</Description>
+		<Description>The element "EphemeralPublicKey" contains the generated public key for Chip Authentication.</Description>
+		<Description>The element "Signature" contains the calculated signature for Terminal Authentication.</Description>
+		<ExpectedResult>
+		  <Text> The eID-Client performs Terminal Authentication and sends the following certificate chain to the eID-Card: [CERT_CV_LINK_4_r], ... , [CERT_CV_LINK_4_s-1], [CERT_CV_DV_4_A], [CERT_CV_TERM_4_A].</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>
+

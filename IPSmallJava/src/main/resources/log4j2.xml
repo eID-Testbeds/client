@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration strict="true" status="info" packages="com.secunet.log4j.plugin">
+	<Properties>
+		<Property name="logGlobalLogfile">debug.log</Property>
+		<Property name="logTestCaseLogfile"></Property><!-- must be empty! -->
+	</Properties>
+	<Appenders>
+    	<Appender type="Console" name="Console" target="SYSTEM_ERR">
+      		<Layout type="PatternLayout" pattern="%msg%n"/>
+    	</Appender>
+    	<Appender type="CustomXMLFileAppender" name="TestCaseLog" fileName="${sys:logTestCaseLogfile}" bufferedIO="false" bufferSize="0">
+      		<Layout type="CustomXMLLayout"/>
+    	</Appender>
+    	<Appender type="File" name="GlobalLog" fileName="${sys:logGlobalLogfile}" append="false">
+      		<Layout type="PatternLayout" pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    	</Appender>  
+  	</Appenders>
+  	<Loggers>  
+  		<Logger name="global" level="all">
+  			<AppenderRef ref="GlobalLog"/>
+  		</Logger>
+        <Logger name="TestObjectBuilder" level="all">
+            <AppenderRef ref="GlobalLog"/>
+        </Logger>
+        <Logger name="CertificateGeneration" level="all">
+            <AppenderRef ref="GlobalLog"/>
+        </Logger>
+  		<Logger name="testcase" level="all" additivity="false">
+  			<AppenderRef ref="TestCaseLog"/>
+  		</Logger>
+    	<Root level="info">
+      		<AppenderRef ref="Console"/>
+    	</Root>
+  	</Loggers>
+</Configuration>

@@ -1,0 +1,11 @@
+<TCTokenType>
+  <ServerAddress></ServerAddress>
+  <SessionIdentifier></SessionIdentifier>
+  <RefreshAddress></RefreshAddress>
+  <CommunicationErrorAddress>http://{commerroraddressserver.hostname}:{commerroraddressserver.port}/{commerroraddressserver.communicationerror.urlpath}</CommunicationErrorAddress>
+  <Binding></Binding>
+  <PathSecurity-Protocol></PathSecurity-Protocol>
+  <PathSecurity-Parameters>
+    <PSK></PSK>
+  </PathSecurity-Parameters>
+</TCTokenType>

@@ -1,0 +1,12 @@
+<html>
+	<body>
+		<object type="application/vnd.ecard-client">
+			<param name="ServerAddress" value="https://{eidservice.hostname}:{eidservice.port}"/>
+			<param name="SessionIdentifier" value="{ecard.sessionid}"/>
+			<param name="Binding" value="urn:liberty:paos:2006-08"/>
+			<param name="PathSecurity-Protocol" value="urn:ietf:rfc:4279"/>
+			<param name="PathSecurity-Parameters" value="<PSK>{ecard.sessionpsk}</PSK>"/>
+			<param name="RefreshAddress" value="https://{eservice.hostname}:{eservice.port}/{eservice.refresh.urlpath}"/>
+		</object>
+	</body>
+</html>

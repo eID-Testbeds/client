@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_15" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_15</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case checks whether the user is requested to enter his PUK on the secure PIN entry if the card reader provides one.</Purpose>
+	<Profile>UI_OFFLINE</Profile>
+	<Reference>TR-03124-1, Chapter 3 "Functional Requirements for an eID-Client"</Reference>
+	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
+	<Precondition>The card reader in use has a PIN-Pad.</Precondition>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<Precondition>Active eID-Card with the PIN already set.</Precondition>
+	<Precondition>The current PIN of the eID-Card is known.</Precondition>
+	<Precondition>The PIN retry counter of the eID-Card is 3.</Precondition>
+	<Precondition>The PUK of the eID-Card is known and the usage counter is not 0.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Start the procedure of changing the PIN using the current PIN. When requested, enter [PIN_NOK]. If necessary, enter [PIN_TMP] as the new PIN.</Text>
+		</Command>
+		<Description>[PIN_NOK] is a wrong PIN for the eID-Card.</Description>
+		<Description>[PIN_TMP] is a temporary user PIN.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client forces the user to use secure PIN entry.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client returns an error message regarding the [PIN_NOK] being wrong.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client informs the user about the current value of the retry counter of the PIN, which is 2.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Repeat the previous step.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>eID-Client returns an error message regarding the [PIN_NOK] being wrong.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client informs the user about the current value of the retry counter of the PIN, which is 1.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Repeat the previous step.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The eID-Client informs that the current retry counter of the PIN is 1, therefore it is suspended and must be resumed.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Start the procedure of resuming a suspended PIN using the CAN. When requested, enter [CAN].</Text>
+		</Command>
+		<Description>[CAN] is the correct CAN for the eID-Card.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client indicates the successful verification of the [CAN]. No error returned.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Start the procedure of changing the PIN using the current PIN. When requested, enter [PIN_NOK] and [PIN_TMP] as the new PIN.</Text>
+		</Command>
+		<Description>[PIN_NOK] is a wrong PIN for the eID-Card.</Description>
+		<Description>[PIN_TMP] is a temporary user PIN.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client forces the user to use secure PIN entry.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client returns an error message regarding the [PIN_NOK] being wrong.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>eID-Client returns an error message regarding the PIN being blocked.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>Start the procedure of unblocking of a blocked PIN using the PUK. When requested, enter the [PUK].</Text>
+		</Command>
+		<Description>[PUK] is the correct PUK for the eID-Card.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client forces the user to use secure PIN entry.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>[PUK] is successfully verified and accepted by the eID-Client. No error returned.</Text>
+		</ExpectedResult>
+	</TestStep>
+	<TestStep>
+		<Command>
+			<Text>In order to verify the result, repeat the procedure of changing the PIN using the current PIN. Use [PIN] as current PIN and [PIN] as the new PIN.</Text>
+		</Command>
+		<Description>[PIN] is the correct current PIN for the eID-Card.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client forces the user to use secure PIN entry.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>[PIN] is successfully verified and accepted by the eID-Client. No error returned.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TR-03124-2_ICS xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com ../../config/TR-03124-2_ICS_v1.2.xsd" version="1.2">
+	<SoftwareVersion>
+		<Name>AusweisApp2</Name>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>4</VersionMinor>
+		<VersionSubminor>0</VersionSubminor>
+	</SoftwareVersion>
+	
+	<Profiles>
+		<CRYPTO enabled="true" />
+		<EAC enabled="true" />
+		<OA enabled="true" />
+		<PAOS enabled="true" />
+		<UI_OFFLINE enabled="true" />
+		<UI_ONLINE enabled="true" />
+		<CCH enabled="true" trIndex_b="3"/><!-- Here the indices from the Cert Set 4 are provided. These are NOT the sequenceNumber from "ClientTrustStore" below! -->
+		
+		<PREVERIFICATION enabled="true" includedTrustpoint="true" />
+		<NO_PREVERIFICATION enabled="false" />
+		<HTTP_MESSAGES enabled="true" />
+		<PROXY_CONFIG enabled="true" />
+		<PRESELECT_RIGHTS enabled="true" />
+		<DISABLE_RIGHTS enabled="true" />
+		<ACTION_STATUS enabled="true" />
+		<ACTION_SHOWUI enabled="true" />
+		<ACTION_SHOWUI_SETTINGS enabled="true" />
+	</Profiles>
+	
+	<SupportedCryptography>
+		<TLSchannel_1-2>
+			<TLS-Version version="tls12" enabled="true">
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_256_GCM_SHA384</CipherSuite>
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384</CipherSuite>
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_256_CBC_SHA256</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_128_GCM_SHA256</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_128_CBC_SHA256</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256</CipherSuite>
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_128_CBC_SHA256</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_128_GCM_SHA256</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_256_GCM_SHA384</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_256_CBC_SHA256</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_256_CBC_SHA</CipherSuite>
+				<SupportedCurve>brainpoolP512r1</SupportedCurve>
+				<SupportedCurve>brainpoolP384r1</SupportedCurve>
+				<SupportedCurve>brainpoolP256r1</SupportedCurve>
+				<SupportedCurve>secp384r1</SupportedCurve>
+				<SupportedCurve>secp256r1</SupportedCurve>
+				<SupportedCurve>secp224r1</SupportedCurve>
+				<MinRSAKeyLength>2048</MinRSAKeyLength>
+				<MinDSAKeyLength>2048</MinDSAKeyLength>
+				<MinDHEKeyLength>2048</MinDHEKeyLength>
+				<SupportedSignatureAlgorithm>SHA512withRSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA512withDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA512withECDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA384withRSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA384withDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA384withECDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA256withRSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA256withDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA256withECDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA224withRSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA224withDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA224withECDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA1withRSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA1withDSA</SupportedSignatureAlgorithm>
+				<SupportedSignatureAlgorithm>SHA1withECDSA</SupportedSignatureAlgorithm>
+			</TLS-Version>
+			
+			<TLS-Version version="tls11" enabled="true">
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_256_CBC_SHA</CipherSuite>
+				<SupportedCurve>secp384r1</SupportedCurve>
+				<SupportedCurve>secp256r1</SupportedCurve>
+				<SupportedCurve>secp224r1</SupportedCurve>
+				<SupportedCurve>brainpoolP256r1</SupportedCurve>
+				<SupportedCurve>brainpoolP384r1</SupportedCurve>
+				<SupportedCurve>brainpoolP512r1</SupportedCurve>
+				<MinRSAKeyLength>2048</MinRSAKeyLength>
+				<MinDSAKeyLength>2048</MinDSAKeyLength>
+				<MinDHEKeyLength>2048</MinDHEKeyLength>
+			</TLS-Version>
+			
+			<TLS-Version version="tls10" enabled="true">
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_DHE_DSS_WITH_AES_256_CBC_SHA</CipherSuite>
+				<CipherSuite>TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</CipherSuite>
+				<SupportedCurve>secp384r1</SupportedCurve>
+				<SupportedCurve>secp256r1</SupportedCurve>
+				<SupportedCurve>secp224r1</SupportedCurve>
+				<SupportedCurve>brainpoolP256r1</SupportedCurve>
+				<SupportedCurve>brainpoolP384r1</SupportedCurve>
+				<SupportedCurve>brainpoolP512r1</SupportedCurve>
+				<MinRSAKeyLength>2048</MinRSAKeyLength>
+				<MinDSAKeyLength>2048</MinDSAKeyLength>
+				<MinDHEKeyLength>2048</MinDHEKeyLength>
+			</TLS-Version>
+
+		</TLSchannel_1-2>
+
+		<TLSchannel_2>
+			<TLS-Version version="tls12" enabled="true">
+				<CipherSuite>TLS_RSA_PSK_WITH_AES_256_CBC_SHA</CipherSuite>
+				<MinRSAKeyLength>2048</MinRSAKeyLength>
+				<SupportedSignatureAlgorithm>SHA1withRSA</SupportedSignatureAlgorithm>
+			</TLS-Version>
+			
+			<TLS-Version version="tls11" enabled="true">
+				<CipherSuite>TLS_RSA_PSK_WITH_AES_256_CBC_SHA</CipherSuite>
+				<MinRSAKeyLength>2048</MinRSAKeyLength>
+				<SupportedSignatureAlgorithm>SHA1withRSA</SupportedSignatureAlgorithm>
+			</TLS-Version>
+		</TLSchannel_2>
+		
+		<TR-03110>
+			<PACE>PACE-DH-GM-AES-CBC-CMAC-128</PACE>
+			<PACE>PACE-DH-GM-AES-CBC-CMAC-192</PACE>
+			<PACE>PACE-DH-GM-AES-CBC-CMAC-256</PACE>
+			<TA>TA-ECDSA-SHA256</TA>
+			<CA>CA-DH-GM-AES-CBC-CMAC-128</CA>
+			<CA>CA-DH-GM-AES-CBC-CMAC-192</CA>
+			<CA>CA-DH-GM-AES-CBC-CMAC-256</CA>
+		</TR-03110>
+	</SupportedCryptography>
+	
+	<CardReaderInterfaces>
+		<PCSC supported="true" />
+		<CCID supported="false" />
+		<Embedded supported="false" />
+	</CardReaderInterfaces>
+	
+	<ClientTrustStore><!-- Here the exact constellation of the trust store of the eID-Client is required. -->
+		<Certificate sequenceNumber="0" CAR="DECVCAeID00102" CHR="DECVCAeID00103"/>
+		<Certificate sequenceNumber="1" CAR="DECVCAeID00102" CHR="DECVCAeID00102"/>
+	</ClientTrustStore>
+	
+</TR-03124-2_ICS>

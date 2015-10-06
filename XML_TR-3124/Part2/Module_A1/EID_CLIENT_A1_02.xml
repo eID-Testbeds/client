@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_A1_02" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_A1_02</Title>
+	<Version>1.2</Version>
+	<Purpose>Check non-accessibility of the eID-Client to external callers.</Purpose>
+	<Profile>OA</Profile>
+	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Send a valid HTTP GET call to the eID-Client directly from the testbed system: http://[IP_EID_CLIENT]:24727/eID-Client?tcTokenURL=[TC_TOKEN_URL].</Text>
+		</Command>
+		<Description>[IP_EID_CLIENT] is the IP address of the client system.</Description>
+		<Description>[TC_TOKEN_URL] is a valid, properly encoded https-URL where the TC Token can be retrieved by the eID-Client.</Description>
+		<ExpectedResult>
+			<Text>Connection can not be established.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

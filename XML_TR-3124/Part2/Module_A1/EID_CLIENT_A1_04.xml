@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_A1_04" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_A1_04</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case checks the behavior of the eID-Client in case the TC Token URL is a http-URL.</Purpose>
+	<Profile>OA</Profile>
+	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Invoke the eID-Client via the "ClientURL".</Text>
+		</Command>
+		<Description>Use parameter "tcTokenURL=[ENC_TC_TOKEN_URL_HTTP]".</Description>
+		<Description>[ENC_TC_TOKEN_URL_HTTP] is a properly encoded http-URL where the TC Token can be retrieved by the eID-Client.</Description>
+		<Description>Note that the [ENC_TC_TOKEN_URL_HTTP] contains a HTTP URL instead of HTTPS.</Description>
+		<ExpectedResult>
+			<Text>The eID-Client does not connect to the given URL.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client aborts the procedure.</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client reports a communication error. It returns an error "Bad Request" to the browser. In case of a web server based Client-Interface, the HTTP error code is "400 Bad Request".</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

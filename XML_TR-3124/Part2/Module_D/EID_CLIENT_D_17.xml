@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_17" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_17</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case evaluates the configuration options of the eID-Client available to configure the proxy settings.</Purpose>
+	<Profile>UI_OFFLINE</Profile>
+	<Profile>PROXY_CONFIG</Profile>
+	<Reference>TR-03124-1, Section 3.4 "HTTP Communication"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Initiate the proxy configuration.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The eID-Client provides appropriate configuration options to configure the proxy settings.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_A1_07" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_A1_07</Title>
+	<Version>1.2</Version>
+	<Purpose>Positive test of the action to open the settings dialogue.</Purpose>
+	<Profile>OA</Profile>
+	<Profile>ACTION_SHOWUI_SETTINGS</Profile>
+	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Invoke the eID-Client via the "ClientURL".</Text>
+		</Command>
+		<Description>Use parameter "?ShowUI=Settings".</Description>
+		<ExpectedResult>
+			<Text>The eID-Client is activated and opens the settings dialogue.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="events">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="event" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="timestamp" minOccurs="1" maxOccurs="1">
+								<xs:complexType>
+									<xs:attribute name="date" type="xs:date" use="required" />
+									<xs:attribute name="time" type="xs:time" use="required" />
+									<xs:attribute name="raw_ms" type="xs:unsignedLong" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="debug" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="trace">
+											<xs:complexType>
+												<xs:attribute name="class" type="xs:string" use="required" />
+												<xs:attribute name="method" type="xs:string" use="required" />
+												<xs:attribute name="file" type="xs:string" />
+												<xs:attribute name="line" type="xs:unsignedShort" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="thread" type="xs:string" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="message" type="xs:string"  minOccurs="1" maxOccurs="1" />
+							<xs:element name="attribute" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="key" type="xs:string" use="required" />
+									<xs:attribute name="value" type="xs:string" use="required" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="logger" type="xs:string" use="required" />
+						<xs:attribute name="module" type="xs:string" use="required" />
+						<xs:attribute name="type">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="STATE" />
+									<xs:enumeration value="CONFORMITY" />
+									<xs:enumeration value="PROTOCOL" />
+									<xs:enumeration value="ENVIRONMENT" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="loglevel" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="FATAL" />
+									<xs:enumeration value="ERROR" />
+									<xs:enumeration value="WARN" />
+									<xs:enumeration value="INFO" />
+									<xs:enumeration value="DEBUG" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="software" type="xs:string" use="required" />
+			<xs:attribute name="sw_version" type="xs:string" use="required" />
+			<xs:attribute name="log_version" type="xs:unsignedByte" use="required" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

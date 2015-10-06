@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="report">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="testcase" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="event" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="result" use="required">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="passed" />
+														<xs:enumeration value="failed" />
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="mode" use="required">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="auto" />
+														<xs:enumeration value="manual" />
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="timestamp" type="xs:unsignedLong" use="required" />
+											<xs:attribute name="module" type="xs:string" use="required" />
+											<xs:attribute name="logfile" type="xs:string" use="required" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="result" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="NotPerformed" />
+									<xs:enumeration value="NotApplicable" />
+									<xs:enumeration value="Passed" />
+									<xs:enumeration value="Failed" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="module" type="xs:string" use="required" />
+						<xs:attribute name="name" type="xs:string" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="software" type="xs:string" use="required" />
+			<xs:attribute name="sw_version" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>pom</packaging>
+
+	<groupId>com.secunet</groupId>
+	<artifactId>testbedutils</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>CommonTestbedUtilities (Metaproject)</name>
+
+	<modules>
+		<module>BouncyCertGenerator</module>
+		<module>CommonUtilities</module>
+		<module>EAC2</module>
+		<module>BouncyCastleTLS</module>
+		<module>CVC</module>
+	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.8.13</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schema/TestCase.xsl"?>
+<TestCase id="EID_CLIENT_D_16_i" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
+	<Title>Test case EID_CLIENT_D_16_i</Title>
+	<Version>1.2</Version>
+	<Purpose>This test case verifies that the eID-Client includes a meaningful human-readable error message/description into the body of the response to the browser in case the TC Token cannot be retrieved. The underlying test case is [EID_CLIENT_E_03].</Purpose>
+	<Profile>UI_ONLINE</Profile>
+	<Profile>HTTP_MESSAGES</Profile>
+	<Reference>TR-03124-1, Section 2.5.1 "Retrieval of TC Token"</Reference>
+	<Precondition>The eID-Client offers its services.</Precondition>
+	<TestStep>
+		<Command>
+			<Text>Complete the test case <Link target="EID_CLIENT_E_03"/> and evaluate the error message/description included into the body of the response to the browser.</Text>
+		</Command>
+		<ExpectedResult>
+			<Text>The error message/description is meaningful and clear for the user.</Text>
+		</ExpectedResult>
+	</TestStep>
+</TestCase>

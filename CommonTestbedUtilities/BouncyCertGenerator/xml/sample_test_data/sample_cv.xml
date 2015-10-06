@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cvcert.xsd">
+
+	<keys>
+		<key name="DETESTCVCASN01_KEY" create="true">
+			<filePrivateKey>./keys/DETESTCVCASN01.pkcs8</filePrivateKey>
+			<filePublicKey>./keys/DETESTCVCASN01.x509</filePublicKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>	
+		<key name="DETESTDVSN01_KEY" create="true">
+			<filePrivateKey>./keys/DETESTDVSN01.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+		<key name="ATSN01_KEY" create="true">
+			<filePrivateKey>./keys/ATSN01.pkcs8</filePrivateKey>
+			<algorithm>TA_ECDSA_SHA_256</algorithm>
+			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
+		</key>
+	</keys>
+
+	<!-- ROOT CVCA Certificate -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DETESTCVCASN01</certAuthRef>
+		<publicKey domainParam="true">DETESTCVCASN01_KEY</publicKey>
+		<certHolderRef>DETESTCVCASN01</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>CVCA</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDate>2013-09-01</effDate>
+		<expDateOffset>1095</expDateOffset> <!-- 3 years valid -->
+		<signKey>DETESTCVCASN01_KEY</signKey>
+		<outputFile>./certs/DETESTCVCASN01.cvcert</outputFile>
+	</cert>
+
+	<!-- DV Certificate -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DETESTCVCASN01</certAuthRef>
+		<publicKey>DETESTDVSN01_KEY</publicKey>
+		<certHolderRef>DETESTDVSN01</certHolderRef>
+		<certHolderAuth type="AT">
+			<role>DV_FOREIGN</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<writeDG21>true</writeDG21>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG11>true</readDG11>
+			<readDG12>true</readDG12>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<readDG21>true</readDG21>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>0</effDateOffset>
+		<expDateOffset>30</expDateOffset>
+		<signKey>DETESTCVCASN01_KEY</signKey>
+		<outputFile>./certs/DETESTDVSN01.cvcert</outputFile>
+	</cert>
+	
+	<!-- AT Certificate -->
+	<cert>
+		<profileId>0</profileId>
+		<certAuthRef>DETESTDVSN01</certAuthRef>
+		<publicKey>ATSN01_KEY</publicKey>
+		<certHolderRef>ATSN01</certHolderRef>
+		<certHolderAuth type="AT" forceOID="04007F000703010201">
+			<role>TERMINAL</role>
+			<writeDG17>true</writeDG17>
+			<writeDG18>true</writeDG18>
+			<writeDG19>true</writeDG19>
+			<writeDG20>true</writeDG20>
+			<readDG1>true</readDG1>
+			<readDG2>true</readDG2>
+			<readDG3>true</readDG3>
+			<readDG4>true</readDG4>
+			<readDG5>true</readDG5>
+			<readDG6>true</readDG6>
+			<readDG7>true</readDG7>
+			<readDG8>true</readDG8>
+			<readDG9>true</readDG9>
+			<readDG10>true</readDG10>
+			<readDG13>true</readDG13>
+			<readDG14>true</readDG14>
+			<readDG15>true</readDG15>
+			<readDG16>true</readDG16>
+			<readDG17>true</readDG17>
+			<readDG18>true</readDG18>
+			<readDG19>true</readDG19>
+			<readDG20>true</readDG20>
+			<installQualifiedCertificate>true</installQualifiedCertificate>
+			<installCertificate>true</installCertificate>
+			<pinManagement>true</pinManagement>
+			<canAllowed>true</canAllowed>
+			<privilegedTerminal>true</privilegedTerminal>
+			<restrictedIdentification>true</restrictedIdentification>
+			<communityIDVerification>true</communityIDVerification>
+			<ageVerification>true</ageVerification>
+		</certHolderAuth>
+		<effDateOffset>0</effDateOffset>
+		<expDateOffset>0</expDateOffset>
+		<extensions>
+			<description>
+				<issuerName>secunet</issuerName>
+				<subjectName>Test-Diensteanbieter</subjectName>
+				<subjectURL>https://ausweisapp-idp-test.secunet.de</subjectURL>
+				<!-- <fileTermsOfUsage>./desc/ATSN01.txt</fileTermsOfUsage> -->
+				<termsOfUsage>Testbeschreibung ...</termsOfUsage>
+				<commCerts>
+					<!-- <fileCommCert>./keys/ServerCertificate.der</fileCommCert> -->
+				</commCerts>
+				<fileDescription>./desc/ATSN01.bin</fileDescription>
+			</description>
+			<!-- <description import="true">
+				<fileDescription>./desc/TerminalCertificateDesc.bin</fileDescription>
+			</description> -->
+			<terminalSector>
+				<!-- <fileSectorPublicKey>./keys/TerminalCertificateSectorKey.bin</fileSectorPublicKey> -->
+			</terminalSector>
+		</extensions>
+		<signKey>DETESTDVSN01_KEY</signKey>
+		<outputFile>./certs/ATSN01.cvcert</outputFile>
+	</cert>
+
+</root>
