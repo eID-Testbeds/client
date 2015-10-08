@@ -1,6 +1,6 @@
 # eIDClientConformanceTestbed
 
-## Get started
+## Getting started
 
 ### Download release
 
