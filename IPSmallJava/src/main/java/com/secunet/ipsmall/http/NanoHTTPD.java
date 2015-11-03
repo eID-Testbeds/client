@@ -45,7 +45,7 @@ import com.secunet.ipsmall.log.Protocols;
 import com.secunet.ipsmall.test.ITestData;
 import com.secunet.ipsmall.test.ITestProtocolCallback.TestEvent;
 import com.secunet.ipsmall.tls.BouncyCastleSocket;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.testbedutils.utilities.CommonUtil;
 
 /**
  * A simple, tiny, nicely embeddable HTTP server in Java
@@ -276,8 +276,6 @@ public abstract class NanoHTTPD {
                                 logger.logState("Closing ClientSocket");
                                 safeClose(finalAccept);
                             } else {
-                                logger.logState("inputStream not-null.", LogLevel.Debug );
-                                logger.logState("inputStream available: " + inputStream.available(), LogLevel.Debug);
                                 asyncRunner.exec(new Runnable() {
                                     @Override
                                     public void run() {

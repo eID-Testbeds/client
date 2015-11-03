@@ -3,13 +3,13 @@ package com.secunet.bouncycastle.crypto.tls.test;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.AlertLevel;
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.PSKTlsServer;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.TlsEncryptionCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsPSKIdentityManager;
+import org.bouncycastle.crypto.tls.AlertDescription;
+import org.bouncycastle.crypto.tls.AlertLevel;
+import org.bouncycastle.crypto.tls.CipherSuite;
+import org.bouncycastle.crypto.tls.PSKTlsServer;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.TlsEncryptionCredentials;
+import org.bouncycastle.crypto.tls.TlsPSKIdentityManager;
 import org.bouncycastle.util.Strings;
 
 class MockPSKTlsServer

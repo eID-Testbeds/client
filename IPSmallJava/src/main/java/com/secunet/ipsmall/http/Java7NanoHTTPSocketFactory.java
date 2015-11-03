@@ -17,7 +17,7 @@ import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.TrustManager;
 
 import com.secunet.ipsmall.test.ITestData.PROTOCOLS;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.testbedutils.utilities.CommonUtil;
 
 public class Java7NanoHTTPSocketFactory implements ExternalServerSocketFactory {
     

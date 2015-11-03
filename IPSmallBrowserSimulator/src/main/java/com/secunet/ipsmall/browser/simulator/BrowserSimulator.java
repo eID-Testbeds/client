@@ -77,7 +77,6 @@ public class BrowserSimulator {
                         .println("ConnectException: -Has the rmiregistry been started? -Has this machines IP been passed as start-arg?");
             }
             System.out.println("Error: " + e.getMessage());
-            e.printStackTrace();
         }
     }
     

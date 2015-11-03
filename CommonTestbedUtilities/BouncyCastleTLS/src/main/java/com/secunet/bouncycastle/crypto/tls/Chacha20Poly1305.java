@@ -8,11 +8,6 @@ import org.bouncycastle.crypto.generators.Poly1305KeyGenerator;
 import org.bouncycastle.crypto.macs.Poly1305;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.TlsCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Pack;
 

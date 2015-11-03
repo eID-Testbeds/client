@@ -8,8 +8,6 @@ import org.bouncycastle.crypto.agreement.ECDHBasicAgreement;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.DHPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsAgreementCredentials;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
 import org.bouncycastle.util.BigIntegers;
 
 public class DefaultTlsAgreementCredentials

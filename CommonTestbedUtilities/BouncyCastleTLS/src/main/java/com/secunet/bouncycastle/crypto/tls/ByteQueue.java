@@ -1,7 +1,5 @@
 package com.secunet.bouncycastle.crypto.tls;
 
-import com.secunet.bouncycastle.crypto.tls.ByteQueue;
-
 /**
  * A queue for bytes. This file could be more optimized.
  */

@@ -15,20 +15,6 @@ import org.bouncycastle.crypto.modes.AEADBlockCipher;
 import org.bouncycastle.crypto.modes.CBCBlockCipher;
 import org.bouncycastle.crypto.modes.CCMBlockCipher;
 import org.bouncycastle.crypto.modes.GCMBlockCipher;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsCipherFactory;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.Chacha20Poly1305;
-import com.secunet.bouncycastle.crypto.tls.EncryptionAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.HashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.MACAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsAEADCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsBlockCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsNullCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsStreamCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 public class DefaultTlsCipherFactory
     extends AbstractTlsCipherFactory

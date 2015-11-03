@@ -7,14 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.CertChainType;
-import com.secunet.bouncycastle.crypto.tls.CertificateURL;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-import com.secunet.bouncycastle.crypto.tls.URLAndHash;
-
 /*
  * RFC 3546 3.3
  */

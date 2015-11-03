@@ -9,11 +9,6 @@ import java.util.Vector;
 import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.x500.X500Name;
-import com.secunet.bouncycastle.crypto.tls.CertificateRequest;
-import com.secunet.bouncycastle.crypto.tls.ClientCertificateType;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 /**
  * Parsing and encoding of a <i>CertificateRequest</i> struct from RFC 4346.

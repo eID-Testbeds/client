@@ -10,8 +10,6 @@ import java.util.Vector;
 import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ocsp.ResponderID;
 import org.bouncycastle.asn1.x509.Extensions;
-import com.secunet.bouncycastle.crypto.tls.OCSPStatusRequest;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 /**
  * RFC 3546 3.6

@@ -7,17 +7,6 @@ import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.DSAPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsSignerCredentials;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsDSSSigner;
-import com.secunet.bouncycastle.crypto.tls.TlsECDSASigner;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsRSASigner;
-import com.secunet.bouncycastle.crypto.tls.TlsSigner;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 public class DefaultTlsSignerCredentials
     extends AbstractTlsSignerCredentials

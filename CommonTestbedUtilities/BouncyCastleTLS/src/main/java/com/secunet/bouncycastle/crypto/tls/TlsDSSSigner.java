@@ -5,9 +5,6 @@ import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.DSAPublicKeyParameters;
 import org.bouncycastle.crypto.signers.DSASigner;
 import org.bouncycastle.crypto.signers.HMacDSAKCalculator;
-import com.secunet.bouncycastle.crypto.tls.SignatureAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsDSASigner;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 public class TlsDSSSigner
     extends TlsDSASigner

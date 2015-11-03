@@ -7,9 +7,9 @@ import java.security.SecureRandom;
 
 import junit.framework.TestCase;
 
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.TlsClientProtocol;
-import com.secunet.bouncycastle.crypto.tls.TlsServerProtocol;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.TlsClientProtocol;
+import org.bouncycastle.crypto.tls.TlsServerProtocol;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.io.Streams;
 
@@ -25,20 +25,38 @@ public class TlsTestCase extends TestCase
 
     protected final TlsTestConfig config;
 
+    public TlsTestCase(String name)
+    {
+        super(name);
+
+        this.config = null;
+    }
+
     public TlsTestCase(TlsTestConfig config, String name)
     {
+        super(name);
+
         checkTLSVersion(config.clientMinimumVersion);
         checkTLSVersion(config.clientOfferVersion);
         checkTLSVersion(config.serverMaximumVersion);
         checkTLSVersion(config.serverMinimumVersion);
 
         this.config = config;
+    }
 
-        setName(name);
+    public void testDummy()
+    {
+        // Avoid "No tests found" warning from junit
     }
 
     protected void runTest() throws Throwable
     {
+        // Disable the test if it is not being run via TlsTestSuite
+        if (config == null)
+        {
+            return;
+        }
+
         SecureRandom secureRandom = new SecureRandom();
         
         PipedInputStream clientRead = new PipedInputStream();
@@ -109,7 +127,7 @@ public class TlsTestCase extends TestCase
         }
     }
 
-    protected  void logException(Exception e)
+    protected void logException(Exception e)
     {
         if (TlsTestConfig.DEBUG)
         {

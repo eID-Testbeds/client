@@ -30,7 +30,7 @@
 			<iso:DIDName>PIN</iso:DIDName>
 			<iso:AuthenticationProtocolData
 				Protocol="urn:oid:1.0.24727.3.0.0.7.2" xsi:type="iso:EAC2InputType">
-				<iso:Certificate>{eidservice.cv.terminal2}</iso:Certificate>
+				<iso:Certificate>{eidservice.cv.dvca.1}</iso:Certificate>
 				<iso:Certificate>{eidservice.cv.cvca}</iso:Certificate>
 				<iso:EphemeralPublicKey>{ecard.ephemeral.public.key}</iso:EphemeralPublicKey>
 				<iso:Signature>{ecard.challenge.signature}</iso:Signature>

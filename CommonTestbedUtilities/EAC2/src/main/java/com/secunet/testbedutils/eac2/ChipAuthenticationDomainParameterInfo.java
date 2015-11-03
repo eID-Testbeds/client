@@ -27,11 +27,10 @@ public class ChipAuthenticationDomainParameterInfo extends SecurityInfo {
         // protocol );
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void fromAsn1(ASN1Encodable required, ASN1Encodable optional) throws IOException, EIDException {
         ASN1Sequence algorithmIdentifier = (ASN1Sequence) required;
-        AlgorithmIdentifier domainParameter = new AlgorithmIdentifier(algorithmIdentifier);
+        AlgorithmIdentifier domainParameter = AlgorithmIdentifier.getInstance(algorithmIdentifier);
         this.domainParameter = domainParameter;
         // DERObjectIdentifier algorithm = domainParameter.getObjectId();
         ASN1Encodable parameters = domainParameter.getParameters();

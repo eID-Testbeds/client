@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.05.15 um 03:07:49 PM CEST 
+// Generiert: 2015.10.19 um 04:26:04 PM CEST 
 //
 
 
@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="TA" maxOccurs="11">
+ *         &lt;element name="TA" maxOccurs="11" minOccurs="0">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;enumeration value="TA-RSA-v1-5-SHA-1"/>
@@ -57,7 +57,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="CA" maxOccurs="8">
+ *         &lt;element name="CA" maxOccurs="8" minOccurs="0">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;enumeration value="CA-DH-3DES-CBC-CBC"/>
@@ -89,9 +89,9 @@ public class TR03110Type {
 
     @XmlElement(name = "PACE", required = true)
     protected List<String> pace;
-    @XmlElement(name = "TA", required = true)
+    @XmlElement(name = "TA")
     protected List<String> ta;
-    @XmlElement(name = "CA", required = true)
+    @XmlElement(name = "CA")
     protected List<String> ca;
 
     /**

@@ -98,7 +98,7 @@ public class HttpHandler {
             log("---------- EXCEPTION -----------");
             log("for request URL: " + url);
             log("Type: " + e.getClass().getName());
-            e.printStackTrace();
+            log("Message: " + e.getMessage());
             // ... and still throw to pass through to testbed
             throw (e);
         }

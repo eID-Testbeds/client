@@ -2,10 +2,6 @@ package com.secunet.bouncycastle.crypto.tls;
 
 import java.io.IOException;
 
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.CertificateRequest;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-
 public interface TlsAuthentication
 {
     /**

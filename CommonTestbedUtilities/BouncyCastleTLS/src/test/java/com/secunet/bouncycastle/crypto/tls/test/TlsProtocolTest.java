@@ -7,8 +7,8 @@ import java.security.SecureRandom;
 
 import junit.framework.TestCase;
 
-import com.secunet.bouncycastle.crypto.tls.TlsClientProtocol;
-import com.secunet.bouncycastle.crypto.tls.TlsServerProtocol;
+import org.bouncycastle.crypto.tls.TlsClientProtocol;
+import org.bouncycastle.crypto.tls.TlsServerProtocol;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.io.Streams;
 

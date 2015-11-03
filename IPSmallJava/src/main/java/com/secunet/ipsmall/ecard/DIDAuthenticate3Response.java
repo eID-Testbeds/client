@@ -7,7 +7,7 @@ import javax.xml.xpath.XPathConstants;
 import com.secunet.ipsmall.eac.CardSecurity;
 import com.secunet.ipsmall.eac.EIDException;
 import com.secunet.ipsmall.test.ITestSession;
-import com.secunet.ipsmall.util.Base64Util;
+import com.secunet.testbedutils.utilities.Base64Util;
 
 public class DIDAuthenticate3Response extends Message {
     

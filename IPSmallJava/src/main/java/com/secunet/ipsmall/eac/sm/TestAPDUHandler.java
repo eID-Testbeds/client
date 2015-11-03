@@ -20,7 +20,7 @@ import com.secunet.ipsmall.eac.sm.SecureMessaging.SymmetricCipher;
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.ITestSession;
-import com.secunet.ipsmall.util.Base64Util;
+import com.secunet.testbedutils.utilities.Base64Util;
 
 public class TestAPDUHandler {
     

@@ -1,8 +1,5 @@
 package com.secunet.bouncycastle.crypto.tls;
 
-import com.secunet.bouncycastle.crypto.tls.DTLSReplayWindow;
-import com.secunet.bouncycastle.crypto.tls.TlsCipher;
-
 class DTLSEpoch
 {
     private final DTLSReplayWindow replayWindow = new DTLSReplayWindow();

@@ -9,16 +9,15 @@ import org.bouncycastle.asn1.pkcs.RSAPrivateKey;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.DefaultTlsAgreementCredentials;
-import com.secunet.bouncycastle.crypto.tls.DefaultTlsEncryptionCredentials;
-import com.secunet.bouncycastle.crypto.tls.DefaultTlsSignerCredentials;
-import com.secunet.bouncycastle.crypto.tls.SignatureAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsAgreementCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsEncryptionCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsSignerCredentials;
+import org.bouncycastle.crypto.tls.Certificate;
+import org.bouncycastle.crypto.tls.DefaultTlsAgreementCredentials;
+import org.bouncycastle.crypto.tls.DefaultTlsEncryptionCredentials;
+import org.bouncycastle.crypto.tls.DefaultTlsSignerCredentials;
+import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import org.bouncycastle.crypto.tls.TlsAgreementCredentials;
+import org.bouncycastle.crypto.tls.TlsContext;
+import org.bouncycastle.crypto.tls.TlsEncryptionCredentials;
+import org.bouncycastle.crypto.tls.TlsSignerCredentials;
 import org.bouncycastle.crypto.util.PrivateKeyFactory;
 import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.encoders.Hex;
@@ -136,8 +135,8 @@ public class TlsTestUtils
             }
         }
 
-        return TlsTestUtils.loadSignerCredentials(context, new String[]{
-            certResource, "x509-ca.pem" }, keyResource, signatureAndHashAlgorithm);
+        return loadSignerCredentials(context, new String[]{ certResource, "x509-ca.pem" },
+            keyResource, signatureAndHashAlgorithm);
     }
 
     static Certificate loadCertificateChain(String[] resources)

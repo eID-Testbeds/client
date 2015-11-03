@@ -1,6 +1,5 @@
 package com.secunet.bouncycastle.crypto.tls;
 
-import com.secunet.bouncycastle.crypto.tls.TlsPSKIdentity;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Strings;
 

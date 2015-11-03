@@ -5,15 +5,15 @@ import java.io.PrintStream;
 import java.util.Hashtable;
 
 import org.bouncycastle.asn1.x509.Certificate;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.AlertLevel;
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SRPTlsClient;
-import com.secunet.bouncycastle.crypto.tls.ServerOnlyTlsAuthentication;
-import com.secunet.bouncycastle.crypto.tls.TlsAuthentication;
-import com.secunet.bouncycastle.crypto.tls.TlsExtensionsUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsSession;
+import org.bouncycastle.crypto.tls.AlertDescription;
+import org.bouncycastle.crypto.tls.AlertLevel;
+import org.bouncycastle.crypto.tls.CipherSuite;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.SRPTlsClient;
+import org.bouncycastle.crypto.tls.ServerOnlyTlsAuthentication;
+import org.bouncycastle.crypto.tls.TlsAuthentication;
+import org.bouncycastle.crypto.tls.TlsExtensionsUtils;
+import org.bouncycastle.crypto.tls.TlsSession;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.encoders.Hex;
 
@@ -102,7 +102,7 @@ class MockSRPTlsClient
     {
         return new ServerOnlyTlsAuthentication()
         {
-            public void notifyServerCertificate(com.secunet.bouncycastle.crypto.tls.Certificate serverCertificate)
+            public void notifyServerCertificate(org.bouncycastle.crypto.tls.Certificate serverCertificate)
                 throws IOException
             {
                 Certificate[] chain = serverCertificate.getCertificateList();

@@ -11,22 +11,6 @@ import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.ECDomainParameters;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.CertificateRequest;
-import com.secunet.bouncycastle.crypto.tls.ClientCertificateType;
-import com.secunet.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsAgreementCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsECCUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsECDSASigner;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsRSASigner;
-import com.secunet.bouncycastle.crypto.tls.TlsSigner;
-import com.secunet.bouncycastle.crypto.tls.TlsSignerCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 
 /**

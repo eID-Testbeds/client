@@ -1,20 +1,34 @@
 package com.secunet.ipsmall;
 
-import java.security.cert.X509Certificate;
+import com.secunet.bouncycastle.crypto.tls.AlertDescription;
+import com.secunet.bouncycastle.crypto.tls.AlertLevel;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 
-import com.secunet.ipsmall.http.Java7NanoHTTPSocketFactory;
 import com.secunet.ipsmall.http.NanoHTTPD;
 import com.secunet.ipsmall.http.NanoHTTPD.Response.Status;
+import com.secunet.ipsmall.log.IModuleLogger;
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.ITestData;
 import com.secunet.ipsmall.test.ITestProtocolCallback.SourceComponent;
 import com.secunet.ipsmall.test.ITestProtocolCallback.TestStep;
 import com.secunet.ipsmall.test.ITestSession;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.ipsmall.tls.BouncyCastleNanoHTTPDSocketFactory;
+import com.secunet.ipsmall.tls.BouncyCastleTlsHelper;
+import com.secunet.ipsmall.tls.BouncyCastleTlsIcsMatcher;
+import com.secunet.ipsmall.tls.BouncyCastleTlsNotificationListener;
+import com.secunet.ipsmall.tobuilder.ics.TLSVersionType;
+import com.secunet.testbedutils.utilities.CommonUtil;
 import com.secunet.ipsmall.util.HttpUtils;
+import org.bouncycastle.crypto.params.DHParameters;
 
-public class Redirector extends NanoHTTPD {
+public class Redirector extends NanoHTTPD implements BouncyCastleTlsNotificationListener {
+    
+    private boolean hasFatalErrors = false;
+    
+    private BouncyCastleTlsIcsMatcher matcher;
     
     /**
      * Type of redirector
@@ -37,11 +51,22 @@ public class Redirector extends NanoHTTPD {
         this.type = type;
         this.params = params;
         
-        try {
-            externalServerSocketFactory = new Java7NanoHTTPSocketFactory(new X509Certificate[] { testData.readCertificate(params[2]) },
-                    testData.readPrivateKey(params[3]), false);
+        matcher = new BouncyCastleTlsIcsMatcher(IPSmallManager.getInstance().getIcs());
+        
+        try {            
+            BouncyCastleNanoHTTPDSocketFactory factory = new BouncyCastleNanoHTTPDSocketFactory(this, testData.readCertificate(params[2]), testData.readPrivateKey(params[3]));
+                if(testData.getEServiceTLSdhParameters() != null && !testData.getEServiceTLSdhParameters().isEmpty()) {
+                    factory.setDHParameters(testData.getEServiceTLSdhParameters());
+                }
+                if(testData.getEServiceTLSecCurve() != null && !testData.getEServiceTLSecCurve().isEmpty()) {
+                    factory.setForcedCurveForECDHEKeyExchange(testData.getEServiceTLSecCurve());
+                }
+                if(testData.getEServiceTLSSignatureAlgorithm() != null && !testData.getEServiceTLSSignatureAlgorithm().isEmpty()) {
+                    factory.setForcedSignatureAlgorithm(testData.getEServiceTLSSignatureAlgorithm());
+                }
+                externalServerSocketFactory = factory;
         } catch (Exception e) {
-            logger.logState("Error creating java7 socket factory: " + e.getMessage(), LogLevel.Error);
+            logger.logState("Error creating BC socket factory: " + e.getMessage(), LogLevel.Error);
         }
     }
     
@@ -150,4 +175,195 @@ public class Redirector extends NanoHTTPD {
         this.params = params;
     }
     
+    // BEGIN implementation of BouncyCastleTlsNotificationListener
+    @Override
+    public void notifyAlertRaised(short alertLevel, short alertDescription, String message, Throwable cause)
+    {
+        String logMessage = "TLS server raised alert: " + AlertLevel.getText(alertLevel) + ", " + AlertDescription.getText(alertDescription);
+        if (message != null)
+        {
+            logMessage += " > " + message;
+        }
+        if (cause != null)
+        {
+            logMessage += " " + cause.toString();
+        }
+        logger.logState(logMessage);
+        
+        //TODO hack to suppress error TLS messages
+        if(alertLevel == AlertLevel.fatal && alertDescription == AlertDescription.internal_error && "Failed to read record".equals(message) && cause instanceof java.io.EOFException) {
+            doSuppressTLSErrors = true;
+        }
+
+        //close HTTP connections if TLS channel is closed
+        if(alertLevel == AlertLevel.warning && alertDescription == AlertDescription.close_notify) {
+            closeAllConnections();
+        }
+    }
+
+    @Override
+    public void notifyAlertReceived(short alertLevel, short alertDescription) {
+        logger.logState("TLS server received alert: " + AlertLevel.getText(alertLevel) + ", "
+                + AlertDescription.getText(alertDescription));
+    }
+    
+    @Override
+    public void notifyClientVersion(ProtocolVersion clientVersion) {
+        logger.logState("TLS client offered version: " + clientVersion.toString());
+
+        if(!testData.getSkipNextICSCheck()) {
+            ProtocolVersion expectedProtocolVersion = BouncyCastleTlsHelper.convertProtocolVersionFromEnumToObject(testData.getEServiceTLSExpectedClientVersion());
+            if( expectedProtocolVersion.equals(clientVersion) ) {
+                logger.logConformity(IModuleLogger.ConformityResult.passed, "Check that client offered " + testData.getEServiceTLSExpectedClientVersion() + " passed.");
+            }
+            else {
+                hasFatalErrors = true;
+                logger.logConformity(IModuleLogger.ConformityResult.failed, "Check that client offered " + testData.getEServiceTLSExpectedClientVersion() + " failed.");
+            }
+        }
+    }
+
+    @Override
+    public void notifyFallback(boolean isFallback) {
+        logger.logState("notifyFallback: " + isFallback);
+    }
+
+    @Override
+    public void notifyOfferedCipherSuites(int[] offeredCipherSuites) {
+        String cipherSuites = "";
+        for(int cipherSuite : offeredCipherSuites) {
+            cipherSuites += " " + BouncyCastleTlsHelper.convertCipherSuiteIntToString(cipherSuite);
+        }
+        logger.logState("TLS client offered cipher suites:" + cipherSuites);
+
+        if(!testData.getSkipNextICSCheck()) {
+            TLSVersionType expectedProtocolVersion = TLSVersionType.fromValue(testData.getEServiceTLSExpectedClientVersion());
+            if( matcher.matchCipherSuites(true, expectedProtocolVersion, offeredCipherSuites) ) {
+                logger.logConformity(IModuleLogger.ConformityResult.passed, "Check cipher suites against ICS passed.");
+            }
+            else {
+                hasFatalErrors = true;
+                logger.logConformity(IModuleLogger.ConformityResult.failed, "Check cipher suites against ICS failed.");
+            }
+        }
+    }
+
+    @Override
+    public void notifyOfferedCompressionMethods(short[] offeredCompressionMethods) {
+        String methods = "";
+        for(short method : offeredCompressionMethods) {
+            methods += " " + method;
+        }
+        logger.logState("TLS client offered compression methods: [" + methods + " ]");
+    }
+
+    @Override
+    public void notifyClientCertificate(Certificate clientCertificate) {
+        logger.logState("notifyClientCertificate: " + clientCertificate);
+    }
+
+    @Override
+    public void notifySecureRenegotiation(boolean secureRenegotiation) {
+        logger.logState("notifySecureRenegotiation: " + secureRenegotiation);
+    }
+
+    @Override
+    public void notifyHandshakeComplete() {
+        logger.logState("TLS handshake complete!");
+    }
+
+    @Override
+    public void notifyEncryptThenMACExtension(boolean hasEncryptThenMACExtension) {
+        logger.logState("TLS client sent EncryptThenMAC extension: " + hasEncryptThenMACExtension);
+    }
+
+    @Override
+    public void notifySignatureAlgorithmsExtension(SignatureAndHashAlgorithm[] signatureAlgorithms) {
+        String algorithms = "";
+        for (Object entry : signatureAlgorithms) {
+            SignatureAndHashAlgorithm saha = (SignatureAndHashAlgorithm) entry;
+            algorithms += " " + BouncyCastleTlsHelper.convertSignatureAndHashAlgorithmObjectToString(saha);
+        }
+        logger.logState("TLS client sent SignatureAlgorithms extension:" + algorithms);
+
+        if(!testData.getSkipNextICSCheck()) {
+            TLSVersionType expectedProtocolVersion = TLSVersionType.fromValue(testData.getEServiceTLSExpectedClientVersion());
+            if( matcher.matchSignatureAndHashAlgorithms(true, expectedProtocolVersion, signatureAlgorithms) ) {
+                logger.logConformity(IModuleLogger.ConformityResult.passed, "Check SignatureAlgorithms extension against ICS passed.");
+            }
+            else {
+                hasFatalErrors = true;
+                logger.logConformity(IModuleLogger.ConformityResult.failed, "Check SignatureAlgorithms extension against ICS failed.");
+            }
+        }
+    }
+
+    @Override
+    public void notifySupportedEllipticCurvesExtension(int[] namedCurves) {
+        String curves = "";
+        for (int entry : namedCurves) {
+            curves += " " + BouncyCastleTlsHelper.convertNamedCurveIntToString(entry);
+        }
+        logger.logState("TLS client sent SupportedEllipticCurves extension:" + curves);
+
+        if(!testData.getSkipNextICSCheck()) {
+            TLSVersionType expectedProtocolVersion = TLSVersionType.fromValue(testData.getEServiceTLSExpectedClientVersion());
+            if( matcher.matchEllipticCurves(true, expectedProtocolVersion, namedCurves) ) {
+                logger.logConformity(IModuleLogger.ConformityResult.passed, "Check SupportedEllipticCurves extension against ICS passed.");
+            }
+            else {
+                hasFatalErrors = true;
+                logger.logConformity(IModuleLogger.ConformityResult.failed, "Check SupportedEllipticCurves extension against ICS failed.");
+            }
+        }
+    }
+
+    @Override
+    public void notifySupportedPointFormatsExtension(short[] supportedECPointFormats) {
+        String formats = "";
+        for (short format : supportedECPointFormats) {
+            formats += " " + BouncyCastleTlsHelper.convertECPointFormatShortToString(format);
+        }
+        logger.logState("TLS client sent SupportedPointFormats extension:" + formats);
+    }
+
+    @Override
+    public void notifySelectedVersion(ProtocolVersion clientVersion) {
+        logger.logState("TLS server accepted version: " + clientVersion.toString());
+    }
+
+    @Override
+    public void notifySelectedCipherSuite(int cipherSuite) {
+        logger.logState("TLS server accepted cipher suite: " + BouncyCastleTlsHelper.convertCipherSuiteIntToString(cipherSuite));
+    }
+
+    @Override
+    public void notifyEnabledCipherSuites(int[] enabledCipherSuites) {
+        String cipherSuites = "";
+        for(int cipherSuite : enabledCipherSuites) {
+            cipherSuites += " " + BouncyCastleTlsHelper.convertCipherSuiteIntToString(cipherSuite);
+        }
+        logger.logState("TLS server enabled cipher suites:" + cipherSuites);
+    }
+
+    @Override
+    public void notifyEnabledMinimumVersion(ProtocolVersion minimumVersion) {
+        logger.logState("TLS server offers minimum version: " + minimumVersion.toString());
+    }
+
+    @Override
+    public void notifyEnabledMaximumVersion(ProtocolVersion maximumVersion) {
+        logger.logState("TLS server offers maximum version: " + maximumVersion.toString());
+    }
+
+    @Override
+    public void notifySelectedDHParameters(DHParameters dhParameters) {
+        logger.logState("TLS server selected DH parameters: " + BouncyCastleTlsHelper.convertDHParametersObjectToDHStandardGroupsString(dhParameters));
+    }
+    
+    @Override
+    public boolean hasFatalErrors() {
+        return hasFatalErrors;
+    }
+    // END implementation of BouncyCastleTlsNotificationListener 
 }

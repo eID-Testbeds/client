@@ -1,8 +1,5 @@
 package com.secunet.bouncycastle.crypto.tls;
 
-import com.secunet.bouncycastle.crypto.tls.SRTPProtectionProfile;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 /**
  * RFC 5764 4.1.1
  */

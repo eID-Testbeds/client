@@ -1,8 +1,5 @@
 package com.secunet.bouncycastle.crypto.tls;
 
-import com.secunet.bouncycastle.crypto.tls.SimulatedTlsSRPIdentityManager;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPLoginParameters;
-
 public interface TlsSRPIdentityManager
 {
     /**

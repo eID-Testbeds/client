@@ -7,12 +7,6 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.Hashtable;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.ExtensionType;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsProtocol;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.BigIntegers;
 import org.bouncycastle.util.Integers;
 

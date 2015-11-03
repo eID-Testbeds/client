@@ -3,7 +3,7 @@ package com.secunet.bouncycastle.crypto.tls.test;
 import java.io.IOException;
 import java.util.Random;
 
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
+import org.bouncycastle.crypto.tls.DatagramTransport;
 
 public class UnreliableDatagramTransport
     implements DatagramTransport

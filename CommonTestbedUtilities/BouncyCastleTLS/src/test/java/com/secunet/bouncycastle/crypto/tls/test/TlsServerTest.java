@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.SecureRandom;
 
-import com.secunet.bouncycastle.crypto.tls.TlsServerProtocol;
+import org.bouncycastle.crypto.tls.TlsServerProtocol;
 import org.bouncycastle.util.io.Streams;
 import org.bouncycastle.util.io.TeeOutputStream;
 

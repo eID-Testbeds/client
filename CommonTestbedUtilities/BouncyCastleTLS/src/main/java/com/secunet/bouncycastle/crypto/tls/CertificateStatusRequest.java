@@ -4,13 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.CertificateStatusRequest;
-import com.secunet.bouncycastle.crypto.tls.CertificateStatusType;
-import com.secunet.bouncycastle.crypto.tls.OCSPStatusRequest;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 public class CertificateStatusRequest
 {
     protected short statusType;

@@ -4,26 +4,6 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsPeer;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.CompressionMethod;
-import com.secunet.bouncycastle.crypto.tls.DefaultTlsCipherFactory;
-import com.secunet.bouncycastle.crypto.tls.ECPointFormat;
-import com.secunet.bouncycastle.crypto.tls.ExtensionType;
-import com.secunet.bouncycastle.crypto.tls.NamedCurve;
-import com.secunet.bouncycastle.crypto.tls.NewSessionTicket;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.TlsCipherFactory;
-import com.secunet.bouncycastle.crypto.tls.TlsClient;
-import com.secunet.bouncycastle.crypto.tls.TlsClientContext;
-import com.secunet.bouncycastle.crypto.tls.TlsCompression;
-import com.secunet.bouncycastle.crypto.tls.TlsECCUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsExtensionsUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsNullCompression;
-import com.secunet.bouncycastle.crypto.tls.TlsSession;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 public abstract class AbstractTlsClient
     extends AbstractTlsPeer
     implements TlsClient
@@ -260,6 +240,15 @@ public abstract class AbstractTlsClient
              */
             throw new TlsFatalAlert(AlertDescription.internal_error);
         }
+    }
+
+    public TlsCipher getCipher()
+        throws IOException
+    {
+        int encryptionAlgorithm = TlsUtils.getEncryptionAlgorithm(selectedCipherSuite);
+        int macAlgorithm = TlsUtils.getMACAlgorithm(selectedCipherSuite);
+
+        return cipherFactory.createCipher(context, encryptionAlgorithm, macAlgorithm);
     }
 
     public void notifyNewSessionTicket(NewSessionTicket newSessionTicket)

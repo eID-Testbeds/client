@@ -6,11 +6,6 @@ import java.io.OutputStream;
 
 import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ocsp.OCSPResponse;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.CertificateStatus;
-import com.secunet.bouncycastle.crypto.tls.CertificateStatusType;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 public class CertificateStatus
 {

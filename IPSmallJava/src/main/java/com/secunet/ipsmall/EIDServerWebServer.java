@@ -13,9 +13,12 @@ import com.secunet.ipsmall.log.IModuleLogger.ConformityResult;
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.ITestData;
+import com.secunet.ipsmall.test.ITestProtocolCallback;
 import com.secunet.ipsmall.test.ITestProtocolCallback.SourceComponent;
 import com.secunet.ipsmall.test.ITestProtocolCallback.TestStep;
 import com.secunet.ipsmall.test.ITestSession;
+import com.secunet.ipsmall.test.TestRunner;
+import com.secunet.ipsmall.ui.UIUtils;
 import com.secunet.ipsmall.util.HttpUtils;
 
 public class EIDServerWebServer {
@@ -162,12 +165,24 @@ public class EIDServerWebServer {
                 
                 resp_message = new Response(paosResponseCode, c_PAOS_MIME_TYPE, sessionData.getDIDAuthenticate1(), testData.chunkedTransfer());
                 testData.sendMessageToCallbacks(TestStep.INITIALIZE_FRAMEWORK, res, sourceComponent, parent);
-            } else if (handler.isDIDAuthenticate1Response()) {
+            } else if (handler.isDIDAuthenticate1Response()) { 
                 EvaluateResult res = Evaluator.createOrderedOccurenceResult("DIDAuthenticateResponse", testData.getAuth1EvaluationConfig(), handler);
                 sessionData.setDIDAuthenticate1Response(handler.getDIDAuthenticate1Response());
                 
                 resp_message = new Response(paosResponseCode, c_PAOS_MIME_TYPE, sessionData.getDIDAuthenticate2(), testData.chunkedTransfer());
                 testData.sendMessageToCallbacks(TestStep.EAC1, res, sourceComponent, parent);
+                
+                //  wait for user confirmation
+                if (testData.isEac1ConfirmDialog()) {
+                    try {
+                        Logger.TestRunner.logState("Before blocking dialog.", LogLevel.Debug);
+                        UIUtils.showInfoDialog("Execution paused after EAC1. Abort the Online-Authentication on the eID-Client now and press OK when done.");
+                        Logger.TestRunner.logState("After blocking dialog.", LogLevel.Debug);
+                    } catch (Exception e) {
+                        Logger.Global.logState("Error showing blocking EAC1-confirm-dialag. " + e.getMessage(), LogLevel.Error);
+                        Logger.Global.logException(e);
+                    }
+                }
             } else if (handler.isDIDAuthenticate2Response(testData.getECardDIDAuthenticate3Template() != null)) {
                 EvaluateResult res = Evaluator.createOrderedOccurenceResult("DIDAuthenticateResponse", testData.getAuth2EvaluationConfig(), handler);
                 sessionData.setDIDAuthenticate2Response(handler.getDIDAuthenticate2Response());

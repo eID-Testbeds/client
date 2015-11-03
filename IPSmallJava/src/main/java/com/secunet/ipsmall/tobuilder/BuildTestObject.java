@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
 import com.secunet.ipsmall.GlobalSettings;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.tobuilder.ics.TR031242ICS;
@@ -147,12 +149,9 @@ public class BuildTestObject {
         
         // initialize test object setups
         ArrayList<ITestObjectSetup> toSetups = new ArrayList<>();
-        toSetups.add(new DefaultTestcaseSetup(settings)); // update default testcase.							// 1.
-        toSetups.add(new CertificateSetup(settings)); // generate certificates.								// 2.
-        toSetups.add(new ResolveReferenceTestcasesSetup(settings)); // resolve reference testcases.					// 3.
-        toSetups.add(new ProfileSetup(settings)); // deactivate profiles.								// 4.
+        toSetups.add(new DefaultTestcaseSetup(settings)); // update default testcase.
+        toSetups.add(new CertificateSetup(settings)); // generate certificates.
 
-        toSetups.add(new ModuleC1AlgorithmSetup(settings)); // deactivated undefined EAC algorithms in module C1.
         toSetups.add(new ModuleC3LinkCertificateSetup(settings)); // set link certificates for module C3.
         toSetups.add(new TestcaseTLSVersionTemplateSetup("EID_CLIENT_E_01_T", RelatedServer.eService, settings)); // generate testcases from template for E_01.
         toSetups.add(new TestcaseShortKeyTemplateSetup("EID_CLIENT_E_04_T", RelatedServer.eService, settings)); // generate testcases from template for E_04.
@@ -160,8 +159,12 @@ public class BuildTestObject {
         toSetups.add(new TestcaseTLSVersionTemplateSetup("EID_CLIENT_E_07_T", RelatedServer.eIDServer, settings)); // generate testcases from template for E_07.
         toSetups.add(new TestcaseE08TemplateSetup(settings)); // generate testcases from template for E_08.
         toSetups.add(new TestcaseShortKeyTemplateSetup("EID_CLIENT_E_12_T", RelatedServer.eIDServer, settings)); // generate testcases from template for E_12.
+        
+        toSetups.add(new ResolveReferenceTestcasesSetup(settings)); // resolve reference testcases.
+        toSetups.add(new ProfileSetup(settings)); // deactivate profiles.
+        toSetups.add(new ModuleC1AlgorithmSetup(settings)); // deactivated undefined EAC algorithms in module C1.
 
-        toSetups.add(new PersoSimProfilesSetup(settings)); // creates persosim profiles                                                 // at last!
+        toSetups.add(new PersoSimProfilesSetup(settings)); // creates persosim profiles.
         
         // run setups
         for(ITestObjectSetup setup : toSetups) {
@@ -177,8 +180,8 @@ public class BuildTestObject {
      * @throws Exception
      */
     private void setupTestObjectDir() throws Exception {
-        String to_name = settings.getName();
-        String to_testDate = settings.getTestDate();
+//        String to_name = settings.getName();
+//        String to_testDate = settings.getTestDate();
         
         String to_client_name = settings.getTestObjectProperies().getProperty(TO_PROP_CLIENT_NAME);
         String to_client_vendor = settings.getTestObjectProperies().getProperty(TO_PROP_CLIENT_VENDOR);
@@ -188,7 +191,13 @@ public class BuildTestObject {
         File testObjectDir = settings.getTestObjectDir();
         File testObjectTestsDir = new File(testObjectDir, GlobalSettings.getTOTestsDir());
         
+        // check, if testObjectDir exists and delete after confirmation
         if (testObjectDir.exists()) {
+            int result = JOptionPane.showConfirmDialog(null, "Test object folder already exists and will be overwritten.", "Warning", JOptionPane.OK_CANCEL_OPTION);
+            if(JOptionPane.CANCEL_OPTION == result) {
+                throw new Exception("Cancellation by user.");
+            }
+            Logger.TestObjectBuilder.logState("Deleting already existing TestObject: " + testObjectDir.getAbsolutePath());
             FileUtils.deleteDir(testObjectDir);
         }
 
@@ -210,7 +219,7 @@ public class BuildTestObject {
                 FileWriter writer = new FileWriter(new File(testObjectDir, GlobalSettings.getClientPropertiesFileName()));
                 clientProperties.store(writer, null);
             } else {
-                throw new Exception("Unable to created TestObject: " + testObjectDir.getAbsolutePath());
+                throw new Exception("Unable to create TestObject: " + testObjectDir.getAbsolutePath());
             }
 
             // set testobject as default

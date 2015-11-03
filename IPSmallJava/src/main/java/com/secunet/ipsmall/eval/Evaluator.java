@@ -1,6 +1,7 @@
 package com.secunet.ipsmall.eval;
 
 import com.secunet.ipsmall.IPSmallManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import java.util.regex.Pattern;
 import javax.xml.xpath.XPathConstants;
 
 import com.secunet.testbedutils.cvc.cvcertificate.DataBuffer;
+
 import org.w3c.dom.Node;
 
 import com.secunet.ipsmall.ecard.MessageHandler;
@@ -26,6 +28,7 @@ import com.secunet.ipsmall.log.IModuleLogger.ConformityResult;
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.ITestData;
+import com.secunet.ipsmall.tobuilder.ics.TR031242ICS;
 
 /**
  * Uses the configuration to create a evaluation setup to evaluate messages.
@@ -33,6 +36,15 @@ import com.secunet.ipsmall.test.ITestData;
  * @author olischlaeger.dennis
  */
 public class Evaluator {
+    
+    public enum ContentPlaceholder {
+        FILE_CARDACCESS,
+        FILE_CARDSECURITY,
+        ICS_CLIENT_NAME,
+        ICS_CLIENT_VERSIONMAJOR,
+        ICS_CLIENT_VERSIONMINOR,
+        ICS_CLIENT_VERSIONSUBMINOR
+    }
     
     private static final String PREFIX = "ecard.xmleval.";
     private static final String POSTFIX_XMLTAG = ".XMLTag";
@@ -73,6 +85,30 @@ public class Evaluator {
                 nodes.add(complKey.substring(prefixLength, (complKey.length() - postfixLength)));
             }
         }
+
+        // get expected name and version from ics
+        TR031242ICS ics = IPSmallManager.getInstance().getIcs();
+        String icsClientName = null;
+        String icsClientVersionMajor = null;
+        String icsClientVersionMinor = null;
+        String icsClientVersionSubminor = null;
+        if (ics != null) {
+            TR031242ICS.SoftwareVersion swVersion = ics.getSoftwareVersion();
+            if (swVersion != null) {
+                icsClientName = swVersion.getName();
+                if (swVersion.getVersionMajor() != null && swVersion.getVersionMinor() != null && swVersion.getVersionSubminor() != null) {
+                    if (!swVersion.getVersionMajor().isEmpty()) {
+                        icsClientVersionMajor = swVersion.getVersionMajor();
+                        if (!swVersion.getVersionMinor().isEmpty()) {
+                            icsClientVersionMinor = swVersion.getVersionMinor();
+                            if (!swVersion.getVersionSubminor().isEmpty()) {
+                                icsClientVersionSubminor = swVersion.getVersionSubminor();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         
         for (String node : nodes) {
             String xmltag = properties.getProperty(PREFIX + node + POSTFIX_XMLTAG, node);
@@ -109,8 +145,7 @@ public class Evaluator {
             }
             
             // handle content reg ex
-            
-            if ("FILE_CARDACCESS".equals(contentRegEx)) {
+            if (ContentPlaceholder.FILE_CARDACCESS.name().equals(contentRegEx)) {
                 try {
                     byte[] rawFile = IPSmallManager.getInstance().getCardSimulator().getCurrentEFCardAccess();
                     if (rawFile == null) {
@@ -123,7 +158,7 @@ public class Evaluator {
                     Logger.XMLEval.logConformity(ConformityResult.failed, "Could not load FILE_CARDACCESS, so the evaluation will not check the content of it", LogLevel.Warn);
                     contentRegEx = null;
                 }
-            } else if ("FILE_CARDSECURITY".equals(contentRegEx)) {
+            } else if (ContentPlaceholder.FILE_CARDSECURITY.name().equals(contentRegEx)) {
                 try {
                     byte[] rawFile = IPSmallManager.getInstance().getCardSimulator().getCurrentEFCardSecurity();
                     if (rawFile == null) {
@@ -135,6 +170,38 @@ public class Evaluator {
                 } catch (Exception ignore) {
                     Logger.XMLEval.logConformity(ConformityResult.failed, "Could not load FILE_CARDSECURITY, so the evaluation will not check the content of it", LogLevel.Warn);
                     contentRegEx = null;
+                }
+            } else if (ContentPlaceholder.ICS_CLIENT_NAME.name().equals(contentRegEx)) {
+                if (icsClientName == null) {
+                    Logger.XMLEval.logConformity(ConformityResult.failed, "Could not load ICS_CLIENT_NAME, so the evaluation will not check the content of it", LogLevel.Warn);
+                    contentRegEx = null;
+                }
+                else {
+                    contentRegEx = "^" + icsClientName + "$";
+                }
+            } else if (ContentPlaceholder.ICS_CLIENT_VERSIONMAJOR.name().equals(contentRegEx)) {
+                if (icsClientVersionMajor == null) {
+                    Logger.XMLEval.logConformity(ConformityResult.failed, "Could not load ICS_CLIENT_VERSIONMAJOR, so the evaluation will not check the content of it", LogLevel.Error);
+                    contentRegEx = null;
+                }
+                else {
+                    contentRegEx = "^" + icsClientVersionMajor + "$";
+                }
+            } else if (ContentPlaceholder.ICS_CLIENT_VERSIONMINOR.name().equals(contentRegEx)) {
+                if (icsClientVersionMinor == null) {
+                    Logger.XMLEval.logConformity(ConformityResult.failed, "Could not load ICS_CLIENT_VERSIONMINOR, so the evaluation will not check the content of it", LogLevel.Error);
+                    contentRegEx = null;
+                }
+                else {
+                    contentRegEx = "^" + icsClientVersionMinor + "$";
+                }
+            } else if (ContentPlaceholder.ICS_CLIENT_VERSIONSUBMINOR.name().equals(contentRegEx)) {
+                if (icsClientVersionSubminor == null) {
+                    Logger.XMLEval.logConformity(ConformityResult.failed, "Could not load ICS_CLIENT_VERSIONSUBMINOR, so the evaluation will not check the content of it", LogLevel.Info);
+                    contentRegEx = null;
+                }
+                else {
+                    contentRegEx = "^" + icsClientVersionSubminor + "$";
                 }
             } else {
                 if (contentRegEx != null)
@@ -234,7 +301,7 @@ public class Evaluator {
             content = node.getTextContent();
         
         if (regex != null && !Pattern.matches(regex, (content == null) ? "" : content)) {
-            EvaluateResult error = new EvaluateResult(ResultType.ContentError, cfgs.get(startNode).isForceFailOnError(), "Content does not match regex",
+            EvaluateResult error = new EvaluateResult(ResultType.ContentError, cfgs.get(startNode).isForceFailOnError(), "Content of " + node.getNodeName() + " does not match regex",
                     content, regex);
             if (cfgs.get(startNode).isWarning()) {
                 result.addWarning(error);
@@ -245,7 +312,7 @@ public class Evaluator {
         // check content specific
         String specificRegex = cfgs.get(startNode).getSpecificEvelContentRegex(currentNodeIndex);
         if (specificRegex != null && !Pattern.matches(specificRegex, (content == null) ? "" : content)) {
-            EvaluateResult error = new EvaluateResult(ResultType.ContentError, cfgs.get(startNode).isForceFailOnError(), "Content does not match regex",
+            EvaluateResult error = new EvaluateResult(ResultType.ContentError, cfgs.get(startNode).isForceFailOnError(), "Content of " + node.getNodeName() + " does not match regex",
                     content, specificRegex);
             if (cfgs.get(startNode).isWarning()) {
                 result.addWarning(error);

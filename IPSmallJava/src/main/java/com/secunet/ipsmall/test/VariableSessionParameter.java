@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.secunet.ipsmall.eac.sm.TestAPDUHandler.TestApdu;
-import com.secunet.ipsmall.util.Base64Util;
-import com.secunet.ipsmall.util.CommonUtil;
-import com.secunet.ipsmall.util.VariableParser.VariableProvider;
+import com.secunet.testbedutils.utilities.Base64Util;
+import com.secunet.testbedutils.utilities.CommonUtil;
+import com.secunet.testbedutils.utilities.VariableParser.VariableProvider;
 
 public class VariableSessionParameter implements VariableProvider 
 {

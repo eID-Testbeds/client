@@ -2,8 +2,6 @@ package com.secunet.bouncycastle.crypto.tls;
 
 import java.io.IOException;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-
 public class TlsFatalAlert
     extends IOException
 {

@@ -2,23 +2,6 @@ package com.secunet.bouncycastle.crypto.tls;
 
 import java.io.IOException;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.AlertLevel;
-import com.secunet.bouncycastle.crypto.tls.ByteQueue;
-import com.secunet.bouncycastle.crypto.tls.ChangeCipherSpec;
-import com.secunet.bouncycastle.crypto.tls.ContentType;
-import com.secunet.bouncycastle.crypto.tls.DTLSEpoch;
-import com.secunet.bouncycastle.crypto.tls.DTLSHandshakeRetransmit;
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
-import com.secunet.bouncycastle.crypto.tls.HandshakeType;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.TlsCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsNullCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsPeer;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 class DTLSRecordLayer
     implements DatagramTransport
 {

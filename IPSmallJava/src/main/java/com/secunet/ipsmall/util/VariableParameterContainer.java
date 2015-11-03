@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.secunet.ipsmall.util.VariableParser.VariableProvider;
+import com.secunet.testbedutils.utilities.VariableParser.VariableProvider;
 
 /**
  * Container for variable parameters.

@@ -13,7 +13,8 @@ public enum GlobalInfo {
     Copyright("globalinfo.properties", "copyright"),
     SoftwareVersion("globalinfo.properties", "version"),
     PublishDate("globalinfo.properties", "date"),
-    LogVersion("globalinfo.properties", "logversion");
+    LogVersion("globalinfo.properties", "logversion"),
+    TRVersion("globalinfo.properties", "trversion");
     
     private final String value;
 

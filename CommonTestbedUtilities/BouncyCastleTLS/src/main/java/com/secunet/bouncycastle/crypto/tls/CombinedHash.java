@@ -1,12 +1,6 @@
 package com.secunet.bouncycastle.crypto.tls;
 
 import org.bouncycastle.crypto.Digest;
-import com.secunet.bouncycastle.crypto.tls.CombinedHash;
-import com.secunet.bouncycastle.crypto.tls.HashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.SSL3Mac;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsHandshakeHash;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 /**
  * A combined hash, which implements md5(m) || sha1(m).

@@ -5,9 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.SessionParameters;
-import com.secunet.bouncycastle.crypto.tls.TlsProtocol;
 import org.bouncycastle.util.Arrays;
 
 public final class SessionParameters
@@ -60,7 +57,7 @@ public final class SessionParameters
         }
 
         /**
-         * @deprecated Use {@link #setPSKIdentity(byte[]))
+         * @deprecated Use {@link #setPSKIdentity(byte[])}
          */
         public Builder setPskIdentity(byte[] pskIdentity)
         {
@@ -159,7 +156,7 @@ public final class SessionParameters
     }
 
     /**
-     * @deprecated Use {@link #getPSKIdentity())
+     * @deprecated Use {@link #getPSKIdentity()}
      */
     public byte[] getPskIdentity()
     {

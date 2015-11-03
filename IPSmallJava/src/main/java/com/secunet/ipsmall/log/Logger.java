@@ -22,6 +22,7 @@ public enum Logger implements IModuleLogger {
     XMLEval("XMLEvaluater", false),
     UI("UI", false),
     TCTokenProv("TCTokenProvider", false),
+    CommErrorAddressServer("CommErrorAddressServer", false),
     ;
     
     private static final String prefixTestcase = "testcase";

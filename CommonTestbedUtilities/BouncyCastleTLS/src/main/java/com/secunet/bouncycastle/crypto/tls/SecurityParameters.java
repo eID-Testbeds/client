@@ -1,9 +1,5 @@
 package com.secunet.bouncycastle.crypto.tls;
 
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.CompressionMethod;
-import com.secunet.bouncycastle.crypto.tls.ConnectionEnd;
-import com.secunet.bouncycastle.crypto.tls.PRFAlgorithm;
 import org.bouncycastle.util.Arrays;
 
 public class SecurityParameters
@@ -93,7 +89,7 @@ public class SecurityParameters
     }
 
     /**
-     * @deprecated Use {@link SecurityParameters#getPSKIdentity()) 
+     * @deprecated Use {@link SecurityParameters#getPSKIdentity()}
      */
     public byte[] getPskIdentity()
     {

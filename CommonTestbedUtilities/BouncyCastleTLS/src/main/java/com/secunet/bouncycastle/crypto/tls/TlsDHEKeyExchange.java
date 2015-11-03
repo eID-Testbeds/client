@@ -7,20 +7,6 @@ import java.util.Vector;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.Signer;
 import org.bouncycastle.crypto.params.DHParameters;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.DigestInputBuffer;
-import com.secunet.bouncycastle.crypto.tls.DigitallySigned;
-import com.secunet.bouncycastle.crypto.tls.SecurityParameters;
-import com.secunet.bouncycastle.crypto.tls.ServerDHParams;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.SignerInputBuffer;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsDHKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.TlsDHUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsSigner;
-import com.secunet.bouncycastle.crypto.tls.TlsSignerCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.io.TeeInputStream;
 
 public class TlsDHEKeyExchange
@@ -103,7 +89,7 @@ public class TlsDHEKeyExchange
         }
 
         this.dhAgreePublicKey = TlsDHUtils.validateDHPublicKey(dhParams.getPublicKey());
-        this.dhParameters = dhAgreePublicKey.getParameters();
+        this.dhParameters = validateDHParameters(dhAgreePublicKey.getParameters());
     }
 
     protected Signer initVerifyer(TlsSigner tlsSigner, SignatureAndHashAlgorithm algorithm, SecurityParameters securityParameters)

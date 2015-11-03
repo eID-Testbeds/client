@@ -3,12 +3,6 @@ package com.secunet.bouncycastle.crypto.tls;
 import java.io.IOException;
 
 import org.bouncycastle.crypto.Digest;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.TlsCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsMac;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Arrays;
 
 /**

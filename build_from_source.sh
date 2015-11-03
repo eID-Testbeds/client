@@ -14,15 +14,6 @@ else
 	testbed_version=$(basename "$PWD")
 fi
 
-echo "*** Packaging sourcecode ... ***"
-sourcecode_name="$testbed_version"_Sourcecode_$timestamp.zip
-zip -rq build/$sourcecode_name CommonTestbedUtilities/
-zip -rq build/$sourcecode_name IPSmallJava/
-zip -rq build/$sourcecode_name IPSmallBrowserSimulator/
-zip -rq build/$sourcecode_name XML_TR-3124/
-zip -rq build/$sourcecode_name build_from_source.sh
-zip -rq build/$sourcecode_name readme_build_from_source.txt
-
 echo "*** Build Dependecies ... ***"
 cd CommonTestbedUtilities
 mvn clean install
@@ -50,15 +41,4 @@ zip -rq $testbed_name browsersimulator_*.zip
 rm -f browsersimulator_*.zip
 zip -rq $testbed_name CardSimControl_*.zip
 rm -f CardSimControl_*.zip
-cd ..
-
-echo "*** Packaging SpecificTestObjectBuilder ... ***"
-mkdir -p build/TestObjectBuilder
-cp -r "SpecificTestObjectBuilder/current/"* "build/TestObjectBuilder"
-cd build
-for d in TestObjectBuilder/* ; do
-	stob_name="$(basename $d)"_$timestamp.zip
-	zip -rq $stob_name TestObjectBuilder/$(basename $d)
-done
-rm -rf TestObjectBuilder/
 cd ..

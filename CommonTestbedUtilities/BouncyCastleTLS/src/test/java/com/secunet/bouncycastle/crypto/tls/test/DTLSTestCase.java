@@ -4,11 +4,11 @@ import java.security.SecureRandom;
 
 import junit.framework.TestCase;
 
-import com.secunet.bouncycastle.crypto.tls.DTLSClientProtocol;
-import com.secunet.bouncycastle.crypto.tls.DTLSServerProtocol;
-import com.secunet.bouncycastle.crypto.tls.DTLSTransport;
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.DTLSClientProtocol;
+import org.bouncycastle.crypto.tls.DTLSServerProtocol;
+import org.bouncycastle.crypto.tls.DTLSTransport;
+import org.bouncycastle.crypto.tls.DatagramTransport;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
 import org.bouncycastle.util.Arrays;
 
 public class DTLSTestCase extends TestCase
@@ -23,20 +23,38 @@ public class DTLSTestCase extends TestCase
 
     protected final TlsTestConfig config;
 
+    public DTLSTestCase(String name)
+    {
+        super(name);
+
+        this.config = null;
+    }
+
     public DTLSTestCase(TlsTestConfig config, String name)
     {
+        super(name);
+
         checkDTLSVersion(config.clientMinimumVersion);
         checkDTLSVersion(config.clientOfferVersion);
         checkDTLSVersion(config.serverMaximumVersion);
         checkDTLSVersion(config.serverMinimumVersion);
 
         this.config = config;
+    }
 
-        setName(name);
+    public void testDummy()
+    {
+        // Avoid "No tests found" warning from junit
     }
 
     protected void runTest() throws Throwable
     {
+        // Disable the test if it is not being run via DTLSTestSuite
+        if (config == null)
+        {
+            return;
+        }
+
         SecureRandom secureRandom = new SecureRandom();
 
         DTLSClientProtocol clientProtocol = new DTLSClientProtocol(secureRandom);
@@ -99,7 +117,7 @@ public class DTLSTestCase extends TestCase
         }
     }
 
-    protected  void logException(Exception e)
+    protected void logException(Exception e)
     {
         if (TlsTestConfig.DEBUG)
         {

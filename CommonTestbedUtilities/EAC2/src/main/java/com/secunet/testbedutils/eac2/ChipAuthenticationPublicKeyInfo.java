@@ -23,7 +23,7 @@ public class ChipAuthenticationPublicKeyInfo extends SecurityInfo {
 	@Override
 	public void fromAsn1(ASN1Encodable required, ASN1Encodable optional) throws IOException, EIDException {
 		ASN1Sequence chipAuthenticationPublicKey = (ASN1Sequence) required;
-		subjectPublicKeyInfo = new SubjectPublicKeyInfo( chipAuthenticationPublicKey );
+		subjectPublicKeyInfo = SubjectPublicKeyInfo.getInstance(chipAuthenticationPublicKey);
 		if( null != optional ) {
 			keyId = ASN1Helper.getCheckedInt( (ASN1Integer)optional );
 			//if( doLog ) log.debug( "read keyId: " + keyId );

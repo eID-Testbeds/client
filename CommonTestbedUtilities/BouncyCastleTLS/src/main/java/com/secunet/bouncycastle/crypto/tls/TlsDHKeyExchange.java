@@ -12,22 +12,6 @@ import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.DHParameters;
 import org.bouncycastle.crypto.params.DHPrivateKeyParameters;
 import org.bouncycastle.crypto.params.DHPublicKeyParameters;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.CertificateRequest;
-import com.secunet.bouncycastle.crypto.tls.ClientCertificateType;
-import com.secunet.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsAgreementCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsDHUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsDSSSigner;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsRSASigner;
-import com.secunet.bouncycastle.crypto.tls.TlsSigner;
-import com.secunet.bouncycastle.crypto.tls.TlsSignerCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 
 /**
@@ -109,6 +93,7 @@ public class TlsDHKeyExchange
             try
             {
                 this.dhAgreePublicKey = TlsDHUtils.validateDHPublicKey((DHPublicKeyParameters)this.serverPublicKey);
+                this.dhParameters = validateDHParameters(dhAgreePublicKey.getParameters());
             }
             catch (ClassCastException e)
             {
@@ -199,8 +184,12 @@ public class TlsDHKeyExchange
 
     public void processClientCertificate(Certificate clientCertificate) throws IOException
     {
-        // TODO Extract the public key
-        // TODO If the certificate is 'fixed', take the public key as dhAgreeClientPublicKey
+        // TODO Extract the public key and validate
+
+        /*
+         * TODO If the certificate is 'fixed', take the public key as dhAgreePublicKey and check
+         * that the parameters match the server's (see 'areCompatibleParameters').
+         */
     }
 
     public void processClientKeyExchange(InputStream input) throws IOException
@@ -230,5 +219,20 @@ public class TlsDHKeyExchange
         }
 
         throw new TlsFatalAlert(AlertDescription.internal_error);
+    }
+
+    protected int getMinimumPrimeBits()
+    {
+        return 1024;
+    }
+
+    protected DHParameters validateDHParameters(DHParameters params) throws IOException
+    {
+        if (params.getP().bitLength() < getMinimumPrimeBits())
+        {
+            throw new TlsFatalAlert(AlertDescription.insufficient_security);
+        }
+
+        return TlsDHUtils.validateDHParameters(params);
     }
 }

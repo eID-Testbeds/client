@@ -6,16 +6,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.DTLSHandshakeRetransmit;
-import com.secunet.bouncycastle.crypto.tls.DTLSReassembler;
-import com.secunet.bouncycastle.crypto.tls.DTLSRecordLayer;
-import com.secunet.bouncycastle.crypto.tls.DeferredHash;
-import com.secunet.bouncycastle.crypto.tls.HandshakeType;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsHandshakeHash;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Integers;
 
 class DTLSReliableHandshake

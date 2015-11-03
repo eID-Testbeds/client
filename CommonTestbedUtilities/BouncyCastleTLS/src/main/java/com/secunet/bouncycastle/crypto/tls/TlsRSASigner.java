@@ -13,11 +13,6 @@ import org.bouncycastle.crypto.params.ParametersWithRandom;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
 import org.bouncycastle.crypto.signers.GenericSigner;
 import org.bouncycastle.crypto.signers.RSADigestSigner;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsSigner;
-import com.secunet.bouncycastle.crypto.tls.CombinedHash;
-import com.secunet.bouncycastle.crypto.tls.SignatureAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 public class TlsRSASigner
     extends AbstractTlsSigner

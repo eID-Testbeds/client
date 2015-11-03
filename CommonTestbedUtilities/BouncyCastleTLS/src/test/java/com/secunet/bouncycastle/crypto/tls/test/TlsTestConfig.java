@@ -1,7 +1,7 @@
 package com.secunet.bouncycastle.crypto.tls.test;
 
-import com.secunet.bouncycastle.crypto.tls.ConnectionEnd;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.ConnectionEnd;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
 
 public class TlsTestConfig
 {

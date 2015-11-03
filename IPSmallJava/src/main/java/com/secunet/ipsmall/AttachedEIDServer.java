@@ -22,8 +22,6 @@ import com.secunet.ipsmall.tobuilder.ics.TLSVersionType;
 public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotificationListener {
     
     private BouncyCastleTlsIcsMatcher matcher;
-    
-    boolean skipFirstICSTest = false;
 
     private boolean hasFatalErrors = false;
     
@@ -37,7 +35,7 @@ public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotif
         
         // if we test without browser simulator, the first call to the eIDServer comes from a real browser, so we must skip the ICS check
         if(testData.getTestType() != null && testData.getTestType() == Type.BROWSER) {
-            skipFirstICSTest = true;
+            testData.setSkipNextICSCheck(true);
         }
 
         eService = new EServiceWebServer(testData, this);
@@ -61,7 +59,7 @@ public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotif
             if (testData.useModifiedSSL()) {
                 logger.logState("Error starting OpenSSL server: " + e.getMessage(), LogLevel.Error);
             } else {
-                logger.logState("Error creating java7 socket factory: " + e.getMessage(), LogLevel.Error);
+                logger.logState("Error creating BC socket factory: " + e.getMessage(), LogLevel.Error);
             }
         }
         
@@ -114,14 +112,16 @@ public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotif
     public void notifyClientVersion(ProtocolVersion clientVersion) {
         logger.logState("TLS client offered version: " + clientVersion.toString());
 
-        ProtocolVersion expectedProtocolVersion = BouncyCastleTlsHelper.convertProtocolVersionFromEnumToObject(testData.getEServiceTLSExpectedClientVersion());
-        if( expectedProtocolVersion.equals(clientVersion) ) {
-            logger.logConformity(ConformityResult.passed, "Check that client offered " + testData.getEServiceTLSExpectedClientVersion() + " passed.");
-        }
-        else {
-            //TODO remove comment
-            //hasFatalErrors = true;
-            logger.logConformity(ConformityResult.failed, "Check that client offered " + testData.getEServiceTLSExpectedClientVersion() + " failed.");
+        if(!testData.getSkipNextICSCheck()) {
+            ProtocolVersion expectedProtocolVersion = BouncyCastleTlsHelper.convertProtocolVersionFromEnumToObject(testData.getEServiceTLSExpectedClientVersion());
+            if( expectedProtocolVersion.equals(clientVersion) ) {
+                logger.logConformity(ConformityResult.passed, "Check that client offered " + testData.getEServiceTLSExpectedClientVersion() + " passed.");
+            }
+            else {
+                //TODO remove comment
+                //hasFatalErrors = true;
+                logger.logConformity(ConformityResult.failed, "Check that client offered " + testData.getEServiceTLSExpectedClientVersion() + " failed.");
+            }
         }
     }
 
@@ -138,7 +138,7 @@ public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotif
         }
         logger.logState("TLS client offered cipher suites:" + cipherSuites);
 
-        if(!skipFirstICSTest) {
+        if(!testData.getSkipNextICSCheck()) {
             TLSVersionType expectedProtocolVersion = TLSVersionType.fromValue(testData.getEServiceTLSExpectedClientVersion());
             if( matcher.matchCipherSuites(true, expectedProtocolVersion, offeredCipherSuites) ) {
                 logger.logConformity(ConformityResult.passed, "Check cipher suites against ICS passed.");
@@ -189,7 +189,7 @@ public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotif
         }
         logger.logState("TLS client sent SignatureAlgorithms extension:" + algorithms);
 
-        if(!skipFirstICSTest) {
+        if(!testData.getSkipNextICSCheck()) {
             TLSVersionType expectedProtocolVersion = TLSVersionType.fromValue(testData.getEServiceTLSExpectedClientVersion());
             if( matcher.matchSignatureAndHashAlgorithms(true, expectedProtocolVersion, signatureAlgorithms) ) {
                 logger.logConformity(ConformityResult.passed, "Check SignatureAlgorithms extension against ICS passed.");
@@ -210,7 +210,7 @@ public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotif
         }
         logger.logState("TLS client sent SupportedEllipticCurves extension:" + curves);
 
-        if(!skipFirstICSTest) {
+        if(!testData.getSkipNextICSCheck()) {
             TLSVersionType expectedProtocolVersion = TLSVersionType.fromValue(testData.getEServiceTLSExpectedClientVersion());
             if( matcher.matchEllipticCurves(true, expectedProtocolVersion, namedCurves) ) {
                 logger.logConformity(ConformityResult.passed, "Check SupportedEllipticCurves extension against ICS passed.");

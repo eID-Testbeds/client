@@ -1,7 +1,7 @@
 package com.secunet.bouncycastle.crypto.tls.test;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.AlertDescription;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -10,6 +10,11 @@ public class TlsTestSuite extends TestSuite
 {
     // Make the access to constants less verbose 
     static abstract class C extends TlsTestConfig {}
+
+    public TlsTestSuite()
+    {
+        super("TLS");
+    }
 
     public static Test suite()
     {

@@ -9,34 +9,6 @@ import java.util.Vector;
 
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.CertificateRequest;
-import com.secunet.bouncycastle.crypto.tls.CertificateStatus;
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.ConnectionEnd;
-import com.secunet.bouncycastle.crypto.tls.ContentType;
-import com.secunet.bouncycastle.crypto.tls.DTLSProtocol;
-import com.secunet.bouncycastle.crypto.tls.DTLSRecordLayer;
-import com.secunet.bouncycastle.crypto.tls.DTLSReliableHandshake;
-import com.secunet.bouncycastle.crypto.tls.DTLSTransport;
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
-import com.secunet.bouncycastle.crypto.tls.DigitallySigned;
-import com.secunet.bouncycastle.crypto.tls.ExporterLabel;
-import com.secunet.bouncycastle.crypto.tls.HandshakeType;
-import com.secunet.bouncycastle.crypto.tls.NewSessionTicket;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SecurityParameters;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsExtensionsUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsHandshakeHash;
-import com.secunet.bouncycastle.crypto.tls.TlsKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.TlsProtocol;
-import com.secunet.bouncycastle.crypto.tls.TlsServer;
-import com.secunet.bouncycastle.crypto.tls.TlsServerContextImpl;
-import com.secunet.bouncycastle.crypto.tls.TlsSigner;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 import org.bouncycastle.util.Arrays;
 
@@ -135,23 +107,8 @@ public class DTLSServerProtocol
 
         {
             byte[] serverHelloBody = generateServerHello(state);
-    
-            if (state.maxFragmentLength >= 0)
-            {
-                int plainTextLimit = 1 << (8 + state.maxFragmentLength);
-                recordLayer.setPlaintextLimit(plainTextLimit);
-            }
-    
-            securityParameters.cipherSuite = state.selectedCipherSuite;
-            securityParameters.compressionAlgorithm = state.selectedCompressionMethod;
-            securityParameters.prfAlgorithm = TlsProtocol.getPRFAlgorithm(state.serverContext,
-                state.selectedCipherSuite);
-    
-            /*
-             * RFC 5264 7.4.9. Any cipher suite which does not explicitly specify verify_data_length
-             * has a verify_data_length equal to 12. This includes all existing cipher suites.
-             */
-            securityParameters.verifyDataLength = 12;
+
+            applyMaxFragmentLengthExtension(recordLayer, securityParameters.maxFragmentLength);
     
             handshake.sendMessage(HandshakeType.server_hello, serverHelloBody);
         }
@@ -347,19 +304,21 @@ public class DTLSServerProtocol
 
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
 
-        ProtocolVersion server_version = state.server.getServerVersion();
-        if (!server_version.isEqualOrEarlierVersionOf(state.serverContext.getClientVersion()))
         {
-            throw new TlsFatalAlert(AlertDescription.internal_error);
+            ProtocolVersion server_version = state.server.getServerVersion();
+            if (!server_version.isEqualOrEarlierVersionOf(state.serverContext.getClientVersion()))
+            {
+                throw new TlsFatalAlert(AlertDescription.internal_error);
+            }
+    
+            // TODO Read RFCs for guidance on the expected record layer version number
+            // recordStream.setReadVersion(server_version);
+            // recordStream.setWriteVersion(server_version);
+            // recordStream.setRestrictReadVersion(true);
+            state.serverContext.setServerVersion(server_version);
+    
+            TlsUtils.writeVersion(state.serverContext.getServerVersion(), buf);
         }
-
-        // TODO Read RFCs for guidance on the expected record layer version number
-        // recordStream.setReadVersion(server_version);
-        // recordStream.setWriteVersion(server_version);
-        // recordStream.setRestrictReadVersion(true);
-        state.serverContext.setServerVersion(server_version);
-
-        TlsUtils.writeVersion(state.serverContext.getServerVersion(), buf);
 
         buf.write(securityParameters.getServerRandom());
 
@@ -369,25 +328,26 @@ public class DTLSServerProtocol
          */
         TlsUtils.writeOpaque8(TlsUtils.EMPTY_BYTES, buf);
 
-        state.selectedCipherSuite = state.server.getSelectedCipherSuite();
-        if (!Arrays.contains(state.offeredCipherSuites, state.selectedCipherSuite)
-            || state.selectedCipherSuite == CipherSuite.TLS_NULL_WITH_NULL_NULL
-            || CipherSuite.isSCSV(state.selectedCipherSuite)
-            || !TlsUtils.isValidCipherSuiteForVersion(state.selectedCipherSuite, server_version))
+        int selectedCipherSuite = state.server.getSelectedCipherSuite();
+        if (!Arrays.contains(state.offeredCipherSuites, selectedCipherSuite)
+            || selectedCipherSuite == CipherSuite.TLS_NULL_WITH_NULL_NULL
+            || CipherSuite.isSCSV(selectedCipherSuite)
+            || !TlsUtils.isValidCipherSuiteForVersion(selectedCipherSuite, state.serverContext.getServerVersion()))
         {
             throw new TlsFatalAlert(AlertDescription.internal_error);
         }
+        validateSelectedCipherSuite(selectedCipherSuite, AlertDescription.internal_error);
+        securityParameters.cipherSuite = selectedCipherSuite;
 
-        validateSelectedCipherSuite(state.selectedCipherSuite, AlertDescription.internal_error);
-
-        state.selectedCompressionMethod = state.server.getSelectedCompressionMethod();
-        if (!Arrays.contains(state.offeredCompressionMethods, state.selectedCompressionMethod))
+        short selectedCompressionMethod = state.server.getSelectedCompressionMethod();
+        if (!Arrays.contains(state.offeredCompressionMethods, selectedCompressionMethod))
         {
             throw new TlsFatalAlert(AlertDescription.internal_error);
         }
+        securityParameters.compressionAlgorithm = selectedCompressionMethod;
 
-        TlsUtils.writeUint16(state.selectedCipherSuite, buf);
-        TlsUtils.writeUint8(state.selectedCompressionMethod, buf);
+        TlsUtils.writeUint16(selectedCipherSuite, buf);
+        TlsUtils.writeUint8(selectedCompressionMethod, buf);
 
         state.serverExtensions = state.server.getServerExtensions();
 
@@ -425,23 +385,44 @@ public class DTLSServerProtocol
             TlsExtensionsUtils.addExtendedMasterSecretExtension(state.serverExtensions);
         }
 
+        /*
+         * TODO RFC 3546 2.3 If [...] the older session is resumed, then the server MUST ignore
+         * extensions appearing in the client hello, and send a server hello containing no
+         * extensions.
+         */
+
         if (state.serverExtensions != null)
         {
             securityParameters.encryptThenMAC = TlsExtensionsUtils.hasEncryptThenMACExtension(state.serverExtensions);
 
-            state.maxFragmentLength = evaluateMaxFragmentLengthExtension(state.clientExtensions, state.serverExtensions,
-                AlertDescription.internal_error);
+            securityParameters.maxFragmentLength = evaluateMaxFragmentLengthExtension(state.resumedSession,
+                state.clientExtensions, state.serverExtensions, AlertDescription.internal_error);
 
             securityParameters.truncatedHMac = TlsExtensionsUtils.hasTruncatedHMacExtension(state.serverExtensions);
 
-            state.allowCertificateStatus = TlsUtils.hasExpectedEmptyExtensionData(state.serverExtensions,
-                TlsExtensionsUtils.EXT_status_request, AlertDescription.internal_error);
+            /*
+             * TODO It's surprising that there's no provision to allow a 'fresh' CertificateStatus to be sent in
+             * a session resumption handshake.
+             */
+            state.allowCertificateStatus = !state.resumedSession
+                && TlsUtils.hasExpectedEmptyExtensionData(state.serverExtensions,
+                    TlsExtensionsUtils.EXT_status_request, AlertDescription.internal_error);
 
-            state.expectSessionTicket = TlsUtils.hasExpectedEmptyExtensionData(state.serverExtensions,
-                TlsProtocol.EXT_SessionTicket, AlertDescription.internal_error);
+            state.expectSessionTicket = !state.resumedSession
+                && TlsUtils.hasExpectedEmptyExtensionData(state.serverExtensions, TlsProtocol.EXT_SessionTicket,
+                    AlertDescription.internal_error);
 
             TlsProtocol.writeExtensions(buf, state.serverExtensions);
         }
+
+        securityParameters.prfAlgorithm = TlsProtocol.getPRFAlgorithm(state.serverContext,
+            securityParameters.getCipherSuite());
+
+        /*
+         * RFC 5264 7.4.9. Any cipher suite which does not explicitly specify verify_data_length
+         * has a verify_data_length equal to 12. This includes all existing cipher suites.
+         */
+        securityParameters.verifyDataLength = 12;
 
         return buf.toByteArray();
     }
@@ -602,6 +583,12 @@ public class DTLSServerProtocol
         TlsServerContextImpl context = state.serverContext;
         SecurityParameters securityParameters = context.getSecurityParameters();
 
+        /*
+         * TODO[session-hash]
+         * 
+         * draft-ietf-tls-session-hash-04 4. Clients and servers SHOULD NOT accept handshakes
+         * that do not use the extended master secret [..]. (and see 5.2, 5.3)
+         */
         securityParameters.extendedMasterSecret = TlsExtensionsUtils.hasExtendedMasterSecretExtension(state.clientExtensions);
 
         context.setClientVersion(client_version);
@@ -690,16 +677,14 @@ public class DTLSServerProtocol
     {
         TlsServer server = null;
         TlsServerContextImpl serverContext = null;
-        int[] offeredCipherSuites;
-        short[] offeredCompressionMethods;
-        Hashtable clientExtensions;
-        int selectedCipherSuite = -1;
-        short selectedCompressionMethod = -1;
+        int[] offeredCipherSuites = null;
+        short[] offeredCompressionMethods = null;
+        Hashtable clientExtensions = null;
+        Hashtable serverExtensions = null;
+        boolean resumedSession = false;
         boolean secure_renegotiation = false;
-        short maxFragmentLength = -1;
         boolean allowCertificateStatus = false;
         boolean expectSessionTicket = false;
-        Hashtable serverExtensions = null;
         TlsKeyExchange keyExchange = null;
         TlsCredentials serverCredentials = null;
         CertificateRequest certificateRequest = null;

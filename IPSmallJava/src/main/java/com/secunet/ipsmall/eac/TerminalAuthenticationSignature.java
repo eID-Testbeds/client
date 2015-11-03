@@ -11,8 +11,8 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import com.secunet.ipsmall.eac.cv.CardVerifiableCertificate;
 import com.secunet.ipsmall.eac.cv.EIDCertificateException;
 import com.secunet.ipsmall.log.Logger;
-import com.secunet.ipsmall.util.Base64Util;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.testbedutils.utilities.Base64Util;
+import com.secunet.testbedutils.utilities.CommonUtil;
 
 public class TerminalAuthenticationSignature 
 {

@@ -2,8 +2,6 @@ package com.secunet.bouncycastle.crypto.tls;
 
 import java.io.OutputStream;
 
-import com.secunet.bouncycastle.crypto.tls.TlsCompression;
-
 public class TlsNullCompression
     implements TlsCompression
 {

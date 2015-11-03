@@ -48,10 +48,10 @@ public class EServiceWebServer {
             
             if (uri.equals("/") || uri.equals("/" + testData.getEServiceIndexPageURL())) {
                 if(parent instanceof EService) {
-                    ((EService)parent).skipFirstICSTest = false;
+                    testData.setSkipNextICSCheck(false);
                 }
                 else if(parent instanceof AttachedEIDServer) {
-                    ((AttachedEIDServer)parent).skipFirstICSTest = false;
+                    testData.setSkipNextICSCheck(false);
                 }
                 resp_message = new Response(testData.getEServiceIndexPage(), testData.chunkedTransfer());
             } else if (uri.equals("/" + testData.getEServiceTCTokenURL())) {

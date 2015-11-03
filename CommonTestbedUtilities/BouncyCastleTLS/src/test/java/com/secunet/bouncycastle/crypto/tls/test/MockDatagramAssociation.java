@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.util.Vector;
 
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
+import org.bouncycastle.crypto.tls.DatagramTransport;
 
 public class MockDatagramAssociation
 {

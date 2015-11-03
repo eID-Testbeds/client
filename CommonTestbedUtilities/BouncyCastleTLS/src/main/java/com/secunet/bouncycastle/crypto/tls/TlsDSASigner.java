@@ -9,10 +9,6 @@ import org.bouncycastle.crypto.digests.NullDigest;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithRandom;
 import org.bouncycastle.crypto.signers.DSADigestSigner;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsSigner;
-import com.secunet.bouncycastle.crypto.tls.HashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 public abstract class TlsDSASigner
     extends AbstractTlsSigner

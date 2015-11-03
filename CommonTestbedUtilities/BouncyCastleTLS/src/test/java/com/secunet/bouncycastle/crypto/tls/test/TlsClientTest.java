@@ -9,8 +9,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.security.SecureRandom;
 
-import com.secunet.bouncycastle.crypto.tls.TlsClient;
-import com.secunet.bouncycastle.crypto.tls.TlsClientProtocol;
+import org.bouncycastle.crypto.tls.TlsClient;
+import org.bouncycastle.crypto.tls.TlsClientProtocol;
 
 /**
  * A simple test designed to conduct a TLS handshake with an external TLS server.

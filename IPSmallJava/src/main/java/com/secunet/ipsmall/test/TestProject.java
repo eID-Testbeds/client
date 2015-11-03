@@ -141,9 +141,7 @@ public class TestProject {
      */
     protected ITestData getTopFromQueue(final boolean onlyAutonomic) {
         for (ITestData curData : queue) {
-            if (onlyAutonomic && curData.isAutonomic()) {
-                return curData;
-            } else if (!onlyAutonomic) {
+            if (!onlyAutonomic) {
                 return curData;
             }
         }
@@ -296,10 +294,8 @@ public class TestProject {
      */
     public class Metainformation {
         private TestState state = TestState.Idle;
-        private boolean autonomic = false;
         
         public Metainformation(ITestData testdata) {
-            autonomic = testdata.isAutonomic();
         }
         
         public void setState(TestState state) {
@@ -308,10 +304,6 @@ public class TestProject {
         
         public TestState getState() {
             return state;
-        }
-        
-        public boolean isAutonomic() {
-            return autonomic;
         }
     }
     

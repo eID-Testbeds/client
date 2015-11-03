@@ -20,9 +20,9 @@ import com.secunet.ipsmall.ecard.DIDAuthenticate3Response;
 import com.secunet.ipsmall.ecard.InitializeFrameworkResponse;
 import com.secunet.ipsmall.ecard.StartPAOS;
 import com.secunet.ipsmall.ecard.TransmitResponse;
-import com.secunet.ipsmall.util.Base64Util;
-import com.secunet.ipsmall.util.CommonUtil;
-import com.secunet.ipsmall.util.VariableParser;
+import com.secunet.testbedutils.utilities.Base64Util;
+import com.secunet.testbedutils.utilities.CommonUtil;
+import com.secunet.testbedutils.utilities.VariableParser;
 import com.sun.xml.internal.ws.util.ByteArrayBuffer;
 
 public class TestSession implements ITestSession {

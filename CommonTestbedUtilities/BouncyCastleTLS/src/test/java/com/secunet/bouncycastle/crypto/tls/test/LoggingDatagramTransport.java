@@ -3,7 +3,8 @@ package com.secunet.bouncycastle.crypto.tls.test;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
+import org.bouncycastle.crypto.tls.DatagramTransport;
+import org.bouncycastle.util.Strings;
 
 public class LoggingDatagramTransport
     implements DatagramTransport
@@ -66,7 +67,7 @@ public class LoggingDatagramTransport
         {
             if (pos % 16 == 0)
             {
-                sb.append(System.getProperty("line.separator"));
+                sb.append(Strings.lineSeparator());
                 sb.append("    ");
             }
             else if (pos % 16 == 8)

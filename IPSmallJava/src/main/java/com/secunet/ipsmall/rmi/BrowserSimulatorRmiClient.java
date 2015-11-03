@@ -1,5 +1,7 @@
 package com.secunet.ipsmall.rmi;
 
+import com.secunet.ipsmall.GlobalInfo;
+import com.secunet.ipsmall.IPSmallManager;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.security.cert.X509Certificate;
@@ -16,6 +18,11 @@ import com.secunet.ipsmall.test.ITestData;
 import com.secunet.ipsmall.test.ITestProtocolCallback.SourceComponent;
 import com.secunet.ipsmall.test.ITestProtocolCallback.TestError;
 import com.secunet.ipsmall.test.ITestProtocolCallback.TestStep;
+import com.secunet.ipsmall.tobuilder.ics.TR031242ICS;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BrowserSimulatorRmiClient {
     
@@ -143,21 +150,110 @@ public class BrowserSimulatorRmiClient {
      * @param response
      */
     private void checkResponseHeaders(final String url, final RmiHttpResponse response) {
-        
         String headerServerValue = response.headers.get("Server");
         
+        LogLevel failLevel = LogLevel.Warn; // only warning ...
+        
+        // get expected name and version from ics
+        TR031242ICS ics = IPSmallManager.getInstance().getIcs();
+        String name = null;
+        String version = null;
+        String trversion = GlobalInfo.TRVersion.getValue();
+        if (ics != null) {
+            TR031242ICS.SoftwareVersion swVersion = ics.getSoftwareVersion();
+            if (swVersion != null) {
+                name = swVersion.getName();
+                if (swVersion.getVersionMajor() != null && swVersion.getVersionMinor() != null && swVersion.getVersionSubminor() != null) {
+                    if (!swVersion.getVersionMajor().isEmpty()) {
+                        version = swVersion.getVersionMajor();
+                        if (!swVersion.getVersionMinor().isEmpty()) {
+                            version += "." + swVersion.getVersionMinor();
+                            if (!swVersion.getVersionSubminor().isEmpty()) {
+                                version += "." + swVersion.getVersionSubminor();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if (name == null) {
+            Logger.BrowserSim.logState("Unable read expected server name from ICS.", LogLevel.Error);
+            return;
+        }
+        
+        if (version == null) {
+            Logger.BrowserSim.logState("Unable read expected server version from ICS.", LogLevel.Error);
+            return;
+        }
+        
+        if (trversion == null) {
+            Logger.BrowserSim.logState("Unable read expected TR from config.", LogLevel.Error);
+            return;
+        }
+                
         boolean isStatusAction = false;
         if (url.contains("?Status")) {
             isStatusAction = true;
         }
         
-        if ((headerServerValue != null) && (headerServerValue.length() > 0)) {
-            // check for "name of the eID-Client and its version ... including TR-03124-1/TR-version for each version"
-            // TODO: check against name/version(s) contained in 'ICS.xml'; only minimal check at the moment
-            if (!headerServerValue.contains("TR-03124-1")) {
-                Logger.BrowserSim.logConformity(ConformityResult.failed,
-                        "Invalid response header 'Server': Mandatory name/version of eID-Client or version(s) of Technical Guideline is missing!",
-                        LogLevel.Warn);
+        if ((headerServerValue != null) && !headerServerValue.isEmpty()) {
+            // get server token
+            Pattern serverTokenPattern = Pattern.compile("(.*)/(.*) ?\\((.*)\\)");
+            Matcher serverTokenMatcher = serverTokenPattern.matcher(headerServerValue);
+
+            boolean foundName = false; 
+            while (serverTokenMatcher.find()) {
+                // check name
+                String serverName = serverTokenMatcher.group(1).trim();
+                String serverVersion = serverTokenMatcher.group(2).trim();
+                String serverComments = serverTokenMatcher.group(3).trim();
+                if (name.equals(serverName)) {
+                    foundName = true;
+
+                    // check version
+                    if (!version.equals(serverVersion)) {
+                        Logger.BrowserSim.logConformity(
+                            ConformityResult.failed,
+                            "Invalid version in Server header.",
+                            failLevel);
+                    }
+
+                    // get comments as list
+                    List<String> comments = new ArrayList<>();
+                    Pattern commentsPattern = Pattern.compile("([^\"]\\S*|\".+?\")\\s*");
+                    Matcher commentsMatcher = commentsPattern.matcher(serverComments);
+                    while (commentsMatcher.find()) {
+                        comments.add(commentsMatcher.group(1));
+                    }
+                    
+                    // check tr version(s) in comments
+                    boolean foundTRVersion = false;
+                    for (String comment : comments) {
+                        if (trversion.equals(comment)) {
+                            foundTRVersion = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!foundTRVersion) {
+                        Logger.BrowserSim.logConformity(
+                            ConformityResult.failed,
+                            "Found no valid TR version in Server header.",
+                            failLevel);
+                    }
+
+                    break;
+                }
+
+                // check version
+            }
+                
+            if (!foundName) {
+                Logger.BrowserSim.logConformity(
+                    ConformityResult.failed,
+                    "Found no valid Server header for " + name + ".",
+                    failLevel);
             }
         } else {
             if (isStatusAction) {

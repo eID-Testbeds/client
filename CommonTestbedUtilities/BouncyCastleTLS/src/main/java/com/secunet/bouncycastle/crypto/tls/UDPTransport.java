@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-
 public class UDPTransport
     implements DatagramTransport
 {

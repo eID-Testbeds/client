@@ -4,10 +4,6 @@ import java.io.IOException;
 
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsEncryptionCredentials;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsRSAUtils;
 
 public class DefaultTlsEncryptionCredentials extends AbstractTlsEncryptionCredentials
 {

@@ -5,12 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.ExtensionType;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsProtocol;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-import com.secunet.bouncycastle.crypto.tls.UseSRTPData;
 import org.bouncycastle.util.Integers;
 
 /**

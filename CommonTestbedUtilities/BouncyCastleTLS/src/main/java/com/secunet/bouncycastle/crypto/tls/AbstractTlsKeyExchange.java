@@ -4,16 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 public abstract class AbstractTlsKeyExchange
     implements TlsKeyExchange
 {

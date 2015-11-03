@@ -3,10 +3,6 @@ package com.secunet.bouncycastle.crypto.tls;
 import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.prng.RandomGenerator;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SecurityParameters;
-import com.secunet.bouncycastle.crypto.tls.TlsPeer;
-import com.secunet.bouncycastle.crypto.tls.TlsSession;
 
 public interface TlsContext
 {

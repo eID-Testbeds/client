@@ -8,8 +8,6 @@ import java.util.Vector;
 
 import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1Primitive;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 /**
  * Parsing and encoding of a <i>Certificate</i> struct from RFC 4346.

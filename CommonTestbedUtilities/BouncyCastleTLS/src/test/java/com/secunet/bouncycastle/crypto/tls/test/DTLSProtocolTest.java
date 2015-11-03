@@ -4,10 +4,10 @@ import java.security.SecureRandom;
 
 import junit.framework.TestCase;
 
-import com.secunet.bouncycastle.crypto.tls.DTLSClientProtocol;
-import com.secunet.bouncycastle.crypto.tls.DTLSServerProtocol;
-import com.secunet.bouncycastle.crypto.tls.DTLSTransport;
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
+import org.bouncycastle.crypto.tls.DTLSClientProtocol;
+import org.bouncycastle.crypto.tls.DTLSServerProtocol;
+import org.bouncycastle.crypto.tls.DTLSTransport;
+import org.bouncycastle.crypto.tls.DatagramTransport;
 import org.bouncycastle.util.Arrays;
 
 public class DTLSProtocolTest

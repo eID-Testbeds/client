@@ -83,6 +83,12 @@ public class ResolveReferenceTestcasesSetup implements ITestObjectSetup {
                     File sourceRef = new File(new File(settings.getTestbedDir(), GlobalSettings.getTestcaseTemplatesDir()),
                             settings.getModule(referencedTestcase) + File.separator + referencedTestcase);
 
+                    // if source does not exist, try in generated tests
+                    if (!sourceRef.exists()) {
+                        File moduleDir = new File(settings.getTestObjectDir(), GlobalSettings.getTOTestsDir());
+                        sourceRef = new File(moduleDir, settings.getModule(referencedTestcase, moduleDir) + File.separator + referencedTestcase);
+                    }
+                    
                     if (sourceRef.exists()) {
                         try {
                             // delete old testcase

@@ -4,11 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.secunet.bouncycastle.crypto.tls.DigitallySigned;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 public class DigitallySigned
 {
     protected SignatureAndHashAlgorithm algorithm;

@@ -16,7 +16,7 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import com.secunet.ipsmall.eac.DHDomainParameter;
 import com.secunet.ipsmall.eac.cv.UtilPublicKey;
 import com.secunet.ipsmall.log.Logger;
-import com.secunet.ipsmall.util.Base64Util;
+import com.secunet.testbedutils.utilities.Base64Util;
 
 public class AuthenticationToken {
     // private static Logger log = Logger.getLogger(AuthenticationToken.class);

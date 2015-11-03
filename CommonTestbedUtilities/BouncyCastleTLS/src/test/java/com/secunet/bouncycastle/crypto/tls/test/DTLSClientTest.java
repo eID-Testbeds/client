@@ -5,12 +5,12 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.security.SecureRandom;
 
-import com.secunet.bouncycastle.crypto.tls.DTLSClientProtocol;
-import com.secunet.bouncycastle.crypto.tls.DTLSTransport;
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
-import com.secunet.bouncycastle.crypto.tls.TlsClient;
-import com.secunet.bouncycastle.crypto.tls.TlsSession;
-import com.secunet.bouncycastle.crypto.tls.UDPTransport;
+import org.bouncycastle.crypto.tls.DTLSClientProtocol;
+import org.bouncycastle.crypto.tls.DTLSTransport;
+import org.bouncycastle.crypto.tls.DatagramTransport;
+import org.bouncycastle.crypto.tls.TlsClient;
+import org.bouncycastle.crypto.tls.TlsSession;
+import org.bouncycastle.crypto.tls.UDPTransport;
 
 /**
  * A simple test designed to conduct a DTLS handshake with an external DTLS server.

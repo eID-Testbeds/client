@@ -2,10 +2,6 @@ package com.secunet.bouncycastle.crypto.tls;
 
 import java.io.IOException;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Strings;
 
 public final class ProtocolVersion

@@ -13,34 +13,6 @@ import java.util.Vector;
 
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.prng.RandomGenerator;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsContext;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.AlertLevel;
-import com.secunet.bouncycastle.crypto.tls.ByteQueue;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.ChangeCipherSpec;
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.ContentType;
-import com.secunet.bouncycastle.crypto.tls.ExporterLabel;
-import com.secunet.bouncycastle.crypto.tls.ExtensionType;
-import com.secunet.bouncycastle.crypto.tls.HandshakeType;
-import com.secunet.bouncycastle.crypto.tls.PRFAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.RecordStream;
-import com.secunet.bouncycastle.crypto.tls.SecurityParameters;
-import com.secunet.bouncycastle.crypto.tls.SessionParameters;
-import com.secunet.bouncycastle.crypto.tls.SupplementalDataEntry;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsExtensionsUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsHandshakeHash;
-import com.secunet.bouncycastle.crypto.tls.TlsInputStream;
-import com.secunet.bouncycastle.crypto.tls.TlsKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.TlsOutputStream;
-import com.secunet.bouncycastle.crypto.tls.TlsPeer;
-import com.secunet.bouncycastle.crypto.tls.TlsSession;
-import com.secunet.bouncycastle.crypto.tls.TlsSessionImpl;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Integers;
 
@@ -136,6 +108,30 @@ public abstract class TlsProtocol
     {
     }
 
+    protected void applyMaxFragmentLengthExtension()
+        throws IOException
+    {
+        if (securityParameters.maxFragmentLength >= 0)
+        {
+            if (!MaxFragmentLength.isValid(securityParameters.maxFragmentLength))
+            {
+                throw new TlsFatalAlert(AlertDescription.internal_error); 
+            }
+    
+            int plainTextLimit = 1 << (8 + securityParameters.maxFragmentLength);
+            recordStream.setPlaintextLimit(plainTextLimit);
+        }
+    }
+
+    protected void checkReceivedChangeCipherSpec(boolean expected)
+        throws IOException
+    {
+        if (expected != receivedChangeCipherSpec)
+        {
+            throw new TlsFatalAlert(AlertDescription.unexpected_message);
+        }
+    }
+
     protected void cleanupHandshake()
     {
         if (this.expected_verify_data != null)
@@ -197,12 +193,12 @@ public abstract class TlsProtocol
                 if (this.sessionParameters == null)
                 {
                     this.sessionParameters = new SessionParameters.Builder()
-                        .setCipherSuite(this.securityParameters.cipherSuite)
-                        .setCompressionAlgorithm(this.securityParameters.compressionAlgorithm)
-                        .setMasterSecret(this.securityParameters.masterSecret)
+                        .setCipherSuite(this.securityParameters.getCipherSuite())
+                        .setCompressionAlgorithm(this.securityParameters.getCompressionAlgorithm())
+                        .setMasterSecret(this.securityParameters.getMasterSecret())
                         .setPeerCertificate(this.peerCertificate)
-                        .setPSKIdentity(this.securityParameters.pskIdentity)
-                        .setSRPIdentity(this.securityParameters.srpIdentity)
+                        .setPSKIdentity(this.securityParameters.getPSKIdentity())
+                        .setSRPIdentity(this.securityParameters.getSRPIdentity())
                         // TODO Consider filtering extensions that aren't relevant to resumed sessions
                         .setServerExtensions(this.serverExtensions)
                         .build();
@@ -304,6 +300,8 @@ public abstract class TlsProtocol
                      */
                     byte[] buf = handshakeQueue.removeData(len, 4);
 
+                    checkReceivedChangeCipherSpec(connection_state == CS_END || type == HandshakeType.finished);
+
                     /*
                      * RFC 2246 7.4.9. The value handshake_messages includes all handshake messages
                      * starting at client hello up to, but not including, this finished message.
@@ -315,9 +313,11 @@ public abstract class TlsProtocol
                         break;
                     case HandshakeType.finished:
                     {
-                        if (this.expected_verify_data == null)
+                        TlsContext ctx = getContext();
+                        if (this.expected_verify_data == null
+                            && ctx.getSecurityParameters().getMasterSecret() != null)
                         {
-                            this.expected_verify_data = createVerifyData(!getContext().isServer());
+                            this.expected_verify_data = createVerifyData(!ctx.isServer());
                         }
 
                         // NB: Fall through to next case label
@@ -701,6 +701,11 @@ public abstract class TlsProtocol
     protected void processFinishedMessage(ByteArrayInputStream buf)
         throws IOException
     {
+        if (expected_verify_data == null)
+        {
+            throw new TlsFatalAlert(AlertDescription.internal_error);
+        }
+
         byte[] verify_data = TlsUtils.readFully(expected_verify_data.length, buf);
 
         assertEmpty(buf);
@@ -844,14 +849,30 @@ public abstract class TlsProtocol
         throws IOException
     {
         short maxFragmentLength = TlsExtensionsUtils.getMaxFragmentLengthExtension(serverExtensions);
-        if (maxFragmentLength >= 0 && !this.resumedSession)
+        if (maxFragmentLength >= 0)
         {
-            if (maxFragmentLength != TlsExtensionsUtils.getMaxFragmentLengthExtension(clientExtensions))
+            if (!MaxFragmentLength.isValid(maxFragmentLength)
+                || (!this.resumedSession && maxFragmentLength != TlsExtensionsUtils
+                    .getMaxFragmentLengthExtension(clientExtensions)))
             {
                 throw new TlsFatalAlert(alertDescription);
             }
         }
         return maxFragmentLength;
+    }
+
+    protected void refuseRenegotiation() throws IOException
+    {
+        /*
+         * RFC 5746 4.5 SSLv3 clients that refuse renegotiation SHOULD use a fatal
+         * handshake_failure alert.
+         */
+        if (TlsUtils.isSSL(getContext()))
+        {
+            throw new TlsFatalAlert(AlertDescription.handshake_failure);
+        }
+
+        raiseWarning(AlertDescription.no_renegotiation, "Renegotiation not supported");
     }
 
     /**

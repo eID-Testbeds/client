@@ -9,18 +9,6 @@ import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.CertificateRequest;
-import com.secunet.bouncycastle.crypto.tls.ClientCertificateType;
-import com.secunet.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsEncryptionCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsRSAUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsSignerCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 import org.bouncycastle.util.io.Streams;
 

@@ -4,13 +4,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.bouncycastle.crypto.Digest;
-import com.secunet.bouncycastle.crypto.tls.CombinedHash;
-import com.secunet.bouncycastle.crypto.tls.DeferredHash;
-import com.secunet.bouncycastle.crypto.tls.DigestInputBuffer;
-import com.secunet.bouncycastle.crypto.tls.PRFAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsHandshakeHash;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Shorts;
 
 /**

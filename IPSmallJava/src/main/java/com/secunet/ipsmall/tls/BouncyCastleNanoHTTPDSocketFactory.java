@@ -1,6 +1,6 @@
 package com.secunet.ipsmall.tls;
 
-import static com.secunet.ipsmall.util.CommonUtil.containsIgnoreCase;
+import static com.secunet.testbedutils.utilities.CommonUtil.containsIgnoreCase;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -18,7 +18,7 @@ import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
 import com.secunet.ipsmall.http.ExternalServerSocketFactory;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.ITestData.PROTOCOLS;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.testbedutils.utilities.CommonUtil;
 
 public class BouncyCastleNanoHTTPDSocketFactory implements ExternalServerSocketFactory {
     

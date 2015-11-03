@@ -4,16 +4,6 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import com.secunet.bouncycastle.crypto.tls.NewSessionTicket;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SessionParameters;
-import com.secunet.bouncycastle.crypto.tls.TlsAuthentication;
-import com.secunet.bouncycastle.crypto.tls.TlsClientContext;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.TlsPeer;
-import com.secunet.bouncycastle.crypto.tls.TlsSession;
-
 public interface TlsClient
     extends TlsPeer
 {

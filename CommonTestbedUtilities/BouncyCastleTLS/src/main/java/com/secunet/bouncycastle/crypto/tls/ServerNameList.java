@@ -7,12 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.ServerName;
-import com.secunet.bouncycastle.crypto.tls.ServerNameList;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 public class ServerNameList
 {
     protected Vector serverNameList;

@@ -38,7 +38,7 @@ import com.secunet.ipsmall.test.TestState;
 import com.secunet.ipsmall.tobuilder.ics.TR031242ICS;
 import com.secunet.ipsmall.ui.MainFrame;
 import com.secunet.ipsmall.ui.UIUtils;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.testbedutils.utilities.CommonUtil;
 import com.secunet.ipsmall.util.FileUtils;
 import com.secunet.testbedutils.utilities.JaxBUtil;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
@@ -858,45 +858,60 @@ public class IPSmallManager implements ITestProtocolCallback {
      */
     public synchronized FileBasedTestData copyTestCase(ITestData data) {
         FileBasedTestData result = null;
-        if (data instanceof FileBasedTestData) {
-            FileBasedTestData fileData = (FileBasedTestData) data;
-            Logger.Global.logState("Starting copying testcase: " + fileData.getTestName() + " ...", LogLevel.Debug);
-
-            // generates name of copy
-            File copiedTestcase = null;
-            int numberOfCopy = 1;
-            do {
-                copiedTestcase = new File(new File(testobjectDirectory, GlobalSettings.getTOCopiedTestsDir()),
-                        fileData.getTestModuleName() + File.separator + fileData.getTestName() + "_" + String.format("%02d", numberOfCopy));
-                numberOfCopy++;
-            } while (copiedTestcase.exists());
-
-            // copy common to destination
-            File commonConfig = new File(testobjectDirectory, GlobalSettings.getTOTestsCommonDir());
-            try {
-                FileUtils.copyDir(commonConfig, copiedTestcase, false);
-            } catch (IOException e) {
-                Logger.Global.logState("Unable to copy testcase: " + fileData.getTestName() + ": " + e.getMessage(), LogLevel.Error);
-                return null;
-            }
-
-            // copy testcase and merge config.properties
-            File sourceTestcase = new File(new File(testobjectDirectory, GlobalSettings.getTOTestsDir()),
-                    fileData.getTestModuleName() + File.separator + fileData.getTestName());
-            try {
-                FileUtils.copyDir(sourceTestcase, copiedTestcase, true, true);
-            } catch (IOException e) {
-                Logger.Global.logState("Unable to copy testcase: " + fileData.getTestName() + ": " + e.getMessage(), LogLevel.Error);
-                return null;
-            }
-
-            Logger.Global.logState("Copied testcase: " + fileData.getTestName() + ".", LogLevel.Info);
-
-            result = loadTestcaseFromFile("CopiedTests" + File.separator
-                    + fileData.getTestModuleName() + File.separator + copiedTestcase.getName(), new File(fileData.getRelativeTestObjectFolder()));
-        } else {
+        if (!(data instanceof FileBasedTestData)) {
             Logger.Global.logState("Unable to copy testcase: " + data.getTestName() + ": " + "no file based testcase.", LogLevel.Error);
+            return null;
         }
+        
+        if (data.getCopyOf() != null && !data.getCopyOf().isEmpty()) {
+            Logger.Global.logState("Unable to copy testcase: " + data.getTestName() + ": " + "Already copy of " + data.getCopyOf() + ".", LogLevel.Error);
+            return null;
+        }
+        
+        FileBasedTestData fileData = (FileBasedTestData) data;
+        Logger.Global.logState("Starting copying testcase: " + fileData.getTestName() + " ...", LogLevel.Debug);
+
+        // generates name of copy
+        File copiedTestcase = null;
+        int numberOfCopy = 1;
+        do {
+            copiedTestcase = new File(new File(testobjectDirectory, GlobalSettings.getTOCopiedTestsDir()),
+                    fileData.getTestModuleName() + File.separator + fileData.getTestName() + "_" + String.format("%02d", numberOfCopy));
+            numberOfCopy++;
+        } while (copiedTestcase.exists());
+
+        // copy common to destination
+        File commonConfig = new File(testobjectDirectory, GlobalSettings.getTOTestsCommonDir());
+        try {
+            FileUtils.copyDir(commonConfig, copiedTestcase, false);
+        } catch (IOException e) {
+            Logger.Global.logState("Unable to copy testcase: " + fileData.getTestName() + ": " + e.getMessage(), LogLevel.Error);
+            return null;
+        }
+
+        // copy testcase and merge config.properties
+        File sourceTestcase = new File(new File(testobjectDirectory, GlobalSettings.getTOTestsDir()),
+                fileData.getTestModuleName() + File.separator + fileData.getTestName());
+        try {
+            FileUtils.copyDir(sourceTestcase, copiedTestcase, true, true);
+        } catch (IOException e) {
+            Logger.Global.logState("Unable to merge testcase: " + fileData.getTestName() + ": " + e.getMessage(), LogLevel.Error);
+        }
+        
+        // insert name of source testcase
+        try {
+            FileUtils.updatePropertiesFile(
+                    new File(copiedTestcase, GlobalSettings.getTestcasePropertiesFileName()),
+                    FileBasedTestData.c_eCardTestCaseCopyof,
+                    fileData.getTestLocation() + File.separator + fileData.getTestModuleName() + File.separator + fileData.getTestName());
+        } catch (IOException e) {
+            Logger.Global.logState("Unable to set source testcase: " + e.getMessage(), LogLevel.Warn);
+        }
+        
+        Logger.Global.logState("Copied testcase: " + fileData.getTestName() + ".", LogLevel.Info);
+
+        result = loadTestcaseFromFile("CopiedTests" + File.separator
+                + fileData.getTestModuleName() + File.separator + copiedTestcase.getName(), new File(fileData.getRelativeTestObjectFolder()));
 
         return result;
     }

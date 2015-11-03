@@ -7,8 +7,6 @@ import java.math.BigInteger;
 
 import org.bouncycastle.crypto.params.DHParameters;
 import org.bouncycastle.crypto.params.DHPublicKeyParameters;
-import com.secunet.bouncycastle.crypto.tls.ServerDHParams;
-import com.secunet.bouncycastle.crypto.tls.TlsDHUtils;
 
 public class ServerDHParams
 {

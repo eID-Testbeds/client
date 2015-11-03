@@ -5,9 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 
-import com.secunet.bouncycastle.crypto.tls.ServerSRPParams;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Arrays;
 
 public class ServerSRPParams

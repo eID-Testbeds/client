@@ -4,12 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.HeartbeatExtension;
-import com.secunet.bouncycastle.crypto.tls.HeartbeatMode;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 public class HeartbeatExtension
 {
     protected short mode;

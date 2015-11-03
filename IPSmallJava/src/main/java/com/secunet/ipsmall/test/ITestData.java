@@ -1,7 +1,5 @@
 package com.secunet.ipsmall.test;
 
-import java.security.PrivateKey;
-import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +64,8 @@ public interface ITestData {
     
     public List<String> getTestMessagesEnd();
     
+    public String getCopyOf();
+    
     /**
      * 
      * Client Methods
@@ -95,8 +95,6 @@ public interface ITestData {
     public byte[] getEIDServiceCV_DVCA();
     
     public byte[] getEIDServiceCV_TERM();
-    
-    public byte[] getEIDServiceCV_TERM2();
     
     public byte[] getEIDServiceCV_TERM_KEY();
     
@@ -184,9 +182,9 @@ public interface ITestData {
     
     public int getTCTokenProviderPort();
     
-    public X509Certificate[] getTCTokenProviderCertificate();
+    public Certificate getTCTokenProviderCertificate();
     
-    public PrivateKey getTCTokenProviderPrivateKey();
+    public AsymmetricKeyParameter getTCTokenProviderPrivateKey();
     
     public String getTCTokenProviderIndexPage();
     
@@ -206,9 +204,9 @@ public interface ITestData {
     
     public String getCommErrorAddressServerCommunicationErrorPageURL();
     
-    public X509Certificate[] getCommErrorAddressServerCertificate();
+    public Certificate getCommErrorAddressServerCertificate();
     
-    public PrivateKey getCommErrorAddressServerPrivateKey();
+    public AsymmetricKeyParameter getCommErrorAddressServerPrivateKey();
     
     public String getCommErrorAddressServerIndexPage();
     
@@ -276,7 +274,7 @@ public interface ITestData {
      * @throws Exception
      *             in error case
      */
-    public PrivateKey readPrivateKey(String fileName) throws Exception;
+    public AsymmetricKeyParameter readPrivateKey(String fileName) throws Exception;
     
     /**
      * Read a X.509certificate from a file in test object-specific data directory
@@ -287,13 +285,15 @@ public interface ITestData {
      * @throws Exception
      *             in error case
      */
-    public X509Certificate readCertificate(String fileName) throws Exception;
+    public Certificate readCertificate(String fileName) throws Exception;
+    
+    public AsymmetricKeyParameter loadPrivateKeyBC(String propKey) throws Exception;
+    
+    public Certificate loadCertifcatesBC(String key) throws Exception;
     
     public ITestSession getNewSession();
     
     public ITestSession getSession(String id);
-    
-    public String getNetworkUnreachableHostname();
     
     public String getECardDIDAuthenticate3Template();
     
@@ -341,8 +341,6 @@ public interface ITestData {
     public void removeTestProtocolCallback(ITestProtocolCallback tpcb);
     
     public void sendMessageToCallbacks(ITestEvent event, Object data, SourceComponent sourceComponent, Object source);
-    
-    public boolean isAutonomic();
     
     public void generateNewTestcaseLogfile();
     
@@ -421,4 +419,7 @@ public interface ITestData {
      * Get the configurationIdentifier to indicate to the remote card simulation which card should be simulated.
      */
     public String getCardSimulationConfigurationIdentifier();
+    
+    public void setSkipNextICSCheck(boolean skip);
+    public boolean getSkipNextICSCheck();
 }

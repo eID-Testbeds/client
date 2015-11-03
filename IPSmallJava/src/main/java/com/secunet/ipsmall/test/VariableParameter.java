@@ -3,9 +3,9 @@ package com.secunet.ipsmall.test;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import com.secunet.ipsmall.util.Base64Util;
-import com.secunet.ipsmall.util.CommonUtil;
-import com.secunet.ipsmall.util.VariableParser.VariableProvider;
+import com.secunet.testbedutils.utilities.Base64Util;
+import com.secunet.testbedutils.utilities.CommonUtil;
+import com.secunet.testbedutils.utilities.VariableParser.VariableProvider;
 
 public class VariableParameter implements VariableProvider {
     
@@ -36,7 +36,6 @@ public class VariableParameter implements VariableProvider {
     public final static String c_eidServiceCV_CVCA = "eidservice.cv.cvca";
     public final static String c_eidServiceCV_DVCA = "eidservice.cv.dvca";
     public final static String c_eidServiceCV_TERM = "eidservice.cv.terminal";
-    public final static String c_eidServiceCV_TERM2 = "eidservice.cv.terminal2";
     public final static String c_eidServiceCV_TERM_KEY = "eidservice.cv.terminal.key";
     public final static String c_eidServiceCV_TERM_SECTOR = "eidservice.cv.terminal.sector";
     public final static String c_eidServiceCertDescription = "eidservice.cert.description";
@@ -63,8 +62,6 @@ public class VariableParameter implements VariableProvider {
     public final static String c_redirectorRefreshPrivateKeysPrefix = "redirector.refresh.privatekey.";
     public final static String c_redirectorTCTokenStatusPrefix = "redirector.tctoken.status.";
     public final static String c_redirectorRefreshStatusPrefix = "redirector.refresh.status.";
-    
-    public final static String c_networkUnreachableHostname = "network.unreachable.hostname";
     
     ArrayList<String> m_allVars = new ArrayList<String>();
     
@@ -139,9 +136,6 @@ public class VariableParameter implements VariableProvider {
         }
         if (c_eidServiceCV_TERM.equals(varname)) {
             return Base64Util.encodeHEX(m_testData.getEIDServiceCV_TERM());
-        }
-        if (c_eidServiceCV_TERM2.equals(varname)) {
-            return Base64Util.encodeHEX(m_testData.getEIDServiceCV_TERM2());
         }
         
         if (c_eidServiceCertDescription.equals(varname)) {
@@ -218,10 +212,6 @@ public class VariableParameter implements VariableProvider {
         }
         if (varname.startsWith(c_redirectorRefreshStatusPrefix)) {
             return m_testData.getRedirectorRefreshStatus(Integer.parseInt(CommonUtil.getSubstringAfter(varname, ".", true)));
-        }
-        
-        if (c_networkUnreachableHostname.equals(varname)) {
-            return m_testData.getNetworkUnreachableHostname();
         }
         
         if (c_commErrorAddressServerCommunicationErrorPageURL.equals(varname)) {

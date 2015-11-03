@@ -1010,7 +1010,7 @@
     <p:certificateDefinition>
         <p:name>CERT_TLS_EIDSERVER_3_B</p:name>
         <p:algorithmID>
-            <p:RSA keylength="1024">SHA256withRSA</p:RSA>
+            <p:RSA keylength="1536">SHA256withRSA</p:RSA>
         </p:algorithmID>
         <p:notAfterOffset>730</p:notAfterOffset>
         <p:issuer>

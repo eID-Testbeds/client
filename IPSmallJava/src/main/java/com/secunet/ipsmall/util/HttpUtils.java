@@ -5,7 +5,11 @@ import java.util.Map;
 
 import com.secunet.ipsmall.http.NanoHTTPD.HTTPSession;
 import com.secunet.ipsmall.rmi.IBrowserSimulator;
+import com.secunet.ipsmall.rmi.RmiHttpResponse;
 import com.secunet.ipsmall.test.ITestProtocolCallback.SourceComponent;
+import com.secunet.ipsmall.tls.BouncyCastleSocket;
+
+import com.secunet.testbedutils.utilities.CommonUtil;
 
 public class HttpUtils {
     
@@ -77,8 +81,55 @@ public class HttpUtils {
         return result;
     }
     
-    public static String getRedirectUrl(Map<String, String> headers) {
-        return (headers != null ? CommonUtil.getIgnoreCase(headers, "Location") : null);
+    public static String getRedirectUrl(final RmiHttpResponse response) {
+        return (response != null && response.headers != null ? CommonUtil.getIgnoreCase(response.headers, "Location") : null);
     }
     
+    public static String getRedirectUrl(final HTTPSession session) {
+        if (session == null) {
+            return null;
+        }
+        
+        String url = "";
+        
+        // get protocol
+        if (session.getSocket() != null) {
+            if (session.getSocket() instanceof BouncyCastleSocket) {
+                url += "https://";
+            } else {
+                url += "http://";
+            }
+        } else {
+            return null;
+        }
+        
+        // get host
+        if (session.getHeaders() != null) {
+            String host = CommonUtil.getIgnoreCase(session.getHeaders(), "host");
+            if (host != null) {
+                url += host;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+        
+        // get path
+        if (session.getUri() != null) {
+            url += session.getUri();
+        } else {
+            url += "/";
+        }
+        
+        // get params
+        if (session.getParms() != null) {
+            String params = CommonUtil.getIgnoreCase(session.getParms(), "NanoHttpd.QUERY_STRING");
+            if (params != null) {
+                url += "?" + params;
+            }
+        }
+        
+        return url;
+    }
 }

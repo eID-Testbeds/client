@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.secunet.bouncycastle.crypto.tls.NewSessionTicket;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
-
 public class NewSessionTicket
 {
     protected long ticketLifetimeHint;

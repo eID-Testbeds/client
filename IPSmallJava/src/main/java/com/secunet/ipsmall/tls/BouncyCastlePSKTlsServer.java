@@ -7,6 +7,7 @@ import java.util.List;
 import org.bouncycastle.crypto.agreement.DHStandardGroups;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.DHParameters;
+import org.bouncycastle.jce.provider.X509CertificateObject;
 
 import com.secunet.bouncycastle.crypto.tls.Certificate;
 import com.secunet.bouncycastle.crypto.tls.CipherSuite;
@@ -32,6 +33,13 @@ public class BouncyCastlePSKTlsServer extends BouncyCastleNotifyingPSKTlsServer 
         super(pskIdentityManager);
         this.serverPrivateKey = serverPrivateKey;
         this.serverCertificate = serverCertificateChain;
+
+        // dump certificate to log
+        try {
+            X509CertificateObject certObject = new X509CertificateObject(serverCertificateChain.getCertificateAt(0));
+            Logger.TLS.logState(certObject.toString(), LogLevel.Debug);
+        } catch (Exception ignore) {
+        }
     }
     
     public void setAllowedProtocolVersions(ProtocolVersion protocolMinimumVersion,

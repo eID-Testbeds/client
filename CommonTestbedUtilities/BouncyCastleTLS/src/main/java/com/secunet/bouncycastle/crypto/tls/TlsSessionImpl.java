@@ -1,7 +1,5 @@
 package com.secunet.bouncycastle.crypto.tls;
 
-import com.secunet.bouncycastle.crypto.tls.SessionParameters;
-import com.secunet.bouncycastle.crypto.tls.TlsSession;
 import org.bouncycastle.util.Arrays;
 
 class TlsSessionImpl implements TlsSession

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns="http://www.secunet.com" targetNamespace="http://www.secunet.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<xs:element name="TR-03124-2_ICS">
     	<xs:complexType>
@@ -131,7 +131,7 @@
 					</xs:restriction>
 				</xs:simpleType>
           	</xs:element>
-			<xs:element name="TA" minOccurs="1" maxOccurs="11">
+			<xs:element name="TA" minOccurs="0" maxOccurs="11">
             	<xs:simpleType>
 			    	<xs:restriction base="xs:string">
 			    		<xs:enumeration value="TA-RSA-v1-5-SHA-1" />
@@ -148,7 +148,7 @@
 			    	</xs:restriction>
 	    		</xs:simpleType>
 	    	</xs:element>
-            <xs:element name="CA" minOccurs="1" maxOccurs="8">
+            <xs:element name="CA" minOccurs="0" maxOccurs="8">
             	<xs:simpleType>
 			    	<xs:restriction base="xs:string">
 			    		<xs:enumeration value="CA-DH-3DES-CBC-CBC" />

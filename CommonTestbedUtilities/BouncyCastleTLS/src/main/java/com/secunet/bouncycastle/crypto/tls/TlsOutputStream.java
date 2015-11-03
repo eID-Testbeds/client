@@ -3,8 +3,6 @@ package com.secunet.bouncycastle.crypto.tls;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import com.secunet.bouncycastle.crypto.tls.TlsProtocol;
-
 /**
  * An OutputStream for an TLS connection.
  */

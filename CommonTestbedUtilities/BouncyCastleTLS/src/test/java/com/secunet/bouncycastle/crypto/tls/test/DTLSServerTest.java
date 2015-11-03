@@ -5,10 +5,10 @@ import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 import java.security.SecureRandom;
 
-import com.secunet.bouncycastle.crypto.tls.DTLSServerProtocol;
-import com.secunet.bouncycastle.crypto.tls.DTLSTransport;
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
-import com.secunet.bouncycastle.crypto.tls.UDPTransport;
+import org.bouncycastle.crypto.tls.DTLSServerProtocol;
+import org.bouncycastle.crypto.tls.DTLSTransport;
+import org.bouncycastle.crypto.tls.DatagramTransport;
+import org.bouncycastle.crypto.tls.UDPTransport;
 
 /**
  * A simple test designed to conduct a DTLS handshake with an external DTLS client.

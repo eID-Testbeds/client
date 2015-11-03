@@ -16,12 +16,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -94,9 +92,8 @@ import com.secunet.ipsmall.test.FileBasedTestData;
 import com.secunet.ipsmall.test.ITestData;
 import com.secunet.ipsmall.test.TestProject;
 import com.secunet.ipsmall.test.TestState;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.testbedutils.utilities.CommonUtil;
 import com.secunet.ipsmall.util.FileUtils;
-import java.util.logging.Level;
 
 /**
  * Main UI which reacts the property changes of the currently active project.
@@ -480,17 +477,25 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
         JLabel lblHeaderTree = new JLabel("Available Testcases");
         spTopTree.setColumnHeaderView(lblHeaderTree);
 
-        sl_contentPane.putConstraint(SpringLayout.SOUTH, spTopTree, -2, SpringLayout.NORTH, lblStatusbar);
-        sl_contentPane.putConstraint(SpringLayout.WEST, spTopTree, 0, SpringLayout.WEST, pnlContentPane);
+        
+        
+        JSplitPane horizontalSplitPane = new JSplitPane();
+        horizontalSplitPane.setResizeWeight(0.3);
+        horizontalSplitPane.setOneTouchExpandable(true);
+        horizontalSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+        
+        sl_contentPane.putConstraint(SpringLayout.SOUTH, horizontalSplitPane, -2, SpringLayout.NORTH, lblStatusbar);
+        sl_contentPane.putConstraint(SpringLayout.NORTH, horizontalSplitPane, 0, SpringLayout.NORTH, pnlContentPane);
+        sl_contentPane.putConstraint(SpringLayout.WEST, horizontalSplitPane, 0, SpringLayout.WEST, pnlContentPane);
+        sl_contentPane.putConstraint(SpringLayout.EAST, horizontalSplitPane, 0, SpringLayout.EAST, pnlContentPane);
+        
         sl_contentPane.putConstraint(SpringLayout.EAST, spTopTree, 220, SpringLayout.WEST, pnlContentPane);
         sl_contentPane.putConstraint(SpringLayout.NORTH, spTopTree, 0, SpringLayout.NORTH, pnlContentPane);
-        pnlContentPane.add(spTopTree);
 
         JPanel panelUILog = new JPanel();
         sl_contentPane.putConstraint(SpringLayout.NORTH, panelUILog, 5, SpringLayout.SOUTH, panelTestcase);
         panelUILog.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Testcase Log", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         sl_contentPane.putConstraint(SpringLayout.WEST, panelUILog, 0, SpringLayout.WEST, panelTestcase);
-        sl_contentPane.putConstraint(SpringLayout.SOUTH, panelUILog, 2, SpringLayout.NORTH, lblStatusbar);
         sl_contentPane.putConstraint(SpringLayout.EAST, panelUILog, 0, SpringLayout.EAST, panelTestcase);
 
         jfxUILog = new JFXPanel();
@@ -501,7 +506,6 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
         sl_contentPane.putConstraint(SpringLayout.NORTH, spUILog, 5, SpringLayout.SOUTH, panelTestcase);
         sl_contentPane.putConstraint(SpringLayout.WEST, spUILog, 300, SpringLayout.WEST, panelTestcase);
         sl_contentPane.putConstraint(SpringLayout.EAST, spUILog, 0, SpringLayout.EAST, panelTestcase);
-        sl_contentPane.putConstraint(SpringLayout.SOUTH, spUILog, -9, SpringLayout.NORTH, lblStatusbar);
         sl_panelTestcase.putConstraint(SpringLayout.NORTH, lblStatusbar, 0, SpringLayout.NORTH, spUILog);
 
         JSplitPane splitPane = new JSplitPane();
@@ -509,15 +513,22 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
         splitPane.setOneTouchExpandable(true);
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 
-        sl_contentPane.putConstraint(SpringLayout.SOUTH, splitPane, -2, SpringLayout.NORTH, lblStatusbar);
-        sl_contentPane.putConstraint(SpringLayout.WEST, splitPane, 10, SpringLayout.EAST, spTopTree);
         sl_contentPane.putConstraint(SpringLayout.NORTH, splitPane, 0, SpringLayout.NORTH, pnlContentPane);
-        sl_contentPane.putConstraint(SpringLayout.EAST, splitPane, 0, SpringLayout.EAST, pnlContentPane);
-        pnlContentPane.add(splitPane);
 
         splitPane.setLeftComponent(panelTestcase);
         splitPane.setRightComponent(panelUILog);
 
+
+        sl_contentPane.putConstraint(SpringLayout.NORTH, spTopTree, 0, SpringLayout.NORTH, splitPane);
+        sl_contentPane.putConstraint(SpringLayout.SOUTH, spTopTree, 0, SpringLayout.SOUTH, splitPane);
+        
+        pnlContentPane.add(horizontalSplitPane);
+        horizontalSplitPane.setLeftComponent(spTopTree);
+        horizontalSplitPane.setRightComponent(splitPane);
+        
+        
+        
+        
         btnStart = new JButton(TRIGGER_LABEL_START);
         btnStart.setEnabled(false);
         btnStart.addActionListener(new ActionListener() {
@@ -771,12 +782,6 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
      * @param e selection event
      */
     protected void testcaseTreeSelectionValueChanged(TreeSelectionEvent e) {
-        // reset the protocol if a new test was selected from the tree
-        /*if (e.getOldLeadSelectionPath() != null
-         && e.getNewLeadSelectionPath() != null
-         && !e.getOldLeadSelectionPath().toString().equals(e.getNewLeadSelectionPath().toString())) {
-         taProtocol.setText("<no data loaded>");
-         }*/
         if (IPSmallManager.getInstance().isTestCaseRunning()) {
             return;
         }
@@ -830,13 +835,9 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
         btnFail.setEnabled(true);
         StringBuilder descrBldr = new StringBuilder();
         descrBldr.append(data.getTestDescription()).append(System.lineSeparator()).append(System.lineSeparator());
-        descrBldr.append("Operator Type:").append((data.isAutonomic()) ? "autonomous" : "manual").append(System.lineSeparator());
         descrBldr.append("Browser Type:").append(data.getTestType().toString().toLowerCase()).append(System.lineSeparator());
         if (!data.isFailOnXMLEvaluationError()) {
             descrBldr.append("Warning: hard xml message validation is deactivated!").append(System.lineSeparator());
-        }
-        if (data instanceof FileBasedTestData && ((FileBasedTestData) data).isLoaded()) {
-            descrBldr.append("null-Properties: ").append(((FileBasedTestData) data).getNotLoadedMembers().size()).append(System.lineSeparator());
         }
         taDescr.setText(descrBldr.toString());
 
@@ -1091,6 +1092,22 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
         return false;
     }
 
+    private DefaultMutableTreeNode findTestcaseInTree(String testid) {
+        for (int i = 0; i < treeTestcases.getRowCount(); i++) {
+            TreePath path = treeTestcases.getPathForRow(i);
+            if (path.getLastPathComponent() instanceof DefaultMutableTreeNode
+                    && ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject() instanceof ITestData) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+                ITestData pathTC = (ITestData) node.getUserObject();
+                if (pathTC.getTestName().equals(testid)) {
+                    return node;
+                }
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Main method to start or cancel test case runs by checking the selected
      * tree elements and filling/filtering the selections into the queue. than
@@ -1108,8 +1125,6 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
                 }
 
                 taProtocol.setText("");
-
-                boolean filterManualtestcases = false;//chBoxAutonomical.isSelected();
 
                 TreePath[] paths = treeTestcases.getSelectionPaths();
 
@@ -1143,8 +1158,7 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
                             && ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject() instanceof String) {
                         for (Enumeration<?> e = ((DefaultMutableTreeNode) path.getLastPathComponent()).children(); e.hasMoreElements();) {
                             DefaultMutableTreeNode child = (DefaultMutableTreeNode) e.nextElement();
-                            if (child.getUserObject() instanceof ITestData
-                                    && (!filterManualtestcases || (filterManualtestcases && ((ITestData) child.getUserObject()).isAutonomic()))) {
+                            if (child.getUserObject() instanceof ITestData) {
                                 queueItems.add((ITestData) child.getUserObject());
                             }
                         }
@@ -1159,7 +1173,7 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
                 IPSmallManager.getInstance().getProject().setQueue(queueItems);
 
                 // start processing of the queue
-                IPSmallManager.getInstance().getProject().setOnlyAutonomic(filterManualtestcases);
+                IPSmallManager.getInstance().getProject().setOnlyAutonomic(false);
                 if (IPSmallManager.getInstance().startTestcase(false)) {
                     setUITestcaseStarted();
                 } else {
@@ -1239,7 +1253,10 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
     private void updateTestcase(String testid) {
         TestState state = IPSmallManager.getInstance().getProject().getState(testid);
         boolean running = TestState.Running == state;
-        updateTree();
+        
+        DefaultMutableTreeNode node = findTestcaseInTree(testid);
+        ((DefaultTreeModel) treeTestcases.getModel()).nodeChanged(node);
+        
         updateQueue();
 
         publishToStatusbar(testid + " " + state);
@@ -1623,9 +1640,11 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
                         IPSmallManager.getInstance().getMainFrame().displayErrorMessage(ex);
                         return;
                     }
+                    
+                    ((DefaultTreeModel) treeTestcases.getModel()).nodeChanged(node);
+
                 }
             }
-            updateTree();
         }
     }
 
@@ -1647,10 +1666,7 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
             if (node.getUserObject() instanceof ITestData) {
                 ITestData data = IPSmallManager.getInstance().reloadTestcase((ITestData) node.getUserObject());
                 node.setUserObject(data);
-                ((DefaultTreeModel) treeTestcases.getModel()).nodeChanged((DefaultMutableTreeNode) selPath.getLastPathComponent());
-                updateTree();
-                treeTestcases.fireTreeExpanded(null);
-                treeTestcases.setSelectionPath(selPath);
+                ((DefaultTreeModel) treeTestcases.getModel()).nodeChanged(node);
             }
         }
     }
@@ -1674,15 +1690,16 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
                 ITestData data = (ITestData) node.getUserObject();
 
                 ITestData newData = IPSmallManager.getInstance().copyTestCase(data);
-                IPSmallManager.getInstance().addTestcase(newData);
-                updateTree();
-                /*
-                 ITestData data = IPSmallManager.getInstance().reloadTestcase((ITestData)node.getUserObject());
-                 node.setUserObject(data);
-                 ((DefaultTreeModel)treeTestcases.getModel()).nodeChanged((DefaultMutableTreeNode)selPath.getLastPathComponent());
-                 updateTree();
-                 treeTestcases.fireTreeExpanded(null);
-                 treeTestcases.setSelectionPath(selPath);*/
+				if (newData != null) {
+                	IPSmallManager.getInstance().addTestcase(newData);
+                
+                	// update tree view
+                	DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(newData);
+                	DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
+                	parent.add(newChild);
+                	UIUtils.sortTreeNodesAlphaNumeric(parent);
+                	((DefaultTreeModel)treeTestcases.getModel()).reload(parent);
+				}
             }
         }
     }
@@ -1705,7 +1722,6 @@ public class MainFrame extends JFrame implements PropertyChangeListener {
             if (node.getUserObject() instanceof ITestData) {
                 ITestData data = (ITestData) node.getUserObject();
                 IPSmallManager.getInstance().editTestCaseInExternalEditor(data);
-
             }
         }
     }

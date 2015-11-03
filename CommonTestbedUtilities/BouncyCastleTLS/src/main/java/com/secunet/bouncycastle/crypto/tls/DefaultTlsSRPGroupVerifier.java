@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import org.bouncycastle.crypto.agreement.srp.SRP6StandardGroups;
 import org.bouncycastle.crypto.params.SRP6GroupParameters;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPGroupVerifier;
 
 public class DefaultTlsSRPGroupVerifier
     implements TlsSRPGroupVerifier

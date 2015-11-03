@@ -18,7 +18,7 @@ import com.secunet.testbedutils.cvc.cvcertificate.DataBuffer;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import com.secunet.ipsmall.util.VariableParameterContainer;
-import com.secunet.ipsmall.util.VariableParser;
+import com.secunet.testbedutils.utilities.VariableParser;
 
 /**
  * Personalization of PersoSim

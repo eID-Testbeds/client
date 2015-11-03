@@ -2,25 +2,24 @@ package com.secunet.bouncycastle.crypto.tls.test;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Vector;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.x509.Certificate;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.AlertLevel;
-import com.secunet.bouncycastle.crypto.tls.CertificateRequest;
-import com.secunet.bouncycastle.crypto.tls.ClientCertificateType;
-import com.secunet.bouncycastle.crypto.tls.ConnectionEnd;
-import com.secunet.bouncycastle.crypto.tls.DefaultTlsClient;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SignatureAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsAuthentication;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsSignerCredentials;
+import org.bouncycastle.crypto.tls.AlertDescription;
+import org.bouncycastle.crypto.tls.AlertLevel;
+import org.bouncycastle.crypto.tls.CertificateRequest;
+import org.bouncycastle.crypto.tls.ClientCertificateType;
+import org.bouncycastle.crypto.tls.ConnectionEnd;
+import org.bouncycastle.crypto.tls.DefaultTlsClient;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.SignatureAlgorithm;
+import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import org.bouncycastle.crypto.tls.TlsAuthentication;
+import org.bouncycastle.crypto.tls.TlsCredentials;
+import org.bouncycastle.crypto.tls.TlsFatalAlert;
+import org.bouncycastle.crypto.tls.TlsSignerCredentials;
 import org.bouncycastle.util.Arrays;
 
 class TlsTestClientImpl
@@ -126,7 +125,7 @@ class TlsTestClientImpl
     {
         return new TlsAuthentication()
         {
-            public void notifyServerCertificate(com.secunet.bouncycastle.crypto.tls.Certificate serverCertificate)
+            public void notifyServerCertificate(org.bouncycastle.crypto.tls.Certificate serverCertificate)
                 throws IOException
             {
                 boolean isEmpty = serverCertificate == null || serverCertificate.isEmpty();
@@ -195,9 +194,9 @@ class TlsTestClientImpl
                         return sig;
                     }
 
-                    public com.secunet.bouncycastle.crypto.tls.Certificate getCertificate()
+                    public org.bouncycastle.crypto.tls.Certificate getCertificate()
                     {
-                        com.secunet.bouncycastle.crypto.tls.Certificate cert = signerCredentials.getCertificate();
+                        org.bouncycastle.crypto.tls.Certificate cert = signerCredentials.getCertificate();
 
                         if (config.clientAuth == TlsTestConfig.CLIENT_AUTH_INVALID_CERT)
                         {
@@ -216,11 +215,11 @@ class TlsTestClientImpl
         };
     }
 
-    protected com.secunet.bouncycastle.crypto.tls.Certificate corruptCertificate(com.secunet.bouncycastle.crypto.tls.Certificate cert)
+    protected org.bouncycastle.crypto.tls.Certificate corruptCertificate(org.bouncycastle.crypto.tls.Certificate cert)
     {
         Certificate[] certList = cert.getCertificateList();
         certList[0] = corruptCertificateSignature(certList[0]);
-        return new com.secunet.bouncycastle.crypto.tls.Certificate(certList);
+        return new org.bouncycastle.crypto.tls.Certificate(certList);
     }
 
     protected Certificate corruptCertificateSignature(Certificate cert)

@@ -2,11 +2,6 @@ package com.secunet.bouncycastle.crypto.tls;
 
 import java.io.IOException;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.DTLSRecordLayer;
-import com.secunet.bouncycastle.crypto.tls.DatagramTransport;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-
 public class DTLSTransport
     implements DatagramTransport
 {

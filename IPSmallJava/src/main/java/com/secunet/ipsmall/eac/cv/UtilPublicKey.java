@@ -20,7 +20,7 @@ import org.bouncycastle.util.BigIntegers;
 
 import com.secunet.ipsmall.eac.DHDomainParameter;
 import com.secunet.ipsmall.eac.DHDomainParameter.Type;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.testbedutils.utilities.CommonUtil;
 
 public class UtilPublicKey {
     public static byte[] getRawKey(ECPublicKey pub) throws IOException {

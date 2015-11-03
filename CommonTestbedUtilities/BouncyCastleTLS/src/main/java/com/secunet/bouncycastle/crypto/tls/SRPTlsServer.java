@@ -3,24 +3,6 @@ package com.secunet.bouncycastle.crypto.tls;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import com.secunet.bouncycastle.crypto.tls.AbstractTlsServer;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.DefaultTlsCipherFactory;
-import com.secunet.bouncycastle.crypto.tls.EncryptionAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.MACAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsCipher;
-import com.secunet.bouncycastle.crypto.tls.TlsCipherFactory;
-import com.secunet.bouncycastle.crypto.tls.TlsCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPIdentityManager;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPKeyExchange;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPLoginParameters;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsSignerCredentials;
-
 public class SRPTlsServer
     extends AbstractTlsServer
 {
@@ -94,21 +76,17 @@ public class SRPTlsServer
 
     public TlsCredentials getCredentials() throws IOException
     {
-        switch (selectedCipherSuite)
+        int keyExchangeAlgorithm = TlsUtils.getKeyExchangeAlgorithm(selectedCipherSuite);
+
+        switch (keyExchangeAlgorithm)
         {
-        case CipherSuite.TLS_SRP_SHA_WITH_3DES_EDE_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_WITH_AES_128_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_WITH_AES_256_CBC_SHA:
+        case KeyExchangeAlgorithm.SRP:
             return null;
 
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_AES_128_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_AES_256_CBC_SHA:
+        case KeyExchangeAlgorithm.SRP_DSS:
             return getDSASignerCredentials();
 
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_AES_128_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_AES_256_CBC_SHA:
+        case KeyExchangeAlgorithm.SRP_RSA:
             return getRSASignerCredentials();
 
         default:
@@ -120,52 +98,14 @@ public class SRPTlsServer
     public TlsKeyExchange getKeyExchange()
         throws IOException
     {
-        switch (selectedCipherSuite)
+        int keyExchangeAlgorithm = TlsUtils.getKeyExchangeAlgorithm(selectedCipherSuite);
+
+        switch (keyExchangeAlgorithm)
         {
-        case CipherSuite.TLS_SRP_SHA_WITH_3DES_EDE_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_WITH_AES_128_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_WITH_AES_256_CBC_SHA:
-            return createSRPKeyExchange(KeyExchangeAlgorithm.SRP);
-
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_AES_128_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_AES_256_CBC_SHA:
-            return createSRPKeyExchange(KeyExchangeAlgorithm.SRP_RSA);
-
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_AES_128_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_AES_256_CBC_SHA:
-            return createSRPKeyExchange(KeyExchangeAlgorithm.SRP_DSS);
-
-        default:
-            /*
-             * Note: internal error here; the TlsProtocol implementation verifies that the
-             * server-selected cipher suite was in the list of client-offered cipher suites, so if
-             * we now can't produce an implementation, we shouldn't have offered it!
-             */
-            throw new TlsFatalAlert(AlertDescription.internal_error);
-        }
-    }
-
-    public TlsCipher getCipher()
-        throws IOException
-    {
-        switch (selectedCipherSuite)
-        {
-        case CipherSuite.TLS_SRP_SHA_WITH_3DES_EDE_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA:
-            return cipherFactory.createCipher(context, EncryptionAlgorithm._3DES_EDE_CBC, MACAlgorithm.hmac_sha1);
-
-        case CipherSuite.TLS_SRP_SHA_WITH_AES_128_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_AES_128_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_AES_128_CBC_SHA:
-            return cipherFactory.createCipher(context, EncryptionAlgorithm.AES_128_CBC, MACAlgorithm.hmac_sha1);
-
-        case CipherSuite.TLS_SRP_SHA_WITH_AES_256_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_RSA_WITH_AES_256_CBC_SHA:
-        case CipherSuite.TLS_SRP_SHA_DSS_WITH_AES_256_CBC_SHA:
-            return cipherFactory.createCipher(context, EncryptionAlgorithm.AES_256_CBC, MACAlgorithm.hmac_sha1);
+        case KeyExchangeAlgorithm.SRP:
+        case KeyExchangeAlgorithm.SRP_DSS:
+        case KeyExchangeAlgorithm.SRP_RSA:
+            return createSRPKeyExchange(keyExchangeAlgorithm);
 
         default:
             /*

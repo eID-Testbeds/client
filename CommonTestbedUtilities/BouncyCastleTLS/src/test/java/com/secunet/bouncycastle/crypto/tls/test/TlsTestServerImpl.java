@@ -5,18 +5,18 @@ import java.io.PrintStream;
 import java.util.Vector;
 
 import org.bouncycastle.asn1.x509.Certificate;
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.AlertLevel;
-import com.secunet.bouncycastle.crypto.tls.CertificateRequest;
-import com.secunet.bouncycastle.crypto.tls.ClientCertificateType;
-import com.secunet.bouncycastle.crypto.tls.ConnectionEnd;
-import com.secunet.bouncycastle.crypto.tls.DefaultTlsServer;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SignatureAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsEncryptionCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsSignerCredentials;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
+import org.bouncycastle.crypto.tls.AlertDescription;
+import org.bouncycastle.crypto.tls.AlertLevel;
+import org.bouncycastle.crypto.tls.CertificateRequest;
+import org.bouncycastle.crypto.tls.ClientCertificateType;
+import org.bouncycastle.crypto.tls.ConnectionEnd;
+import org.bouncycastle.crypto.tls.DefaultTlsServer;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.SignatureAlgorithm;
+import org.bouncycastle.crypto.tls.TlsEncryptionCredentials;
+import org.bouncycastle.crypto.tls.TlsFatalAlert;
+import org.bouncycastle.crypto.tls.TlsSignerCredentials;
+import org.bouncycastle.crypto.tls.TlsUtils;
 
 class TlsTestServerImpl
     extends DefaultTlsServer
@@ -135,7 +135,7 @@ class TlsTestServerImpl
         return new CertificateRequest(certificateTypes, serverSigAlgs, certificateAuthorities);
     }
 
-    public void notifyClientCertificate(com.secunet.bouncycastle.crypto.tls.Certificate clientCertificate)
+    public void notifyClientCertificate(org.bouncycastle.crypto.tls.Certificate clientCertificate)
         throws IOException
     {
         boolean isEmpty = (clientCertificate == null || clientCertificate.isEmpty());

@@ -81,16 +81,16 @@
     </build>
 
     <dependencies>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+            <version>1.52</version>
+        </dependency> -->
 
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk15on</artifactId>
-            <version>RELEASE</version>
+            <version>1.53</version>
         </dependency>
 
     </dependencies>

@@ -8,11 +8,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,10 +36,10 @@ import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.ITestProtocolCallback.ITestEvent;
 import com.secunet.ipsmall.test.ITestProtocolCallback.SourceComponent;
-import com.secunet.ipsmall.util.CommonUtil;
+import com.secunet.testbedutils.utilities.CommonUtil;
 import com.secunet.ipsmall.util.FileDateComperator;
 import com.secunet.ipsmall.util.FileUtils;
-import com.secunet.ipsmall.util.VariableParser;
+import com.secunet.testbedutils.utilities.VariableParser;
 import com.secunet.testbedutils.cvc.cvcertificate.DataBuffer;
 
 public class FileBasedTestData implements ITestData {
@@ -55,6 +50,7 @@ public class FileBasedTestData implements ITestData {
     public final static String c_eCardTestCaseDesc = "ecard.testcase.description";
     public final static String c_eCardTestCaseReference = "ecard.testcase.reference";
     public final static String c_eCardTestCaseType = "ecard.testcase.type";
+    public final static String c_eCardTestCaseCopyof = "ecard.testcase.copyof";
     public final static String c_eCardTestCaseFailOnXMLEvaluationError = "ecard.testcase.failOnXMLEvaluationError";
     public final static String c_eCardTestCaseLegacyActivation = "ecard.testcase.legacyActivation";
 
@@ -74,7 +70,6 @@ public class FileBasedTestData implements ITestData {
     public final static String c_eidServiceCV_CVCA = "eidservice.cv.cvca";
     public final static String c_eidServiceCV_DVCA = "eidservice.cv.dvca";
     public final static String c_eidServiceCV_TERM = "eidservice.cv.terminal";
-    public final static String c_eidServiceCV_TERM2 = "eidservice.cv.terminal2";
     public final static String c_eidServiceCV_TERM_KEY = "eidservice.cv.terminal.key";
     public final static String c_eidServiceCV_TERM_SECTOR = "eidservice.cv.terminal.sector";
     public final static String c_eidServiceCertDescription = "eidservice.cert.description";
@@ -164,11 +159,8 @@ public class FileBasedTestData implements ITestData {
     public final static String c_browserSimulatorRmiHost = "browsersimulator.rmi.host";
     public final static String c_browserSimulatorRmiPort = "browsersimulator.rmi.port";
 
-    public final static String c_testcaseAutonomic = "testcase.autonomic";
     public final static String c_testcaseProfiles = "testcase.profiles";
     public final static String c_isEac1ConfirmDialog = "testcase.eac1.confirm";
-
-    public final static String c_networkUnreachableHostname = "network.unreachable.hostname";
 
     public final static String c_expectedAllowedResultMinorErrors = "expect.allowedParams.resultMinorErrors";
 
@@ -233,6 +225,7 @@ public class FileBasedTestData implements ITestData {
     boolean testEnabled;
     boolean testManualResult;
     String testReference;
+    String testCopyOf;
 
     List<String> testMessagesBegin;
     List<String> testMessagesEnd;
@@ -275,7 +268,6 @@ public class FileBasedTestData implements ITestData {
     byte[] eidServiceCV_CVCA;
     byte[] eidServiceCV_DVCA;
     byte[] eidServiceCV_TERM;
-    byte[] eidServiceCV_TERM2;
     byte[] eidServiceCV_TERM_KEY;
     byte[] eidServiceCV_TERM_SECTOR;
     byte[] eidServiceCertificateDescription;
@@ -309,8 +301,8 @@ public class FileBasedTestData implements ITestData {
 
     String tcTokenProviderHostname;
     int tcTokenProviderPort;
-    X509Certificate[] tcTokenProviderCertificate;
-    PrivateKey tcTokenProviderPrivateKey;
+    Certificate tcTokenProviderCertificate;
+    AsymmetricKeyParameter tcTokenProviderPrivateKey;
     String tcTokenProviderIndexPageTemplate;
     String tcTokenProviderTokenURL;
     List<String> tcTokenProviderTLSVersion;
@@ -320,8 +312,8 @@ public class FileBasedTestData implements ITestData {
     int commErrorAddressServerPort;
     String commErrorAddressServerCommunicationErrorPageURL;
     String commErrorAddressServerCommunicationErrorPageTemplate;
-    X509Certificate[] commErrorAddressServerCertificate;
-    PrivateKey commErrorAddressServerPrivateKey;
+    Certificate commErrorAddressServerCertificate;
+    AsymmetricKeyParameter commErrorAddressServerPrivateKey;
     String commErrorAddressServerIndexPageTemplate;
     List<String> commErrorAddressServerTLSVersion;
     List<String> commErrorAddressServerTLSCipherSuites;
@@ -361,12 +353,9 @@ public class FileBasedTestData implements ITestData {
     String browserSimulatorRmiHost;
     int browserSimulatorRmiPort;
 
-    boolean autonomic;
     List<String> profiles;
 
     boolean isEac1ConfirmDialog;
-
-    String networkUnreachableHostname;
 
     List<String> allowedResultMinorErrors;
 
@@ -436,6 +425,8 @@ public class FileBasedTestData implements ITestData {
     protected Date cardDate;
     private boolean cardSimulationResetAtStart;
     private String cardSimulationConfigurationIdentifier;
+    
+    private boolean skipNextICSStep = false;
 
     // Entry in ArrayList with all Properties
     private class PropsEntry {
@@ -538,6 +529,7 @@ public class FileBasedTestData implements ITestData {
         testManualResult = Boolean.parseBoolean(getPropertyValue(c_eCardTestCaseManualResult));
         testDescription = getPropertyValue(c_eCardTestCaseDesc);
         testReference = getPropertyValue(c_eCardTestCaseReference);
+        testCopyOf = getPropertyValue(c_eCardTestCaseCopyof);
         String type = getPropertyValue(c_eCardTestCaseType);
         if (type != null) {
             testType = Enum.valueOf(Type.class, getPropertyValue(c_eCardTestCaseType).toUpperCase());
@@ -575,8 +567,8 @@ public class FileBasedTestData implements ITestData {
             if ((tcTokenProviderPortStr != null) && (tcTokenProviderPortStr.length() > 0)) {
                 tcTokenProviderPort = Integer.parseInt(tcTokenProviderPortStr);
             }
-            tcTokenProviderCertificate = loadCertifcates(c_tcTokenProviderCertificate);
-            tcTokenProviderPrivateKey = loadPrivateKey(c_tcTokenProviderPrivateKey);
+            tcTokenProviderCertificate = loadCertifcatesBC(c_tcTokenProviderCertificate);
+            tcTokenProviderPrivateKey = loadPrivateKeyBC(c_tcTokenProviderPrivateKey);
             tcTokenProviderTokenURL = getPropertyValue(c_tcTokenProviderTCTokenURL);
             tcTokenProviderTLSVersion = getList(getPropertyValue(c_tcTokenProviderTLSVersion));
             tcTokenProviderTLSCipherSuites = getList(getPropertyValue(c_tcTokenProviderTLSCipherSuites));
@@ -586,8 +578,8 @@ public class FileBasedTestData implements ITestData {
         if (commErrorAddressServerHostname != null && commErrorAddressServerHostname.length() > 0) {
             String commErrorAddressServerPortStr = getPropertyValue(c_commErrorAddressServerPort);
             commErrorAddressServerPort = Integer.parseInt(commErrorAddressServerPortStr);
-            commErrorAddressServerCertificate = loadCertifcates(c_commErrorAddressServerCertificate);
-            commErrorAddressServerPrivateKey = loadPrivateKey(c_commErrorAddressServerPrivateKey);
+            commErrorAddressServerCertificate = loadCertifcatesBC(c_commErrorAddressServerCertificate);
+            commErrorAddressServerPrivateKey = loadPrivateKeyBC(c_commErrorAddressServerPrivateKey);
             commErrorAddressServerTLSVersion = getList(getPropertyValue(c_commErrorAddressServerTLSVersion));
             commErrorAddressServerTLSCipherSuites = getList(getPropertyValue(c_commErrorAddressServerTLSCipherSuites));
             commErrorAddressServerCommunicationErrorPageURL = getPropertyValue(c_commErrorAddressServerCommunicationErrorPageURL);
@@ -607,7 +599,6 @@ public class FileBasedTestData implements ITestData {
         eidServiceCV_CVCA = getFileByPropertyKey(c_eidServiceCV_CVCA);
         eidServiceCV_DVCA = getFileByPropertyKey(c_eidServiceCV_DVCA);
         eidServiceCV_TERM = getFileByPropertyKey(c_eidServiceCV_TERM);
-        eidServiceCV_TERM2 = getFileByPropertyKey(c_eidServiceCV_TERM2);
         eidServiceCV_TERM_KEY = getFileByPropertyKey(c_eidServiceCV_TERM_KEY);
         eidServiceCV_TERM_SECTOR = getFileByPropertyKey(c_eidServiceCV_TERM_SECTOR);
         eidServiceCertificateDescription = getFileByPropertyKey(c_eidServiceCertDescription);
@@ -695,13 +686,10 @@ public class FileBasedTestData implements ITestData {
         expectedFinalDefaultFlowStep = getExpectedStep(-1);
         expectedAdditionalSteps = getExpectedAdditionalSteps(10);
 
-        autonomic = Boolean.parseBoolean(getPropertyValue(c_testcaseAutonomic));
         profiles = getList(getPropertyValue(c_testcaseProfiles));
         isEac1ConfirmDialog = Boolean.parseBoolean(getPropertyValue(c_isEac1ConfirmDialog));
         failOnXMLEvaluationError = Boolean.parseBoolean(getPropertyValue(c_eCardTestCaseFailOnXMLEvaluationError));
         legacyActivation = Boolean.parseBoolean(getPropertyValue(c_eCardTestCaseLegacyActivation));
-
-        networkUnreachableHostname = getPropertyValue(c_networkUnreachableHostname);
 
         String sCAKeyID = getPropertyValue(c_DefaultCAKeyID);
         if (sCAKeyID != null) {
@@ -1093,37 +1081,14 @@ public class FileBasedTestData implements ITestData {
         return absFilePath == null ? null : CommonUtil.readFromFile(absFilePath);
     }
 
-    private PrivateKey loadPrivateKey(String propKey) throws Exception {
-        String value = getPropertyValue(propKey);
-        if (value == null) {
-            return null;
-        }
-        // String startPath = keyPropFilePath.get(propKey);
-        String absFilePath = getFilePath(propKey, null);
-        if (absFilePath == null) {
-            return null;
-        }
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(CommonUtil.readFromFile(absFilePath));
-
-        PrivateKey pk = null;
-
-        // This workaround could surely be more elegant
-        try {
-            KeyFactory kf = KeyFactory.getInstance("RSA");
-            pk = kf.generatePrivate(keySpec);
-        } catch (java.security.spec.InvalidKeySpecException e) {
-            try {
-                KeyFactory kf = KeyFactory.getInstance("EC");
-                pk = kf.generatePrivate(keySpec);
-            } catch (java.security.spec.InvalidKeySpecException e2) {
-                KeyFactory kf = KeyFactory.getInstance("DSA");
-                pk = kf.generatePrivate(keySpec);
-            }
-        }
-        return pk;
+    @Override
+    public AsymmetricKeyParameter readPrivateKey(String fileName) throws Exception {
+        String absFilePath = getAbsFilePath(fileName);
+        return PrivateKeyFactory.createKey(CommonUtil.readFromFile(absFilePath));
     }
-
-    private AsymmetricKeyParameter loadPrivateKeyBC(String propKey) throws Exception {
+    
+    @Override
+    public AsymmetricKeyParameter loadPrivateKeyBC(String propKey) throws Exception {
         String value = getPropertyValue(propKey);
         if (value == null) {
             return null;
@@ -1138,41 +1103,13 @@ public class FileBasedTestData implements ITestData {
     }
 
     @Override
-    public PrivateKey readPrivateKey(String fileName) throws Exception {
-        String absFilePath = getAbsFilePath(fileName);
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(CommonUtil.readFromFile(absFilePath));
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePrivate(keySpec);
+    public Certificate readCertificate(String fileName) throws Exception {
+        org.bouncycastle.asn1.x509.Certificate[] asn1Certs = { readCertificateBC(fileName) };
+        return new Certificate(asn1Certs);
     }
-
-    private X509Certificate[] loadCertifcates(String key) throws Exception {
-        try {
-            ArrayList<X509Certificate> certList = new ArrayList<X509Certificate>();
-
-            String propFiles = getPropertyValue(key);
-            StringTokenizer token = new StringTokenizer(propFiles, ";");
-            while (token.hasMoreTokens()) {
-                String curToken = token.nextToken();
-                certList.add(readCertificate(curToken));
-            }
-            return certList.toArray(new X509Certificate[]{});
-        } catch (Exception ex) {
-            throw new GeneralException("Could not load certificate: " + key);
-        }
-    }
-
+    
     @Override
-    public X509Certificate readCertificate(String fileName) throws Exception {
-        CertificateFactory fac = CertificateFactory.getInstance("x.509");
-        String absFilePath = getAbsFilePath(fileName);
-        FileInputStream fis = new FileInputStream(absFilePath);
-        X509Certificate cert = (X509Certificate) fac.generateCertificate(fis);
-        fis.close();
-
-        return cert;
-    }
-
-    private Certificate loadCertifcatesBC(String key) throws Exception {
+    public Certificate loadCertifcatesBC(String key) throws Exception {
         try {
             ArrayList<org.bouncycastle.asn1.x509.Certificate> certList = new ArrayList<org.bouncycastle.asn1.x509.Certificate>();
 
@@ -1270,6 +1207,11 @@ public class FileBasedTestData implements ITestData {
     public String getTestReference() {
         return testReference;
     }
+    
+    @Override
+    public String getCopyOf() {
+        return testCopyOf;
+    }
 
     @Override
     public List<String> getTestMessagesBegin() {
@@ -1343,11 +1285,6 @@ public class FileBasedTestData implements ITestData {
     @Override
     public byte[] getEIDServiceCV_TERM() {
         return eidServiceCV_TERM;
-    }
-
-    @Override
-    public byte[] getEIDServiceCV_TERM2() {
-        return eidServiceCV_TERM2;
     }
 
     @Override
@@ -1446,12 +1383,12 @@ public class FileBasedTestData implements ITestData {
     }
 
     @Override
-    public X509Certificate[] getTCTokenProviderCertificate() {
+    public Certificate getTCTokenProviderCertificate() {
         return tcTokenProviderCertificate;
     }
 
     @Override
-    public PrivateKey getTCTokenProviderPrivateKey() {
+    public AsymmetricKeyParameter getTCTokenProviderPrivateKey() {
         return tcTokenProviderPrivateKey;
     }
 
@@ -1752,7 +1689,11 @@ public class FileBasedTestData implements ITestData {
 
     @Override
     public void addTestProtocolCallback(ITestProtocolCallback tpcb) {
-        testProtocolCallbackList.add(tpcb);
+        if (tpcb instanceof TestRunner) {
+            testProtocolCallbackList.add(0, tpcb);
+        } else {
+            testProtocolCallbackList.add(tpcb);
+        }
     }
 
     @Override
@@ -1803,18 +1744,8 @@ public class FileBasedTestData implements ITestData {
     }
 
     @Override
-    public boolean isAutonomic() {
-        return autonomic;
-    }
-
-    @Override
     public String toString() {
         return getTestName();
-    }
-
-    @Override
-    public String getNetworkUnreachableHostname() {
-        return networkUnreachableHostname;
     }
 
     @Override
@@ -2102,12 +2033,12 @@ public class FileBasedTestData implements ITestData {
     }
 
     @Override
-    public X509Certificate[] getCommErrorAddressServerCertificate() {
+    public Certificate getCommErrorAddressServerCertificate() {
         return commErrorAddressServerCertificate;
     }
 
     @Override
-    public PrivateKey getCommErrorAddressServerPrivateKey() {
+    public AsymmetricKeyParameter getCommErrorAddressServerPrivateKey() {
         return commErrorAddressServerPrivateKey;
     }
 
@@ -2136,4 +2067,13 @@ public class FileBasedTestData implements ITestData {
         return cardSimulationConfigurationIdentifier;
     }
 
+    @Override
+    public void setSkipNextICSCheck(boolean skip) {
+        this.skipNextICSStep = skip;
+    }
+
+    @Override
+    public boolean getSkipNextICSCheck() {
+        return this.skipNextICSStep;
+    }
 }

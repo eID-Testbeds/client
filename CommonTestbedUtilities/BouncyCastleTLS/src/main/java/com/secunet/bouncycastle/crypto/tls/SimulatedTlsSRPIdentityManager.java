@@ -7,11 +7,6 @@ import org.bouncycastle.crypto.agreement.srp.SRP6VerifierGenerator;
 import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.SRP6GroupParameters;
-import com.secunet.bouncycastle.crypto.tls.HashAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.SimulatedTlsSRPIdentityManager;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPIdentityManager;
-import com.secunet.bouncycastle.crypto.tls.TlsSRPLoginParameters;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Strings;
 
 /**

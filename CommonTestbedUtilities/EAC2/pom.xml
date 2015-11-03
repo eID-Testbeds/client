@@ -11,11 +11,11 @@
 	</parent>
 
 	<dependencies>
-		<dependency>
+		<!--  <dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
-			<version>RELEASE</version>
-		</dependency>
+			<version>1.52</version>
+		</dependency> -->
 		<dependency>
 			<groupId>com.secunet</groupId>
 			<artifactId>testbedutils-CommonUtilities</artifactId>

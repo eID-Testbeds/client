@@ -3,8 +3,6 @@ package com.secunet.bouncycastle.crypto.tls;
 import org.bouncycastle.crypto.CryptoException;
 import org.bouncycastle.crypto.Signer;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
-import com.secunet.bouncycastle.crypto.tls.TlsContext;
-import com.secunet.bouncycastle.crypto.tls.TlsSigner;
 
 public abstract class AbstractTlsSigner
     implements TlsSigner

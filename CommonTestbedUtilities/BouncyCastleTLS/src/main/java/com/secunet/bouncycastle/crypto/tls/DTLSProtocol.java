@@ -7,13 +7,6 @@ import java.security.SecureRandom;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.EncryptionAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.TlsExtensionsUtils;
-import com.secunet.bouncycastle.crypto.tls.TlsFatalAlert;
-import com.secunet.bouncycastle.crypto.tls.TlsProtocol;
-import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 import org.bouncycastle.util.Arrays;
 
 public abstract class DTLSProtocol
@@ -45,13 +38,33 @@ public abstract class DTLSProtocol
         }
     }
 
-    protected static short evaluateMaxFragmentLengthExtension(Hashtable clientExtensions, Hashtable serverExtensions,
-        short alertDescription) throws IOException
+    protected static void applyMaxFragmentLengthExtension(DTLSRecordLayer recordLayer, short maxFragmentLength)
+        throws IOException
+    {
+        if (maxFragmentLength >= 0)
+        {
+            if (!MaxFragmentLength.isValid(maxFragmentLength))
+            {
+                throw new TlsFatalAlert(AlertDescription.internal_error); 
+            }
+
+            int plainTextLimit = 1 << (8 + maxFragmentLength);
+            recordLayer.setPlaintextLimit(plainTextLimit);
+        }
+    }
+
+    protected static short evaluateMaxFragmentLengthExtension(boolean resumedSession, Hashtable clientExtensions,
+        Hashtable serverExtensions, short alertDescription) throws IOException
     {
         short maxFragmentLength = TlsExtensionsUtils.getMaxFragmentLengthExtension(serverExtensions);
-        if (maxFragmentLength >= 0 && maxFragmentLength != TlsExtensionsUtils.getMaxFragmentLengthExtension(clientExtensions))
+        if (maxFragmentLength >= 0)
         {
-            throw new TlsFatalAlert(alertDescription);
+            if (!MaxFragmentLength.isValid(maxFragmentLength)
+                || (!resumedSession && maxFragmentLength != TlsExtensionsUtils
+                    .getMaxFragmentLengthExtension(clientExtensions)))
+            {
+                throw new TlsFatalAlert(alertDescription);
+            }
         }
         return maxFragmentLength;
     }
