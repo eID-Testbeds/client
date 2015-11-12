@@ -169,7 +169,7 @@
 	<dependency>
 		<groupId>com.secunet.eidclient</groupId>
 		<artifactId>ipsmall-java</artifactId>
-		<version>1.2-SNAPSHOT</version>
+		<version>1.2.0</version>
 	</dependency>
 	</dependencies>
 	
