@@ -6,7 +6,6 @@
 	<Purpose>Positive test checking the ability of the eID-Client to set to zero all access rights in the CHAT which are not presented to the user during the CHAT dialogue.</Purpose>
 	<Profile>EAC</Profile>
 	<Profile>PAOS</Profile>
-	<Reference>TR-03112-3, Section 3.1.1 "InitializeFramework"</Reference>
 	<Reference>TR-03112-6, Section 3.2.5 "Transmit"</Reference>
 	<Reference>TR-03112-7, Section 2.6 "StartPAOS"</Reference>
 	<Reference>TR-03112-7, Section 3.6 "Extended Access Control"</Reference>

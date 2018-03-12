@@ -18,7 +18,7 @@ public class GlobalSettings {
 	private static final String REPORT_SCHEMA_FILE_NAME = "report.xsd";
 	private static final String REPORT_STYLE_FILE_NAME = "report.xsl";
 	
-	private static final String ICS_SCHEMA_FILE_NAME = "TR-03124-2_ICS_v1.2.xsd";
+	private static final String ICS_SCHEMA_FILE_NAME = "TR-03124-2_ICS_v1.3.xsd";
 	private static final String ICS_FILE_NAME = "ics.xml";
 	
 	private static final String CONFIG_DIR = "config";

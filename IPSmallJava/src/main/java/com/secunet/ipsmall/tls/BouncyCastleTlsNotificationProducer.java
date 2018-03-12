@@ -2,9 +2,9 @@ package com.secunet.ipsmall.tls;
 
 import org.bouncycastle.crypto.params.DHParameters;
 
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import org.bouncycastle.crypto.tls.Certificate;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 
 public interface BouncyCastleTlsNotificationProducer {
     

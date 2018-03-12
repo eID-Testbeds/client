@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_A1_02</Title>
 	<Version>1.2</Version>
 	<Purpose>Check non-accessibility of the eID-Client to external callers.</Purpose>
-	<Profile>OA</Profile>
+	<Profile>CLIENT_INTERFACE</Profile>
 	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>
 	<TestStep>

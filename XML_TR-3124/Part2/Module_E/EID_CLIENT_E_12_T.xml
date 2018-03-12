@@ -53,10 +53,10 @@
 		<Description>The eID-Server offers a TLS_RSA_PSK_* cipher suite listed for TLS-2 in the ICS of the eID-Client.</Description>
 		<Description> The eID-Server uses the TLS server certificate [CERT_TLS_EIDSERVER_3_B] with a key length not conforming to the [TR-03124-1]</Description>
 		<ExpectedResult>
-			<Text>The TLS-2 channel is not established.</Text>
+			<Text>A functional TLS-2 channel is not established.</Text>
 		</ExpectedResult>
 		<ExpectedResult>
-			<Text>The connection establishment is aborted by the eID-Client.</Text>
+			<Text>The connection establishment is either aborted by the eID-Client, or the connection is closed immediately after creation, without sending any further data.</Text>
 		</ExpectedResult>
 		<ExpectedResult>
 			<Text>The eID-Client redirects the browser to the "RefreshAddress".</Text>

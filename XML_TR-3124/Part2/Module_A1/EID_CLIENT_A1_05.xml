@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_A1_05</Title>
 	<Version>1.2</Version>
 	<Purpose>Positive test of the action to return status information to the caller.</Purpose>
-	<Profile>OA</Profile>
+	<Profile>CLIENT_INTERFACE</Profile>
 	<Profile>ACTION_STATUS</Profile>
 	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>

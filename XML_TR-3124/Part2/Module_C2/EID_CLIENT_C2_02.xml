@@ -6,7 +6,6 @@
 	<Purpose>Positive test checking the ability of eID-Client to send the correct CHAT to eID-Card and eID-Server in case no RequiredChat field is given in EAC1InputType and the CHAT is restricted by the user.</Purpose>
 	<Profile>EAC</Profile>
 	<Profile>PAOS</Profile>
-	<Reference>TR-03112-3, Section 3.1.1 "InitializeFramework"</Reference>
 	<Reference>TR-03112-6, Section 3.2.5 "Transmit"</Reference>
 	<Reference>TR-03112-7, Section 2.6 "StartPAOS"</Reference>
 	<Reference>TR-03112-7, Section 3.6 "Extended Access Control"</Reference>
@@ -27,6 +26,9 @@
 		</Command>
 		<ExpectedResult>
 			<Text>TRUE</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The element "Version" is conform to the requirements of [TR-03112].</Text>
 		</ExpectedResult>
 	</TestStep>
 	<TestStep>

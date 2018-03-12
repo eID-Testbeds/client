@@ -1,15 +1,17 @@
 package com.secunet.ipsmall.tobuilder;
 
-import com.secunet.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
+import org.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
+
 import com.secunet.ipsmall.GlobalSettings;
 import com.secunet.ipsmall.log.IModuleLogger;
 import com.secunet.ipsmall.log.Logger;
-import com.secunet.ipsmall.tls.BouncyCastleTlsHelper;
 import com.secunet.ipsmall.tobuilder.ics.TLSCipherSuiteType;
 import com.secunet.ipsmall.tobuilder.ics.TLSVersionType;
 import com.secunet.ipsmall.tobuilder.ics.TLSchannelType;
 import com.secunet.ipsmall.tobuilder.ics.TR031242ICS;
 import com.secunet.ipsmall.util.FileUtils;
+import com.secunet.testbedutils.utilities.BouncyCastleTlsHelper;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +43,7 @@ public class TestcaseShortKeyTemplateSetup implements ITestObjectSetup {
     private boolean isSetUp = false;
 
     /**
-     * Creates setup to generate testcases from template for to short
+     * Creates setup to generate testcases from template for too short
      * keys/params.
      *
      * @param testcaseName Name of testcase.
@@ -56,7 +58,7 @@ public class TestcaseShortKeyTemplateSetup implements ITestObjectSetup {
 
     @Override
     public void runSetup() throws Exception {
-        Logger.TestObjectBuilder.logState("Generating testcases from template for E_12 ...");
+        Logger.TestObjectBuilder.logState("Generating testcases from template for " + testcaseName + " ...");
 
         // delete old template testcase
         File testcaseTemplate = new File(new File(settings.getTestObjectDir(), GlobalSettings.getTOTestsDir()),
@@ -101,7 +103,7 @@ public class TestcaseShortKeyTemplateSetup implements ITestObjectSetup {
             allTestcases.get(i).create(testcaseName + String.format("%03d", i + 1), settings);
         }
 
-        Logger.TestObjectBuilder.logState("Testcases from template for E_12 generated.");
+        Logger.TestObjectBuilder.logState("Testcases from template for " + testcaseName + " generated.");
 
         isSetUp = true;
     }

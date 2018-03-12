@@ -1,10 +1,11 @@
 package com.secunet.ipsmall;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.AlertLevel;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import org.bouncycastle.crypto.tls.AlertDescription;
+import org.bouncycastle.crypto.tls.AlertLevel;
+import org.bouncycastle.crypto.tls.Certificate;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+
 import java.io.File;
 
 import com.secunet.ipsmall.http.Java7NanoHTTPSocketFactory;
@@ -19,9 +20,10 @@ import com.secunet.ipsmall.test.ITestProtocolCallback.SourceComponent;
 import com.secunet.ipsmall.test.ITestProtocolCallback.TestStep;
 import com.secunet.ipsmall.test.ITestSession;
 import com.secunet.ipsmall.tls.BouncyCastleNanoHTTPDSocketFactory;
-import com.secunet.ipsmall.tls.BouncyCastleTlsHelper;
 import com.secunet.ipsmall.tls.BouncyCastleTlsNotificationListener;
 import com.secunet.ipsmall.util.HttpUtils;
+import com.secunet.testbedutils.utilities.BouncyCastleTlsHelper;
+
 import org.bouncycastle.crypto.params.DHParameters;
 
 public class TCTokenProvider extends NanoHTTPD implements BouncyCastleTlsNotificationListener {

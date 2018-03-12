@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cvcert.xsd">
+<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cv_schema.xsd">
 
 	<keys>	
-		<key name="DECVCAeIDCT00001_KEY" create="true"> <!-- WARNING: create="true" overwrites existing keys! -->
+		<key name="DECVCAeIDCT00001_KEY" create="true">
+			<!-- WARNING: create="true" overwrites existing keys! -->
 			<filePrivateKey>./CVCA/DECVCAeIDCT00001.pkcs8</filePrivateKey>
 			<filePublicKey>./CVCA/DECVCAeIDCT00001.bin</filePublicKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>

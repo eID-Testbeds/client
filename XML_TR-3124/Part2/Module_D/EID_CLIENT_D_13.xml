@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_D_13</Title>
 	<Version>1.2</Version>
 	<Purpose>This test case evaluates the user interface for resuming of a suspended PIN using the correct CAN.</Purpose>
-	<Profile>UI_OFFLINE</Profile>
+	<Profile>PIN_MANAGEMENT</Profile>
 	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
 	<Precondition>The card reader in use has neither display, nor PIN-Pad.</Precondition>
 	<Precondition>The eID-Client offers its services.</Precondition>

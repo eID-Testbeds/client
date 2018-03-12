@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_D_16_e</Title>
 	<Version>1.2</Version>
 	<Purpose>This test case verifies that the eID-Client includes a meaningful human-readable error message/description into the body of the response to the browser in case the TC Token cannot be retrieved. The underlying test case is [EID_CLIENT_A2_11].</Purpose>
-	<Profile>UI_ONLINE</Profile>
+	<Profile>USER_INTERFACE</Profile>
 	<Profile>HTTP_MESSAGES</Profile>
 	<Reference>TR-03124-1, Section 2.5.1 "Retrieval of TC Token"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>

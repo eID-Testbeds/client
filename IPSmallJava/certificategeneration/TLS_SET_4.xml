@@ -1,93 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:certificateDefinitions xmlns:p="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com tlscert.xsd ">
+<p:certificateDefinitions xmlns:p="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com tls_schema.xsd ">
 
-    <p:certificateDefinition>
-        <p:name>CERT_TLS_ESERVICE_4_A</p:name>
-        <p:algorithmID>
-            <p:RSA keylength="2048">SHA256withRSA</p:RSA>
-        </p:algorithmID>
-        <p:notAfterOffset>730</p:notAfterOffset>
-        <p:issuer>
-            <p:commonName>TR03124-2-TLS-CA-RSA-1</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:country>DE</p:country>
-        </p:issuer>
-        <p:subject>
-            <p:commonName>CERT_TLS_ESERVICE_4_A</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:locality>Essen</p:locality>
-            <p:country>DE</p:country>
-        </p:subject>
-        <p:extensions>
-            <p:keyUsage>
-                <p:digitalSignature>true</p:digitalSignature>
-                <p:keyEncipherment>true</p:keyEncipherment>
-            </p:keyUsage>
-            <p:basicConstraints>
-                <p:cA>false</p:cA>
-                <p:pathLenConstraint>false</p:pathLenConstraint>
-            </p:basicConstraints>
-            <p:extendedKeyUsage>
-                <p:serverAuth>true</p:serverAuth>
-            </p:extendedKeyUsage>
-            <p:subjectAltName>
-                <p:GeneralName type="dNSName">eservice-idp-test.secunet.de</p:GeneralName>
-            </p:subjectAltName>
-            <p:cRLDistributionPoints>
-                <p:DistributionPoint>
-                    <p:distributionPoint>
-                        <p:fullName>
-                            <p:GeneralName type="uniformResourceIdentifier">http://crl-idp-test.secunet.de/TR03124-2-TLS-CA-RSA-1.crl</p:GeneralName>
-                        </p:fullName>
-                    </p:distributionPoint>
-                </p:DistributionPoint>
-            </p:cRLDistributionPoints>
-        </p:extensions>
-    </p:certificateDefinition>
-    
-    <p:certificateDefinition>
-        <p:name>CERT_TLS_EIDSERVER_4_A</p:name>
-        <p:algorithmID>
-            <p:RSA keylength="2048">SHA256withRSA</p:RSA>
-        </p:algorithmID>
-        <p:notAfterOffset>730</p:notAfterOffset>
-        <p:issuer>
-            <p:commonName>TR03124-2-TLS-CA-RSA-1</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:country>DE</p:country>
-        </p:issuer>
-        <p:subject>
-            <p:commonName>CERT_TLS_EIDSERVER_4_A</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:locality>Essen</p:locality>
-            <p:country>DE</p:country>
-        </p:subject>
-        <p:extensions>
-            <p:keyUsage>
-                <p:digitalSignature>true</p:digitalSignature>
-                <p:nonRepudiation>true</p:nonRepudiation>
-                <p:keyEncipherment>true</p:keyEncipherment>
-                <p:keyAgreement>true</p:keyAgreement>
-            </p:keyUsage>
-            <p:basicConstraints>
-                <p:cA>false</p:cA>
-                <p:pathLenConstraint>false</p:pathLenConstraint>
-            </p:basicConstraints>
-            <p:extendedKeyUsage>
-                <p:serverAuth>true</p:serverAuth>
-            </p:extendedKeyUsage>
-            <p:subjectAltName>
-                <p:GeneralName type="dNSName">eidserver-idp-test.secunet.de</p:GeneralName>
-            </p:subjectAltName>
-            <p:cRLDistributionPoints>
-                <p:DistributionPoint>
-                    <p:distributionPoint>
-                        <p:fullName>
-                            <p:GeneralName type="uniformResourceIdentifier">http://crl-idp-test.secunet.de/TR03124-2-TLS-CA-RSA-1.crl</p:GeneralName>
-                        </p:fullName>
-                    </p:distributionPoint>
-                </p:DistributionPoint>
-            </p:cRLDistributionPoints>
-        </p:extensions>
-    </p:certificateDefinition>
+	<p:certificateDefinition>
+		<p:name>CERT_TLS_ESERVICE_4_A</p:name>
+		<p:keyAlgorithm>
+			<p:RSA>2048</p:RSA>
+		</p:keyAlgorithm>
+		<p:signatureAlgorithm>
+			<p:RSA>SHA256withRSA</p:RSA>
+		</p:signatureAlgorithm>
+		<p:issuer>
+			<p:commonName>TR03124-2-TLS-CA-RSA-1</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:country>DE</p:country>
+		</p:issuer>
+		<p:notAfterOffset>730</p:notAfterOffset>
+		<p:subject>
+			<p:commonName>CERT_TLS_ESERVICE_4_A</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:locality>Essen</p:locality>
+			<p:country>DE</p:country>
+		</p:subject>
+		<p:extensions>
+			<p:keyUsage>
+				<p:digitalSignature>true</p:digitalSignature>
+				<p:keyEncipherment>true</p:keyEncipherment>
+			</p:keyUsage>
+			<p:basicConstraints>
+				<p:cA>false</p:cA>
+			</p:basicConstraints>
+			<p:extendedKeyUsage>
+				<p:serverAuth>true</p:serverAuth>
+			</p:extendedKeyUsage>
+			<p:subjectAltName>
+				<p:GeneralName type="dNSName">eservice-idp-test.secunet.de</p:GeneralName>
+			</p:subjectAltName>
+			<p:cRLDistributionPoints>
+				<p:DistributionPoint>
+					<p:distributionPoint>
+						<p:fullName>
+							<p:GeneralName type="uniformResourceIdentifier">http://crl-idp-test.secunet.de/TR03124-2-TLS-CA-RSA-1.crl</p:GeneralName>
+						</p:fullName>
+					</p:distributionPoint>
+				</p:DistributionPoint>
+			</p:cRLDistributionPoints>
+		</p:extensions>
+	</p:certificateDefinition>
+
+	<p:certificateDefinition>
+		<p:name>CERT_TLS_EIDSERVER_4_A</p:name>
+		<p:keyAlgorithm>
+			<p:RSA>2048</p:RSA>
+		</p:keyAlgorithm>
+		<p:signatureAlgorithm>
+			<p:RSA>SHA256withRSA</p:RSA>
+		</p:signatureAlgorithm>
+		<p:issuer>
+			<p:commonName>TR03124-2-TLS-CA-RSA-1</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:country>DE</p:country>
+		</p:issuer>
+		<p:notAfterOffset>730</p:notAfterOffset>
+		<p:subject>
+			<p:commonName>CERT_TLS_EIDSERVER_4_A</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:locality>Essen</p:locality>
+			<p:country>DE</p:country>
+		</p:subject>
+		<p:extensions>
+			<p:keyUsage>
+				<p:digitalSignature>true</p:digitalSignature>
+				<p:nonRepudiation>true</p:nonRepudiation>
+				<p:keyEncipherment>true</p:keyEncipherment>
+				<p:keyAgreement>true</p:keyAgreement>
+			</p:keyUsage>
+			<p:basicConstraints>
+				<p:cA>false</p:cA>
+			</p:basicConstraints>
+			<p:extendedKeyUsage>
+				<p:serverAuth>true</p:serverAuth>
+			</p:extendedKeyUsage>
+			<p:subjectAltName>
+				<p:GeneralName type="dNSName">eidserver-idp-test.secunet.de</p:GeneralName>
+			</p:subjectAltName>
+			<p:cRLDistributionPoints>
+				<p:DistributionPoint>
+					<p:distributionPoint>
+						<p:fullName>
+							<p:GeneralName type="uniformResourceIdentifier">http://crl-idp-test.secunet.de/TR03124-2-TLS-CA-RSA-1.crl</p:GeneralName>
+						</p:fullName>
+					</p:distributionPoint>
+				</p:DistributionPoint>
+			</p:cRLDistributionPoints>
+		</p:extensions>
+	</p:certificateDefinition>
 </p:certificateDefinitions>

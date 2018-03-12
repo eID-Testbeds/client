@@ -11,4 +11,5 @@ Build eID Client Conformance Testbed on Windows.
 # Create build
 1. (optional) Convert `build_from_source.sh` with dos2unix in Cygwin terminal.
 2. (optional) Install Cygwin package "xmlstarlet".
-3. Run `build_from_source.sh` in Cygwin terminal.
+3. (conditional) Install CommonTestbedUtilities via "mvn clean install"
+4. Run `build_from_source.sh` in Cygwin terminal.

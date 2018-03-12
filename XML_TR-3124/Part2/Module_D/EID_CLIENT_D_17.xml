@@ -4,7 +4,6 @@
 	<Title>Test case EID_CLIENT_D_17</Title>
 	<Version>1.2</Version>
 	<Purpose>This test case evaluates the configuration options of the eID-Client available to configure the proxy settings.</Purpose>
-	<Profile>UI_OFFLINE</Profile>
 	<Profile>PROXY_CONFIG</Profile>
 	<Reference>TR-03124-1, Section 3.4 "HTTP Communication"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>

@@ -10,11 +10,12 @@ import java.nio.file.Paths;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 import com.secunet.ipsmall.GlobalSettings;
 import com.secunet.ipsmall.tobuilder.ics.TLSVersionType;
 import com.secunet.ipsmall.tobuilder.ics.TR031242ICS;
+import com.secunet.testbedutils.utilities.BouncyCastleTlsHelper;
 import com.secunet.testbedutils.utilities.JaxBUtil;
 
 public class BouncyCastleTlsIcsMatcherTest {

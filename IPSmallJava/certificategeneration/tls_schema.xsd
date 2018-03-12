@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.secunet.com" targetNamespace="http://www.secunet.com"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+	<xs:element name="certificateDefinitions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="certificateDefinition" type="certificateDefinition"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="certificateDefinition">	<!-- Note: We are ignoring the version number here. Only v3 certificates 
+			will be created -->
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="1"></xs:element> <!-- This name shall also be used for the new key file if none is provided 
+				as input ([name]_privKey) -->
+			<xs:choice>
+				<xs:element name="serialNumber" type="xs:integer"
+					default="42" minOccurs="0" />
+				<xs:element name="serialNumberHex" type="xs:hexBinary"
+					default="2A" minOccurs="0" />
+			</xs:choice>
+			<xs:element name="keyAlgorithm" type="algorithmType" />
+			<xs:element name="signatureAlgorithm" type="signatureAlgorithmType" minOccurs="0" maxOccurs="1" /> <!-- Only necessary for TLS1.2 -->
+			<xs:element name="issuer" type="dnType" />
+			<xs:choice>
+				<xs:element name="notBefore" type="xs:date" minOccurs="0" />            <!-- If not specified, the certificate will be valid the second it gets created -->
+				<xs:element name="notBeforeOffset" type="xs:int"
+					minOccurs="0" />   <!-- Offset from reference date -->
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="notAfter" type="xs:date" minOccurs="0" />		<!-- If not specified, the certificate will be valid for 6000 days -->
+				<xs:element name="notAfterOffset" type="xs:int"
+					minOccurs="0" />       <!-- Offset from notBefore date -->
+			</xs:choice>
+			<xs:element name="subject" type="dnType" />
+			<xs:element name="extensions" type="extensionsType"
+				minOccurs="0" />
+			<xs:element name="keyFile" type="keyFileType" minOccurs="0" /> <!-- Path to a file containing the (PEM) key file. If none is provided, a 
+				new key will be created. PEM keys may also have a password as attribute, 
+				if necessary. -->
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="algorithmType">
+		<xs:choice>
+			<xs:element name="ECDSA" type="algorithmTypeEC" />
+			<xs:element name="RSA" type="algorithmTypeRSADSA" />
+			<xs:element name="DSA" type="algorithmTypeRSADSA" />
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:simpleType name="algorithmTypeEC">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sect233k1" />
+			<xs:enumeration value="sect233r1" />
+			<xs:enumeration value="sect239k1" />
+			<xs:enumeration value="sect283k1" />
+			<xs:enumeration value="sect283r1" />
+			<xs:enumeration value="sect409k1" />
+			<xs:enumeration value="sect409r1" />
+			<xs:enumeration value="sect571k1" />
+			<xs:enumeration value="sect571r1" />
+			<xs:enumeration value="secp192k1" />
+			<xs:enumeration value="secp192r1" />
+			<xs:enumeration value="secp224k1" />
+			<xs:enumeration value="secp224r1" />
+			<xs:enumeration value="secp256k1" />
+			<xs:enumeration value="secp256r1" />
+			<xs:enumeration value="secp384r1" />
+			<xs:enumeration value="secp521r1" />
+			<xs:enumeration value="brainpoolP256r1" />
+			<xs:enumeration value="brainpoolP384r1" />
+			<xs:enumeration value="brainpoolP512r1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="algorithmTypeRSADSA">
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="512" />
+			<xs:enumeration value="768" />
+			<xs:enumeration value="1024" />
+			<xs:enumeration value="1536" />
+			<xs:enumeration value="2048" />
+			<xs:enumeration value="3072" />
+			<xs:enumeration value="4096" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="signatureAlgorithmType">
+		<xs:choice>
+			<xs:element name="ECDSA" type="signatureAlgorithmTypeECDSA" />
+			<xs:element name="RSA" type="signatureAlgorithmTypeRSA" />
+			<xs:element name="DSA" type="signatureAlgorithmTypeDSA" />
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:simpleType name="signatureAlgorithmTypeDSA">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SHA1withDSA" />
+			<xs:enumeration value="SHA224withDSA" />
+			<xs:enumeration value="SHA256withDSA" />
+			<xs:enumeration value="SHA384withDSA" />
+			<xs:enumeration value="SHA512withDSA" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="signatureAlgorithmTypeRSA">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SHA1withRSA" />
+			<xs:enumeration value="SHA224withRSA" />
+			<xs:enumeration value="SHA256withRSA" />
+			<xs:enumeration value="SHA384withRSA" />
+			<xs:enumeration value="SHA512withRSA" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="signatureAlgorithmTypeECDSA">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SHA1withECDSA" />
+			<xs:enumeration value="SHA224withECDSA" />
+			<xs:enumeration value="SHA256withECDSA" />
+			<xs:enumeration value="SHA384withECDSA" />
+			<xs:enumeration value="SHA512withECDSA" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="dnType">
+		<xs:all>																			<!-- Everything is optional, should be discussed -->
+			<xs:element name="organization" type="xs:string"
+				minOccurs="0" /> 				<!-- O= -->
+			<xs:element name="organizationalUnit" type="xs:string"
+				minOccurs="0" /> 			<!-- OU= -->
+			<xs:element name="country" type="xs:string" minOccurs="0" /> 					<!-- C= -->
+			<xs:element name="state" type="xs:string" minOccurs="0" /> 						<!-- ST= -->
+			<xs:element name="commonName" type="xs:string" minOccurs="0" /> 				<!-- CN= -->
+			<xs:element name="distinguishedNameQualifier" type="xs:string"
+				minOccurs="0" /> 	<!-- dnQualifier -->
+			<xs:element name="serialNumber" type="xs:string"
+				minOccurs="0" /> 				<!-- serialNumber -->
+			<xs:element name="locality" type="xs:string" minOccurs="0" /> 					<!-- L= -->
+			<xs:element name="title" type="xs:string" minOccurs="0" /> 						<!-- title= -->
+			<xs:element name="surname" type="xs:string" minOccurs="0" /> 					<!-- SN= -->
+			<xs:element name="givenName" type="xs:string" minOccurs="0" />					<!-- GN= -->
+			<xs:element name="pseudonym" type="xs:string" minOccurs="0" /> 					<!-- pseudonym -->
+			<xs:element name="generationQualifier" type="xs:string"
+				minOccurs="0" /> 		<!-- generationQualifier -->
+			<xs:element name="initials" type="xs:string" minOccurs="0" /> 					<!-- initials -->
+		</xs:all>
+	</xs:complexType>
+
+	<xs:complexType name="keyFileType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="password" type="xs:string">
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- Extensions. TODO check criticality for each extension -->
+	<xs:complexType name="extensionsType">
+		<xs:all>
+			<xs:element name="basicConstraints" type="basicConstraintsType" />
+			<xs:element name="keyUsage" type="keyUsageType" minOccurs="0" />
+			<xs:element name="extendedKeyUsage" type="extendedKeyUsageType"
+				minOccurs="0" />
+			<xs:element name="subjectAltName" type="altNameType"
+				minOccurs="0" />
+			<xs:element name="issuerAltName" type="altNameType"
+				minOccurs="0" />
+			<xs:element name="cRLDistributionPoints" type="cRLDistributionPointsType"
+				minOccurs="0" />
+			<xs:element name="signatureAlgorithms" type="cRLDistributionPointsType"
+				minOccurs="0" />
+		</xs:all>
+	</xs:complexType>
+
+	<xs:complexType name="altNameType">
+		<xs:complexContent>
+			<xs:extension base="GeneralNamesType">
+				<xs:attribute name="critical" type="xs:boolean"
+					default="false" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="GeneralNameTypeType">	<!-- We only support a subset of the General Name type defined in RFC 5280 -->
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="rfc822Name" />
+			<xs:enumeration value="dNSName" />
+			<xs:enumeration value="uniformResourceIdentifier" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="GeneralNamesType">
+		<xs:sequence>
+			<xs:element name="GeneralName" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type" type="GeneralNameTypeType"
+								use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="basicConstraintsType">
+		<xs:choice>
+			<xs:element name="cA" type="xs:boolean" default="1" />
+			<xs:element name="pathLenConstraint" type="xs:int" />
+		</xs:choice>
+		<xs:attribute name="critical" type="xs:boolean" default="true" />
+	</xs:complexType>
+
+	<xs:complexType name="keyUsageType">
+		<xs:all>
+			<xs:element name="digitalSignature" type="xs:boolean"
+				default="0" minOccurs="0" />
+			<xs:element name="nonRepudiation" type="xs:boolean"
+				default="0" minOccurs="0" />
+			<xs:element name="keyEncipherment" type="xs:boolean"
+				default="0" minOccurs="0" />
+			<xs:element name="dataEncipherment" type="xs:boolean"
+				default="0" minOccurs="0" />
+			<xs:element name="keyAgreement" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="keyCertSign" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="cRLSign" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="encipherOnly" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="decipherOnly" type="xs:boolean" default="0"
+				minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="critical" type="xs:boolean" default="true" />
+	</xs:complexType>
+
+	<xs:complexType name="extendedKeyUsageType">
+		<xs:all>
+			<xs:element name="anyExtendedKeyUsage" type="xs:boolean"
+				default="0" minOccurs="0" />
+			<xs:element name="serverAuth" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="clientAuth" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="codeSigning" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="emailProtection" type="xs:boolean"
+				default="0" minOccurs="0" />
+			<xs:element name="timeStamping" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="OCSPSigning" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="ipsecEndSystem" type="xs:boolean"
+				default="0" minOccurs="0" />
+			<xs:element name="ipsecTunnel" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="ipsecUser" type="xs:boolean" default="0"
+				minOccurs="0" />
+			<xs:element name="smartcardlogon" type="xs:boolean"
+				default="0" minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="critical" type="xs:boolean" default="false" />
+	</xs:complexType>
+
+	<xs:complexType name="cRLDistributionPointsType">
+		<xs:sequence>
+			<xs:element name="DistributionPoint" minOccurs="1"
+				maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="distributionPoint" type="distributionPointType"
+							minOccurs="0" maxOccurs="1" />
+						<!-- <xs:element name="reasons" type="xs:string" minOccurs="0" maxOccurs="1"/> 
+							not supported yet -->
+						<xs:element name="cRLIssuer" type="GeneralNamesType"
+							minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="critical" type="xs:boolean" default="false" />
+	</xs:complexType>
+
+	<xs:complexType name="distributionPointType">
+		<xs:choice>
+			<xs:element name="fullName" type="GeneralNamesType" />
+			<!-- <xs:element name="nameRelativeToCRLIssuer" type="dnType" /> not supported 
+				yet -->
+		</xs:choice>
+	</xs:complexType>
+
+	<!-- <xs:enumeration value="AuditIdentity" /> <xs:enumeration value="AuthorityInfoAccess" 
+		/> <xs:enumeration value="AuthorityKeyIdentifier" /> <xs:enumeration value="BiometricInfo" 
+		/> <xs:enumeration value="CertificateIssuer" /> <xs:enumeration value="CertificatePolicies" 
+		/> <xs:enumeration value="CRLDistributionPoints" /> <xs:enumeration value="CRLNumber" 
+		/> <xs:enumeration value="DeltaCRLIndicator" /> <xs:enumeration value="FreshestCRL" 
+		/> <xs:enumeration value="InhibitAnyPolicy" /> <xs:enumeration value="InstructionCode" 
+		/> <xs:enumeration value="InvalidityDate" /> <xs:enumeration value="IssuerAlternativeName" 
+		/> <xs:enumeration value="IssuingDistributionPoint" /> <xs:enumeration value="LogoType" 
+		/> <xs:enumeration value="NameConstraints" /> <xs:enumeration value="NoRevAvail" 
+		/> <xs:enumeration value="PolicyConstraints" /> <xs:enumeration value="PolicyMappings" 
+		/> <xs:enumeration value="PrivateKeyUsagePeriod" /> <xs:enumeration value="QCStatements" 
+		/> <xs:enumeration value="ReasonCode" /> <xs:enumeration value="SubjectDirectoryAttributes" 
+		/> <xs:enumeration value="SubjectInfoAccess" /> <xs:enumeration value="SubjectKeyIdentifier" 
+		/> <xs:enumeration value="TargetInformation" /> -->
+
+</xs:schema>

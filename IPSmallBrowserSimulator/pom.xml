@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.secunet.eidclient</groupId>
   <artifactId>ipsmall-browser-simulator</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.3-SNAPSHOT</version>
   <name>IPSmallBrowserSimulator</name>
   <properties>
 		<ipsmalljava.directory>${project.build.directory}/IPSmallJava</ipsmalljava.directory>
@@ -169,7 +169,7 @@
 	<dependency>
 		<groupId>com.secunet.eidclient</groupId>
 		<artifactId>ipsmall-java</artifactId>
-		<version>1.2.0</version>
+		<version>1.3-SNAPSHOT</version>
 	</dependency>
 	</dependencies>
 	

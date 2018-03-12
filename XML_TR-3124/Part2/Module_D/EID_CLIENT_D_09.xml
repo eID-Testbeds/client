@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_D_09</Title>
 	<Version>1.2</Version>
 	<Purpose>This test case evaluates the user interface of the eID-Client regarding the PIN-Pad functionality if the card reader has secure PIN entry.</Purpose>
-	<Profile>UI_ONLINE</Profile>
+	<Profile>USER_INTERFACE</Profile>
 	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
 	<Reference>TR-03124-1, Section 4.3 "Functionalities"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>

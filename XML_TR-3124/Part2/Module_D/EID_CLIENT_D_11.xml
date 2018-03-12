@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_D_11</Title>
 	<Version>1.2</Version>
 	<Purpose>This test case evaluates the user interface of the eID-Client providing the PIN-Management.</Purpose>
-	<Profile>UI_OFFLINE</Profile>
+	<Profile>PIN_MANAGEMENT</Profile>
 	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>
 	<TestStep>

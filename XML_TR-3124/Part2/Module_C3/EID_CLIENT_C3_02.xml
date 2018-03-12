@@ -43,7 +43,7 @@
 			<Text>The eID-Client responds with the message "DIDAuthenticateResponse_EAC1OutputType".</Text>
 		</ExpectedResult>
 		<ExpectedResult>
-			<Text>The message contains at least the following elements: "Result", "CertificationAuthorityReference", "EFCardAccess", "IDPICC" and "Challenge".</Text>
+			<Text>The message contains at least the following elements: "Result", "EFCardAccess", "IDPICC" and "Challenge".</Text>
 		</ExpectedResult>
 		<ExpectedResult>
 			<Text>The element "Result" contains exactly one element "ResultMajor" which equals /resultmajor#ok.</Text>

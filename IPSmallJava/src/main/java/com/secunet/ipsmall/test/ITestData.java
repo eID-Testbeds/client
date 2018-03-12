@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 
-import com.secunet.bouncycastle.crypto.tls.Certificate;
+import org.bouncycastle.crypto.tls.Certificate;
 import com.secunet.ipsmall.eval.EvaluationConfig;
 import com.secunet.ipsmall.test.ITestProtocolCallback.ITestEvent;
 import com.secunet.ipsmall.test.ITestProtocolCallback.SourceComponent;
@@ -395,13 +395,21 @@ public interface ITestData {
     /**
      * Get flag if result is indeterminable (if automatic result was positive).
      */
-    public boolean getResultIndeterminable();
+    public boolean isResultIndeterminable();
     
     /**
      * Get reason why state is indeterminable.
      */
     public String getResultIndeterminableReason();
     
+    /**
+     * Set reason why test state is indeterminable. If set to null, the test is determinable.
+     * So, the flag whether result is indeterminable must be set to (reason != null).
+     * 
+     * @param reason String that explains why the test is indeterminable. If set to null, the test is determinable.
+     */
+    public void setResultIndeterminableReason(String reason);
+
     /**
      * Whether to show a confirm dialog after EAC1 step in order to block
      * test run until user confirms. This gives time to abort online-authentication.

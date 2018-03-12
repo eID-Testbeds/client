@@ -5,6 +5,7 @@
 	<Version>1.2</Version>
 	<Purpose>This test checks the behavior of the eID-Client in case of an error, but the "CommunicationErrorAddress" element is not included in the TC Token.</Purpose>
 	<Profile>OA</Profile>
+	<Profile>REFRESH_REDIRECT</Profile>
 	<Reference>TR-03124-1, Section 2.5.4 "Return to the web-session"</Reference>
 	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
 	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>

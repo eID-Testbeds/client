@@ -8,12 +8,12 @@ import java.util.Properties;
 
 import com.secunet.ipsmall.GlobalSettings;
 import com.secunet.ipsmall.log.Logger;
-import com.secunet.ipsmall.tls.BouncyCastleTlsHelper;
 import com.secunet.ipsmall.tobuilder.ics.TLSCipherSuiteType;
 import com.secunet.ipsmall.tobuilder.ics.TLSchannelType;
 import com.secunet.ipsmall.tobuilder.ics.TLSchannelType.TLSVersion;
 import com.secunet.ipsmall.tobuilder.ics.TR031242ICS;
 import com.secunet.ipsmall.util.FileUtils;
+import com.secunet.testbedutils.utilities.BouncyCastleTlsHelper;
 
 /**
  * Generates testcases from template for E_06.

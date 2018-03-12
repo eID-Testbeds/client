@@ -14,11 +14,15 @@ else
 	testbed_version=$(basename "$PWD")
 fi
 
-echo "*** Build Dependecies ... ***"
-cd CommonTestbedUtilities
-mvn clean install
-cp target/*.zip ../build/
-cd ..
+# !!!! NOTICE !!!!
+# component structure changed
+# you have to build and install CommonTestbedUtilities separately
+# !!!! NOTICE !!!!
+#echo "*** Build Dependecies ... ***"
+#cd CommonTestbedUtilities
+#mvn clean install
+#cp target/*.zip ../build/
+#cd ..
 
 echo "*** Build Testbed ... ***"
 cd IPSmallJava

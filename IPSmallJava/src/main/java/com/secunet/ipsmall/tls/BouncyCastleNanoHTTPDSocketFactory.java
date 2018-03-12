@@ -12,9 +12,9 @@ import java.util.List;
 
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.Certificate;
+import org.bouncycastle.crypto.tls.CipherSuite;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
 import com.secunet.ipsmall.http.ExternalServerSocketFactory;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.ITestData.PROTOCOLS;
@@ -41,7 +41,7 @@ public class BouncyCastleNanoHTTPDSocketFactory implements ExternalServerSocketF
         m_listener = listener;
         
         m_cipherSuites = new ArrayList<String>();
-        m_cipherSuites.add("TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA");
+        m_cipherSuites.add("TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256");
     }
     
     public void enablePSK() {

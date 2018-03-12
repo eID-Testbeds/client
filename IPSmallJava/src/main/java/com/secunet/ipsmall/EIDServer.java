@@ -1,13 +1,14 @@
 package com.secunet.ipsmall;
 
 import java.io.UnsupportedEncodingException;
-import org.bouncycastle.crypto.params.DHParameters;
 
-import com.secunet.bouncycastle.crypto.tls.AlertDescription;
-import com.secunet.bouncycastle.crypto.tls.AlertLevel;
-import com.secunet.bouncycastle.crypto.tls.Certificate;
-import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import org.bouncycastle.crypto.params.DHParameters;
+import org.bouncycastle.crypto.tls.AlertDescription;
+import org.bouncycastle.crypto.tls.AlertLevel;
+import org.bouncycastle.crypto.tls.Certificate;
+import org.bouncycastle.crypto.tls.ProtocolVersion;
+import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+
 import com.secunet.ipsmall.http.NanoHTTPD;
 import com.secunet.ipsmall.log.IModuleLogger.ConformityResult;
 import com.secunet.ipsmall.log.Logger;
@@ -15,10 +16,11 @@ import com.secunet.ipsmall.test.IPublishPSK;
 import com.secunet.ipsmall.test.ITestData;
 import com.secunet.ipsmall.tls.BouncyCastleNanoHTTPDSocketFactory;
 import com.secunet.ipsmall.tls.BouncyCastleServerSocket;
-import com.secunet.ipsmall.tls.BouncyCastleTlsHelper;
 import com.secunet.ipsmall.tls.BouncyCastleTlsIcsMatcher;
 import com.secunet.ipsmall.tls.BouncyCastleTlsNotificationListener;
 import com.secunet.ipsmall.tobuilder.ics.TLSVersionType;
+import com.secunet.ipsmall.util.BouncyCastleTlsUtils;
+import com.secunet.testbedutils.utilities.BouncyCastleTlsHelper;
 
 public class EIDServer extends NanoHTTPD implements IPublishPSK, BouncyCastleTlsNotificationListener {
     
@@ -101,7 +103,7 @@ public class EIDServer extends NanoHTTPD implements IPublishPSK, BouncyCastleTls
     @Override
     public void notifyClientVersion(ProtocolVersion clientVersion) {
         logger.logState("TLS client offered version: " + clientVersion.toString());
-        ProtocolVersion expectedProtocolVersion = BouncyCastleTlsHelper.convertProtocolVersionFromEnumToObject(testData.getEIDServiceTLSExpectedClientVersion());
+        ProtocolVersion expectedProtocolVersion = BouncyCastleTlsUtils.convertProtocolVersionFromEnumToObject(testData.getEIDServiceTLSExpectedClientVersion());
         if( expectedProtocolVersion.equals(clientVersion) ) {
             logger.logConformity(ConformityResult.passed, "Check that client offered " + testData.getEIDServiceTLSExpectedClientVersion() + " passed.");
         }

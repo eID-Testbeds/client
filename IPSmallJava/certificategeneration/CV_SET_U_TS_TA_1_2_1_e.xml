@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cvcert.xsd">
+<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cv_schema.xsd">
 
 	<keys>
-		<key name="CERT_CV_CVCA_U_TS_TA_1_2_1_e_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+		<key name="CERT_CV_CVCA_U_TS_TA_1_2_1_e_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_CVCA_U_TS_TA_1_2_1_e_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_RSA_PSS_SHA_1</algorithm>
 			<rsa>
@@ -10,8 +11,9 @@
 				<length>1024</length>
 			</rsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_U_TS_TA_1_2_1_e_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_U_TS_TA_1_2_1_e_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_U_TS_TA_1_2_1_e_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_RSA_PSS_SHA_1</algorithm>
 			<rsa>
@@ -19,8 +21,9 @@
 				<length>1024</length>
 			</rsa>				
 		</key>
-		
-		<key name="CERT_CV_TERM_U_TS_TA_1_2_1_e_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_U_TS_TA_1_2_1_e_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_U_TS_TA_1_2_1_e_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_RSA_PSS_SHA_1</algorithm>
 			<rsa>
@@ -29,7 +32,7 @@
 			</rsa>			
 		</key>
 	</keys>
-	
+
 	<!-- CERT_CV_DV_U_TS_TA_1_2_1_e -->
 	<cert>
 		<profileId>0</profileId>
@@ -79,7 +82,7 @@
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_CVCA_U_TS_TA_1_2_1_e.cvcert</outputFile>
 	</cert>
 
- 	<!-- CERT_CV_DV_U_TS_TA_1_2_1_e -->
+	<!-- CERT_CV_DV_U_TS_TA_1_2_1_e -->
 	<cert>
 		<profileId>0</profileId>
 		<certAuthRef>DECVCAeIDCT00UTE</certAuthRef>
@@ -127,7 +130,7 @@
 		<signKey>CERT_CV_CVCA_U_TS_TA_1_2_1_e_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_U_TS_TA_1_2_1_e.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_U_TS_TA_1_2_1_e -->
 	<cert>
 		<profileId>0</profileId>
@@ -162,6 +165,7 @@
 				<commCerts>
 					<fileCommCert>./certs/CERT_TLS_ESERVICE_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_ESERVICE_1_NSOP.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_TCTOKEN_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_EIDSERVER_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_A.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_B.der</fileCommCert>

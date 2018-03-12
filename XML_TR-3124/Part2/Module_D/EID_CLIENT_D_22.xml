@@ -3,8 +3,8 @@
 <TestCase id="EID_CLIENT_D_22" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
 	<Title>Test case EID_CLIENT_D_22</Title>
 	<Version>1.2</Version>
-	<Purpose>This test unit evaluates the possibility for the user to restrict the access rights requested by the eService (CHAT restriction) not contained in RequiredCHAT if RequiredCHAT is present.</Purpose>
-	<Profile>UI_ONLINE</Profile>
+	<Purpose>This test unit evaluates that the user is not able to restrict the access rights requested by the eService (CHAT restriction) if contained in RequiredCHAT.</Purpose>
+	<Profile>USER_INTERFACE</Profile>
 	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>
 	<TestStep>
@@ -16,10 +16,13 @@
 		<Description>The element "AuthenticatedAuxiliaryData" contains a valid date for the document validity check.</Description>
 		<Description>The element "AuthenticatedAuxiliaryData" contains a valid municipality ID.</Description>
 		<ExpectedResult>
-			<Text>The access rights contained in the CHAT of the eService certificate are displayed.</Text>
+			<Text>At least the access right for [DGROUP_A] is displayed.</Text>
 		</ExpectedResult>
 		<ExpectedResult>
-			<Text>The eID-Client allows the user to deselect the access rights granted by the eService certificate, except for [DGROUP_A].</Text>
+			<Text>If more access rights are displayed, the eID-Client allows the user to deselect the access rights granted by the eService certificate, except for [DGROUP_A].</Text>
+		</ExpectedResult>
+		<ExpectedResult>
+			<Text>The eID-Client preselects the access right for [DGROUP_A].</Text>
 		</ExpectedResult>
 		<ExpectedResult>
 			<Text>The eID-Client does not allow the user to deselect the access right for [DGROUP_A].</Text>

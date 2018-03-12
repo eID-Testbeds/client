@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_A1_08</Title>
 	<Version>1.2</Version>
 	<Purpose>Positive test of the action to open the User Interface in case the Module is not set.</Purpose>
-	<Profile>OA</Profile>
+	<Profile>CLIENT_INTERFACE</Profile>
 	<Profile>ACTION_SHOWUI</Profile>
 	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>

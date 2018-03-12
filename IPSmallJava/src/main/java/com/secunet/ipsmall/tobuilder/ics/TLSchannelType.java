@@ -1,10 +1,3 @@
-//
-// Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
-// Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.10.19 um 04:26:04 PM CEST 
-//
-
 
 package com.secunet.ipsmall.tobuilder.ics;
 
@@ -55,12 +48,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TLSchannelType", propOrder = {
+@XmlType(name = "TLSchannelType", namespace = "http://www.secunet.com", propOrder = {
     "tlsVersion"
 })
 public class TLSchannelType {
 
-    @XmlElement(name = "TLS-Version", required = true)
+    @XmlElement(name = "TLS-Version", namespace = "http://www.secunet.com", required = true)
     protected List<TLSchannelType.TLSVersion> tlsVersion;
 
     /**
@@ -130,22 +123,22 @@ public class TLSchannelType {
     })
     public static class TLSVersion {
 
-        @XmlElement(name = "CipherSuite", required = true)
+        @XmlElement(name = "CipherSuite", namespace = "http://www.secunet.com", required = true)
         @XmlSchemaType(name = "string")
         protected List<TLSCipherSuiteType> cipherSuite;
-        @XmlElement(name = "SupportedCurve")
+        @XmlElement(name = "SupportedCurve", namespace = "http://www.secunet.com")
         @XmlSchemaType(name = "string")
         protected List<TLSSupportedCurveType> supportedCurve;
-        @XmlElement(name = "MinRSAKeyLength")
+        @XmlElement(name = "MinRSAKeyLength", namespace = "http://www.secunet.com")
         @XmlSchemaType(name = "unsignedInt")
         protected Long minRSAKeyLength;
-        @XmlElement(name = "MinDSAKeyLength")
+        @XmlElement(name = "MinDSAKeyLength", namespace = "http://www.secunet.com")
         @XmlSchemaType(name = "unsignedInt")
         protected Long minDSAKeyLength;
-        @XmlElement(name = "MinDHEKeyLength")
+        @XmlElement(name = "MinDHEKeyLength", namespace = "http://www.secunet.com")
         @XmlSchemaType(name = "unsignedInt")
         protected Long minDHEKeyLength;
-        @XmlElement(name = "SupportedSignatureAlgorithm")
+        @XmlElement(name = "SupportedSignatureAlgorithm", namespace = "http://www.secunet.com")
         @XmlSchemaType(name = "string")
         protected List<TLSSupportedSignatureAlgorithmType> supportedSignatureAlgorithm;
         @XmlAttribute(name = "version", required = true)

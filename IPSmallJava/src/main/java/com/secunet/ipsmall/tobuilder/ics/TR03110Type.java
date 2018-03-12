@@ -1,10 +1,3 @@
-//
-// Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
-// Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.10.19 um 04:26:04 PM CEST 
-//
-
 
 package com.secunet.ipsmall.tobuilder.ics;
 
@@ -80,18 +73,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TR03110Type", propOrder = {
+@XmlType(name = "TR03110Type", namespace = "http://www.secunet.com", propOrder = {
     "pace",
     "ta",
     "ca"
 })
 public class TR03110Type {
 
-    @XmlElement(name = "PACE", required = true)
+    @XmlElement(name = "PACE", namespace = "http://www.secunet.com", required = true)
     protected List<String> pace;
-    @XmlElement(name = "TA")
+    @XmlElement(name = "TA", namespace = "http://www.secunet.com")
     protected List<String> ta;
-    @XmlElement(name = "CA")
+    @XmlElement(name = "CA", namespace = "http://www.secunet.com")
     protected List<String> ca;
 
     /**

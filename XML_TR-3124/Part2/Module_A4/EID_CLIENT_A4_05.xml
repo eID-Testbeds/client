@@ -3,8 +3,9 @@
 <TestCase id="EID_CLIENT_A4_05" xmlns="http://bsi.bund.de/TR03124" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03124 ../../schema/TR03124_Part_2.xsd">
 	<Title>Test case EID_CLIENT_A4_05</Title>
 	<Version>1.2</Version>
-	<Purpose>Positive test describing the eID-Client returning to the web-session following the redirects.</Purpose>
+	<Purpose>Positive test describing the eID-Client returning to the caller following the redirects.</Purpose>
 	<Profile>OA</Profile>
+	<Profile>REFRESH_REDIRECT</Profile>
 	<Reference>TR-03124-1, Section 2.5.4 "Return to the web-session"</Reference>
 	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
 	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>

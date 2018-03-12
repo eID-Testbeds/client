@@ -29,10 +29,10 @@
 		<Description>The TC Token Provider uses the TLS server certificate [CERT_TLS_ESERVICE_3_A] from [CERT_SET_3].</Description>		
 		<Description>The server identity contained in the SubjectAltName of type dNSName of the server certificate does not match with [TC_TOKEN_URL_NNM]. </Description>
 		<ExpectedResult>
-			<Text>The TLS-1-2 channel is not established.</Text>
+			<Text>A functional TLS-1-2 channel is not established.</Text>
 		</ExpectedResult> 
 		<ExpectedResult>
-			<Text>The connection establishment is aborted by the eID-Client.</Text>
+			<Text>The connection establishment is either aborted by the eID-Client, or the connection is closed immediately after creation, without sending any further data.</Text>
 		</ExpectedResult>
 		<ExpectedResult>
 			<Text>The eID-Client returns an error "Not Found" to the browser. In case of a web server based Client-Interface, the HTTP error code is "404 Not Found".</Text>

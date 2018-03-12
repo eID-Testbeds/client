@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_D_15</Title>
 	<Version>1.2</Version>
 	<Purpose>This test case checks whether the user is requested to enter his PUK on the secure PIN entry if the card reader provides one.</Purpose>
-	<Profile>UI_OFFLINE</Profile>
+	<Profile>PIN_MANAGEMENT</Profile>
 	<Reference>TR-03124-1, Chapter 3 "Functional Requirements for an eID-Client"</Reference>
 	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
 	<Precondition>The card reader in use has a PIN-Pad.</Precondition>

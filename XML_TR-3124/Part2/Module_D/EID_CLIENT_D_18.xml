@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_D_18</Title>
 	<Version>1.2</Version>
 	<Purpose>This test unit evaluates the preselection of the access rights requested by the eID-Server in the EAC1InputType message (CHAT restriction).</Purpose>
-	<Profile>UI_ONLINE</Profile>
+	<Profile>USER_INTERFACE</Profile>
 	<Profile>PRESELECT_RIGHTS</Profile>
 	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>

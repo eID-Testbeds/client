@@ -5,6 +5,7 @@
 	<Version>1.2</Version>
 	<Purpose>This test checks the behavior of the eID-Client in case the "RefreshAddress" from the TC Token and the "subjectURL" contained in the "CertificateDescription" extension of the eService certificate conform not to the Same-origin policy according to [RFC6454] and the hash of the retrieved server certificate is not contained in the "CertificateDescription" extension of the eService certificate.</Purpose>
 	<Profile>OA</Profile>
+	<Profile>REFRESH_REDIRECT</Profile>
 	<Reference>TR-03124-1, Section 2.5.4 "Return to the web-session"</Reference>
 	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
 	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>
@@ -21,23 +22,17 @@
 		</Command>
 		<Description>The result code returned in "StartPAOSResponse" is /resultmajor#ok.</Description>
 		<ExpectedResult>
-			<Text>The eID-Client starts establishment of a TLS connection to [RADDRESS_NSOP_1] and performs a HTTP GET.</Text>
+			<Text>The eID-Client starts establishment of a TLS connection to [RADDRESS_NSOP_1] and receives the certificate.</Text>
 		</ExpectedResult>
-	</TestStep>
-	<TestStep>
-		<Command>
-			<Text>The end point provided in the refresh URL accepts the connection and responds with a redirect "302 Found".</Text>
-		</Command>
-		<Description>The server certificate used is [CERT_TLS_REDIRECT_1_D] from [CERT_SET_1].</Description>
-		<Description>The redirect location is [RADDRESS].</Description>
 		<ExpectedResult>
-			<Text>The eID-Client directs the browser to the "CommunicationErrorAddress" from the TC Token.</Text>
+			<Text>The eID-Client directs the browser to the CommunicationErrorAddress from the TC Token.</Text>
 		</ExpectedResult>
-	    	<ExpectedResult>
+		<ExpectedResult>
 			<Text>In case of a web server based Client-Interface, the eID-Client uses "303 See Other" for the redirection.</Text>
 		</ExpectedResult>
 		<ExpectedResult>
 			<Text>The direction includes an additional URL-Parameter "ResultMajor=error&amp;ResultMinor=communicationError".</Text>
 		</ExpectedResult>
 	</TestStep>
+
 </TestCase>

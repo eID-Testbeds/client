@@ -1,10 +1,3 @@
-//
-// Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
-// Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.10.19 um 04:26:04 PM CEST 
-//
-
 
 package com.secunet.ipsmall.tobuilder.ics;
 
@@ -51,8 +44,6 @@ import javax.xml.bind.annotation.XmlType;
  *                   &lt;element name="EAC" type="{http://www.secunet.com}ProfileType"/>
  *                   &lt;element name="OA" type="{http://www.secunet.com}ProfileType"/>
  *                   &lt;element name="PAOS" type="{http://www.secunet.com}ProfileType"/>
- *                   &lt;element name="UI_OFFLINE" type="{http://www.secunet.com}ProfileType"/>
- *                   &lt;element name="UI_ONLINE" type="{http://www.secunet.com}ProfileType"/>
  *                   &lt;element name="CCH" type="{http://www.secunet.com}CCHProfileType"/>
  *                   &lt;element name="PREVERIFICATION" type="{http://www.secunet.com}PreverificationProfileType"/>
  *                   &lt;element name="NO_PREVERIFICATION" type="{http://www.secunet.com}ProfileType"/>
@@ -63,6 +54,13 @@ import javax.xml.bind.annotation.XmlType;
  *                   &lt;element name="ACTION_STATUS" type="{http://www.secunet.com}ProfileType"/>
  *                   &lt;element name="ACTION_SHOWUI" type="{http://www.secunet.com}ProfileType"/>
  *                   &lt;element name="ACTION_SHOWUI_SETTINGS" type="{http://www.secunet.com}ProfileType"/>
+ *                   &lt;element name="CLIENT_INTERFACE" type="{http://www.secunet.com}ProfileType"/>
+ *                   &lt;element name="PIN_MANAGEMENT" type="{http://www.secunet.com}ProfileType"/>
+ *                   &lt;element name="USER_INTERFACE" type="{http://www.secunet.com}ProfileType"/>
+ *                   &lt;element name="REFRESH_REDIRECT" type="{http://www.secunet.com}ProfileType"/>
+ *                   &lt;element name="ECAPI_INITFW" type="{http://www.secunet.com}ProfileType"/>
+ *                   &lt;element name="SESSION_RESUMPTION" type="{http://www.secunet.com}ProfileType"/>
+ *                   &lt;element name="NO_SESSION_RESUMPTION" type="{http://www.secunet.com}ProfileType"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -110,6 +108,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;simpleType>
  *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *             &lt;enumeration value="1.2"/>
+ *             &lt;enumeration value="1.3"/>
  *           &lt;/restriction>
  *         &lt;/simpleType>
  *       &lt;/attribute>
@@ -128,18 +127,18 @@ import javax.xml.bind.annotation.XmlType;
     "cardReaderInterfaces",
     "clientTrustStore"
 })
-@XmlRootElement(name = "TR-03124-2_ICS")
+@XmlRootElement(name = "TR-03124-2_ICS", namespace = "http://www.secunet.com")
 public class TR031242ICS {
 
-    @XmlElement(name = "SoftwareVersion", required = true)
+    @XmlElement(name = "SoftwareVersion", namespace = "http://www.secunet.com", required = true)
     protected TR031242ICS.SoftwareVersion softwareVersion;
-    @XmlElement(name = "Profiles", required = true)
+    @XmlElement(name = "Profiles", namespace = "http://www.secunet.com", required = true)
     protected TR031242ICS.Profiles profiles;
-    @XmlElement(name = "SupportedCryptography", required = true)
+    @XmlElement(name = "SupportedCryptography", namespace = "http://www.secunet.com", required = true)
     protected TR031242ICS.SupportedCryptography supportedCryptography;
-    @XmlElement(name = "CardReaderInterfaces", required = true)
+    @XmlElement(name = "CardReaderInterfaces", namespace = "http://www.secunet.com", required = true)
     protected TR031242ICS.CardReaderInterfaces cardReaderInterfaces;
-    @XmlElement(name = "ClientTrustStore", required = true)
+    @XmlElement(name = "ClientTrustStore", namespace = "http://www.secunet.com", required = true)
     protected TR031242ICS.ClientTrustStore clientTrustStore;
     @XmlAttribute(name = "version", required = true)
     protected String version;
@@ -318,11 +317,11 @@ public class TR031242ICS {
     })
     public static class CardReaderInterfaces {
 
-        @XmlElement(name = "PCSC", required = true)
+        @XmlElement(name = "PCSC", namespace = "http://www.secunet.com", required = true)
         protected CardReaderInterfaceType pcsc;
-        @XmlElement(name = "CCID", required = true)
+        @XmlElement(name = "CCID", namespace = "http://www.secunet.com", required = true)
         protected CardReaderInterfaceType ccid;
-        @XmlElement(name = "Embedded", required = true)
+        @XmlElement(name = "Embedded", namespace = "http://www.secunet.com", required = true)
         protected CardReaderInterfaceType embedded;
 
         /**
@@ -425,7 +424,7 @@ public class TR031242ICS {
     })
     public static class ClientTrustStore {
 
-        @XmlElement(name = "Certificate")
+        @XmlElement(name = "Certificate", namespace = "http://www.secunet.com")
         protected List<ClientTrustStoreCertificateType> certificate;
 
         /**
@@ -474,8 +473,6 @@ public class TR031242ICS {
      *         &lt;element name="EAC" type="{http://www.secunet.com}ProfileType"/>
      *         &lt;element name="OA" type="{http://www.secunet.com}ProfileType"/>
      *         &lt;element name="PAOS" type="{http://www.secunet.com}ProfileType"/>
-     *         &lt;element name="UI_OFFLINE" type="{http://www.secunet.com}ProfileType"/>
-     *         &lt;element name="UI_ONLINE" type="{http://www.secunet.com}ProfileType"/>
      *         &lt;element name="CCH" type="{http://www.secunet.com}CCHProfileType"/>
      *         &lt;element name="PREVERIFICATION" type="{http://www.secunet.com}PreverificationProfileType"/>
      *         &lt;element name="NO_PREVERIFICATION" type="{http://www.secunet.com}ProfileType"/>
@@ -486,6 +483,13 @@ public class TR031242ICS {
      *         &lt;element name="ACTION_STATUS" type="{http://www.secunet.com}ProfileType"/>
      *         &lt;element name="ACTION_SHOWUI" type="{http://www.secunet.com}ProfileType"/>
      *         &lt;element name="ACTION_SHOWUI_SETTINGS" type="{http://www.secunet.com}ProfileType"/>
+     *         &lt;element name="CLIENT_INTERFACE" type="{http://www.secunet.com}ProfileType"/>
+     *         &lt;element name="PIN_MANAGEMENT" type="{http://www.secunet.com}ProfileType"/>
+     *         &lt;element name="USER_INTERFACE" type="{http://www.secunet.com}ProfileType"/>
+     *         &lt;element name="REFRESH_REDIRECT" type="{http://www.secunet.com}ProfileType"/>
+     *         &lt;element name="ECAPI_INITFW" type="{http://www.secunet.com}ProfileType"/>
+     *         &lt;element name="SESSION_RESUMPTION" type="{http://www.secunet.com}ProfileType"/>
+     *         &lt;element name="NO_SESSION_RESUMPTION" type="{http://www.secunet.com}ProfileType"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -500,8 +504,6 @@ public class TR031242ICS {
         "eac",
         "oa",
         "paos",
-        "uioffline",
-        "uionline",
         "cch",
         "preverification",
         "nopreverification",
@@ -511,42 +513,59 @@ public class TR031242ICS {
         "disablerights",
         "actionstatus",
         "actionshowui",
-        "actionshowuisettings"
+        "actionshowuisettings",
+        "clientinterface",
+        "pinmanagement",
+        "userinterface",
+        "refreshredirect",
+        "ecapiinitfw",
+        "sessionresumption",
+        "nosessionresumption"
     })
     public static class Profiles {
 
-        @XmlElement(name = "CRYPTO", required = true)
+        @XmlElement(name = "CRYPTO", namespace = "http://www.secunet.com", required = true)
         protected ProfileType crypto;
-        @XmlElement(name = "EAC", required = true)
+        @XmlElement(name = "EAC", namespace = "http://www.secunet.com", required = true)
         protected ProfileType eac;
-        @XmlElement(name = "OA", required = true)
+        @XmlElement(name = "OA", namespace = "http://www.secunet.com", required = true)
         protected ProfileType oa;
-        @XmlElement(name = "PAOS", required = true)
+        @XmlElement(name = "PAOS", namespace = "http://www.secunet.com", required = true)
         protected ProfileType paos;
-        @XmlElement(name = "UI_OFFLINE", required = true)
-        protected ProfileType uioffline;
-        @XmlElement(name = "UI_ONLINE", required = true)
-        protected ProfileType uionline;
-        @XmlElement(name = "CCH", required = true)
+        @XmlElement(name = "CCH", namespace = "http://www.secunet.com", required = true)
         protected CCHProfileType cch;
-        @XmlElement(name = "PREVERIFICATION", required = true)
+        @XmlElement(name = "PREVERIFICATION", namespace = "http://www.secunet.com", required = true)
         protected PreverificationProfileType preverification;
-        @XmlElement(name = "NO_PREVERIFICATION", required = true)
+        @XmlElement(name = "NO_PREVERIFICATION", namespace = "http://www.secunet.com", required = true)
         protected ProfileType nopreverification;
-        @XmlElement(name = "HTTP_MESSAGES", required = true)
+        @XmlElement(name = "HTTP_MESSAGES", namespace = "http://www.secunet.com", required = true)
         protected ProfileType httpmessages;
-        @XmlElement(name = "PROXY_CONFIG", required = true)
+        @XmlElement(name = "PROXY_CONFIG", namespace = "http://www.secunet.com", required = true)
         protected ProfileType proxyconfig;
-        @XmlElement(name = "PRESELECT_RIGHTS", required = true)
+        @XmlElement(name = "PRESELECT_RIGHTS", namespace = "http://www.secunet.com", required = true)
         protected ProfileType preselectrights;
-        @XmlElement(name = "DISABLE_RIGHTS", required = true)
+        @XmlElement(name = "DISABLE_RIGHTS", namespace = "http://www.secunet.com", required = true)
         protected ProfileType disablerights;
-        @XmlElement(name = "ACTION_STATUS", required = true)
+        @XmlElement(name = "ACTION_STATUS", namespace = "http://www.secunet.com", required = true)
         protected ProfileType actionstatus;
-        @XmlElement(name = "ACTION_SHOWUI", required = true)
+        @XmlElement(name = "ACTION_SHOWUI", namespace = "http://www.secunet.com", required = true)
         protected ProfileType actionshowui;
-        @XmlElement(name = "ACTION_SHOWUI_SETTINGS", required = true)
+        @XmlElement(name = "ACTION_SHOWUI_SETTINGS", namespace = "http://www.secunet.com", required = true)
         protected ProfileType actionshowuisettings;
+        @XmlElement(name = "CLIENT_INTERFACE", namespace = "http://www.secunet.com", required = true)
+        protected ProfileType clientinterface;
+        @XmlElement(name = "PIN_MANAGEMENT", namespace = "http://www.secunet.com", required = true)
+        protected ProfileType pinmanagement;
+        @XmlElement(name = "USER_INTERFACE", namespace = "http://www.secunet.com", required = true)
+        protected ProfileType userinterface;
+        @XmlElement(name = "REFRESH_REDIRECT", namespace = "http://www.secunet.com", required = true)
+        protected ProfileType refreshredirect;
+        @XmlElement(name = "ECAPI_INITFW", namespace = "http://www.secunet.com", required = true)
+        protected ProfileType ecapiinitfw;
+        @XmlElement(name = "SESSION_RESUMPTION", namespace = "http://www.secunet.com", required = true)
+        protected ProfileType sessionresumption;
+        @XmlElement(name = "NO_SESSION_RESUMPTION", namespace = "http://www.secunet.com", required = true)
+        protected ProfileType nosessionresumption;
 
         /**
          * Ruft den Wert der crypto-Eigenschaft ab.
@@ -642,54 +661,6 @@ public class TR031242ICS {
          */
         public void setPAOS(ProfileType value) {
             this.paos = value;
-        }
-
-        /**
-         * Ruft den Wert der uioffline-Eigenschaft ab.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ProfileType }
-         *     
-         */
-        public ProfileType getUIOFFLINE() {
-            return uioffline;
-        }
-
-        /**
-         * Legt den Wert der uioffline-Eigenschaft fest.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ProfileType }
-         *     
-         */
-        public void setUIOFFLINE(ProfileType value) {
-            this.uioffline = value;
-        }
-
-        /**
-         * Ruft den Wert der uionline-Eigenschaft ab.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ProfileType }
-         *     
-         */
-        public ProfileType getUIONLINE() {
-            return uionline;
-        }
-
-        /**
-         * Legt den Wert der uionline-Eigenschaft fest.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ProfileType }
-         *     
-         */
-        public void setUIONLINE(ProfileType value) {
-            this.uionline = value;
         }
 
         /**
@@ -932,6 +903,174 @@ public class TR031242ICS {
             this.actionshowuisettings = value;
         }
 
+        /**
+         * Ruft den Wert der clientinterface-Eigenschaft ab.
+         * 
+         * @return
+         *     possible object is
+         *     {@link ProfileType }
+         *     
+         */
+        public ProfileType getCLIENTINTERFACE() {
+            return clientinterface;
+        }
+
+        /**
+         * Legt den Wert der clientinterface-Eigenschaft fest.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link ProfileType }
+         *     
+         */
+        public void setCLIENTINTERFACE(ProfileType value) {
+            this.clientinterface = value;
+        }
+
+        /**
+         * Ruft den Wert der pinmanagement-Eigenschaft ab.
+         * 
+         * @return
+         *     possible object is
+         *     {@link ProfileType }
+         *     
+         */
+        public ProfileType getPINMANAGEMENT() {
+            return pinmanagement;
+        }
+
+        /**
+         * Legt den Wert der pinmanagement-Eigenschaft fest.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link ProfileType }
+         *     
+         */
+        public void setPINMANAGEMENT(ProfileType value) {
+            this.pinmanagement = value;
+        }
+
+        /**
+         * Ruft den Wert der userinterface-Eigenschaft ab.
+         * 
+         * @return
+         *     possible object is
+         *     {@link ProfileType }
+         *     
+         */
+        public ProfileType getUSERINTERFACE() {
+            return userinterface;
+        }
+
+        /**
+         * Legt den Wert der userinterface-Eigenschaft fest.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link ProfileType }
+         *     
+         */
+        public void setUSERINTERFACE(ProfileType value) {
+            this.userinterface = value;
+        }
+
+        /**
+         * Ruft den Wert der refreshredirect-Eigenschaft ab.
+         * 
+         * @return
+         *     possible object is
+         *     {@link ProfileType }
+         *     
+         */
+        public ProfileType getREFRESHREDIRECT() {
+            return refreshredirect;
+        }
+
+        /**
+         * Legt den Wert der refreshredirect-Eigenschaft fest.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link ProfileType }
+         *     
+         */
+        public void setREFRESHREDIRECT(ProfileType value) {
+            this.refreshredirect = value;
+        }
+
+        /**
+         * Ruft den Wert der ecapiinitfw-Eigenschaft ab.
+         * 
+         * @return
+         *     possible object is
+         *     {@link ProfileType }
+         *     
+         */
+        public ProfileType getECAPIINITFW() {
+            return ecapiinitfw;
+        }
+
+        /**
+         * Legt den Wert der ecapiinitfw-Eigenschaft fest.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link ProfileType }
+         *     
+         */
+        public void setECAPIINITFW(ProfileType value) {
+            this.ecapiinitfw = value;
+        }
+
+        /**
+         * Ruft den Wert der sessionresumption-Eigenschaft ab.
+         * 
+         * @return
+         *     possible object is
+         *     {@link ProfileType }
+         *     
+         */
+        public ProfileType getSESSIONRESUMPTION() {
+            return sessionresumption;
+        }
+
+        /**
+         * Legt den Wert der sessionresumption-Eigenschaft fest.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link ProfileType }
+         *     
+         */
+        public void setSESSIONRESUMPTION(ProfileType value) {
+            this.sessionresumption = value;
+        }
+
+        /**
+         * Ruft den Wert der nosessionresumption-Eigenschaft ab.
+         * 
+         * @return
+         *     possible object is
+         *     {@link ProfileType }
+         *     
+         */
+        public ProfileType getNOSESSIONRESUMPTION() {
+            return nosessionresumption;
+        }
+
+        /**
+         * Legt den Wert der nosessionresumption-Eigenschaft fest.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link ProfileType }
+         *     
+         */
+        public void setNOSESSIONRESUMPTION(ProfileType value) {
+            this.nosessionresumption = value;
+        }
+
     }
 
 
@@ -966,13 +1105,13 @@ public class TR031242ICS {
     })
     public static class SoftwareVersion {
 
-        @XmlElement(name = "Name", required = true)
+        @XmlElement(name = "Name", namespace = "http://www.secunet.com", required = true)
         protected String name;
-        @XmlElement(name = "VersionMajor", required = true)
+        @XmlElement(name = "VersionMajor", namespace = "http://www.secunet.com", required = true)
         protected String versionMajor;
-        @XmlElement(name = "VersionMinor", required = true)
+        @XmlElement(name = "VersionMinor", namespace = "http://www.secunet.com", required = true)
         protected String versionMinor;
-        @XmlElement(name = "VersionSubminor", required = true)
+        @XmlElement(name = "VersionSubminor", namespace = "http://www.secunet.com", required = true)
         protected String versionSubminor;
 
         /**
@@ -1103,11 +1242,11 @@ public class TR031242ICS {
     })
     public static class SupportedCryptography {
 
-        @XmlElement(name = "TLSchannel_1-2", required = true)
+        @XmlElement(name = "TLSchannel_1-2", namespace = "http://www.secunet.com", required = true)
         protected TLSchannelType tlSchannel12;
-        @XmlElement(name = "TLSchannel_2", required = true)
+        @XmlElement(name = "TLSchannel_2", namespace = "http://www.secunet.com", required = true)
         protected TLSchannelType tlSchannel2;
-        @XmlElement(name = "TR-03110", required = true)
+        @XmlElement(name = "TR-03110", namespace = "http://www.secunet.com", required = true)
         protected TR03110Type tr03110;
 
         /**

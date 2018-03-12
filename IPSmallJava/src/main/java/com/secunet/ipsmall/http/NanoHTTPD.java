@@ -961,6 +961,14 @@ public abstract class NanoHTTPD {
                     	this.getInputStream().close();
                     	this.getSocket().close();
                     }
+
+                    /* 
+                     * FIXME workaround for forced disconnect tests with attached server
+                     */
+                    if (r.getTxtResponse() != null && r.getTxtResponse().contains("EAC1InputType") && !testData.tcTokenDisconnect() && testData.isEIDServiceAttached()) {
+                    	this.getInputStream().close();
+                    	this.getSocket().close();
+                    }
                 }
             } catch (SocketException e) {
                 // throw it out to close socket object (finalAccept)

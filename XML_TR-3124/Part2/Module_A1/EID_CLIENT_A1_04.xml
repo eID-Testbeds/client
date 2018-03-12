@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_A1_04</Title>
 	<Version>1.2</Version>
 	<Purpose>This test case checks the behavior of the eID-Client in case the TC Token URL is a http-URL.</Purpose>
-	<Profile>OA</Profile>
+	<Profile>CLIENT_INTERFACE</Profile>
 	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>
 	<TestStep>

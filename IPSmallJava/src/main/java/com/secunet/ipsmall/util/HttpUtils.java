@@ -38,7 +38,7 @@ public class HttpUtils {
             // startWith 'Apache-HttpClient' inserted too as passing user-agent
             // manually in BrowserSimulator is not applied as expected
             return SourceComponent.BROWSER_SIMULATOR;
-        } else if (userAgent.contains("Mozilla")) {
+        } else if (userAgent.contains("Mozilla") || userAgent.contains("Dalvik")) {
             // almost any genuine browser sends Mozilla...
             return SourceComponent.BROWSER;
         } else {

@@ -1,137 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cvcert.xsd">
+<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cv_schema.xsd">
 
 	<keys>
-		
+
 		<!-- use keys of CVCA certificate for this link CA  -->
 		<key name="CERT_CV_CVCA_4_1_KEY">
 			<filePrivateKey>./CVCA/DECVCAeIDCT00001.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
+
 		<key name="CERT_CV_LINK_4_1_KEY">
 			<filePrivateKey>./CVCA/CERT_CV_LINK_4_1_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
+
 		<key name="CERT_CV_LINK_4_2_KEY">
 			<filePrivateKey>./CVCA/CERT_CV_LINK_4_2_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
+
 		<key name="CERT_CV_LINK_4_3_KEY">
 			<filePrivateKey>./CVCA/CERT_CV_LINK_4_3_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
+
 		<key name="CERT_CV_LINK_4_4_KEY">
 			<filePrivateKey>./CVCA/CERT_CV_LINK_4_4_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
+
 		<key name="CERT_CV_LINK_4_5_KEY">
 			<filePrivateKey>./CVCA/CERT_CV_LINK_4_5_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
+
 		<key name="CERT_CV_LINK_4_6_KEY">
 			<filePrivateKey>./CVCA/CERT_CV_LINK_4_6_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_4_1_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_4_1_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_4_1_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_4_2_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_4_2_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_4_2_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_4_3_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_4_3_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_4_3_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_4_4_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_4_4_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_4_4_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_4_5_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_4_5_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_4_5_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_4_6_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_4_6_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_4_6_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_4_7_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_4_7_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_4_7_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_TERM_4_1_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_4_1_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_4_1_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_TERM_4_2_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_4_2_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_4_2_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_TERM_4_3_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_4_3_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_4_3_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_TERM_4_4_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_4_4_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_4_4_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_TERM_4_5_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_4_5_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_4_5_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_TERM_4_6_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_4_6_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_4_6_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_TERM_4_7_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_4_7_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_4_7_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
+
 	</keys>
-	
+
 	<!-- CERT_CV_DV_4_1 -->
 	<cert>
 		<profileId>0</profileId>
@@ -180,7 +194,7 @@
 		<signKey>CERT_CV_CVCA_4_1_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_4_1.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_DV_4_2 -->
 	<cert>
 		<profileId>0</profileId>
@@ -229,7 +243,7 @@
 		<signKey>CERT_CV_LINK_4_1_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_4_2.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_DV_4_3 -->
 	<cert>
 		<profileId>0</profileId>
@@ -278,7 +292,7 @@
 		<signKey>CERT_CV_LINK_4_2_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_4_3.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_DV_4_4 -->
 	<cert>
 		<profileId>0</profileId>
@@ -327,7 +341,7 @@
 		<signKey>CERT_CV_LINK_4_3_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_4_4.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_DV_4_5 -->
 	<cert>
 		<profileId>0</profileId>
@@ -376,7 +390,7 @@
 		<signKey>CERT_CV_LINK_4_4_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_4_5.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_DV_4_6 -->
 	<cert>
 		<profileId>0</profileId>
@@ -425,8 +439,8 @@
 		<signKey>CERT_CV_LINK_4_5_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_4_6.cvcert</outputFile>
 	</cert> 
-	 
-	 <!-- CERT_CV_DV_4_7 -->
+
+	<!-- CERT_CV_DV_4_7 -->
 	<cert>
 		<profileId>0</profileId>
 		<certAuthRef>DECVCAeIDCTL0406</certAuthRef>
@@ -474,7 +488,7 @@
 		<signKey>CERT_CV_LINK_4_6_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_4_7.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_4_6 -->
 	<cert>
 		<profileId>0</profileId>
@@ -539,7 +553,7 @@
 		<signKey>CERT_CV_DV_4_1_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_4_1.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_4_2 -->
 	<cert>
 		<profileId>0</profileId>
@@ -604,7 +618,7 @@
 		<signKey>CERT_CV_DV_4_2_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_4_2.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_4_3 -->
 	<cert>
 		<profileId>0</profileId>
@@ -669,7 +683,7 @@
 		<signKey>CERT_CV_DV_4_3_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_4_3.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_4_4 -->
 	<cert>
 		<profileId>0</profileId>
@@ -734,7 +748,7 @@
 		<signKey>CERT_CV_DV_4_4_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_4_4.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_4_5 -->
 	<cert>
 		<profileId>0</profileId>
@@ -799,7 +813,7 @@
 		<signKey>CERT_CV_DV_4_5_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_4_5.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_4_6 -->
 	<cert>
 		<profileId>0</profileId>
@@ -864,7 +878,7 @@
 		<signKey>CERT_CV_DV_4_6_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_4_6.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_4_7 -->
 	<cert>
 		<profileId>0</profileId>
@@ -929,5 +943,5 @@
 		<signKey>CERT_CV_DV_4_7_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_4_7.cvcert</outputFile>
 	</cert>
-	
+
 </root>

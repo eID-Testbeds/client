@@ -304,7 +304,7 @@ public class TestRunner implements ITestProtocolCallback {
                             break;
 
                         case REDIRECT_BROWSER:
-                            if (testData.getTestType() != null && testData.getTestType() == Type.BROWSER && ((caller.getClass() == EService.class) || (caller.getClass() == TCTokenProvider.class) || (caller.getClass() == CommErrorAddressServer.class))) {
+                            if (testData.getTestType() != null && testData.getTestType() == Type.BROWSER && ((caller.getClass() == EService.class) || (caller.getClass() == AttachedEIDServer.class) || (caller.getClass() == TCTokenProvider.class) || (caller.getClass() == CommErrorAddressServer.class))) {
                                 onStepRedirectBrowserViaHTTPServer();
                             } else {
                                 onStepRedirectBrowser();
@@ -354,7 +354,7 @@ public class TestRunner implements ITestProtocolCallback {
                         // good pattern, but much easier to handle here:
                         // automatic logging, detail logging, set of bool flag,
                         // etc.)
-                        if (testData.getResultIndeterminable()) {
+                        if (testData.isResultIndeterminable()) {
                             throw new TestAnalysisAbortException(TestResult.UNDETERMINED, Reason.MANUAL_CHECK_NEEDED, testData.getResultIndeterminableReason());
                         } else if (resultWarnings.size() > 0) {
                             throw new TestAnalysisAbortException(TestResult.UNDETERMINED, Reason.MANUAL_CHECK_NEEDED, resultWarnings.size() + " test result warning(s) occured.");
@@ -958,6 +958,17 @@ public class TestRunner implements ITestProtocolCallback {
 
             for (HashMap<ITestData.ExpectedTestStepKey, String> map : additionalList) {
                 TestStep testStep = TestStep.valueOf(map.get(ITestData.ExpectedTestStepKey.STEP));
+                
+                // special handling of step BROWSER_CONTENT in browser test mode
+                if(testStep != null && testStep == TestStep.BROWSER_CONTENT && testData.getTestType() != null && testData.getTestType() == Type.BROWSER) {
+                	String reason = (testData.isResultIndeterminable() ? ("" + testData.getResultIndeterminableReason() + "\n\n") : "");
+                	reason += "Test Step BROWSER_CONTENT was skipped due to testing in browser test mode and must be checked manually.";
+                	testData.setResultIndeterminableReason(reason);
+                	continue;
+                }
+                
+                //TODO this code is very suspicious!
+                // 'lastStep' is never written => always null
                 if (testStep == lastStep) {
                     numOfStepForType++;
                 } else {

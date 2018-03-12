@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_D_10</Title>
 	<Version>1.2</Version>
 	<Purpose>This test case verifies the eID-Client to advise the user about the current value of the retry counter of the PIN if the PIN verification fails.</Purpose>
-	<Profile>UI_OFFLINE</Profile>
+	<Profile>PIN_MANAGEMENT</Profile>
 	<Reference>TR-03124-1, Chapter 3 "Functional Requirements for an eID-Client"</Reference>
 	<Precondition>The card reader in use has neither display, nor PIN-Pad.</Precondition>
 	<Precondition>The eID-Client offers its services.</Precondition>

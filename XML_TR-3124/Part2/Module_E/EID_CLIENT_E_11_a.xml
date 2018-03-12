@@ -56,10 +56,10 @@
 		<Description> The eID-Server uses the TLS server certificate [CERT_TLS_EIDSERVER_3_A] from [CERT_SET_3]</Description>
 		<Description>The server identity contained in the SubjectAltName of type dNSName of the server certificate does not match with [SERVERADRESS_NNM]. </Description>
 		<ExpectedResult>
-			<Text>The TLS-2 channel is not established.</Text>
+			<Text>A functional TLS-2 channel is not established.</Text>
 		</ExpectedResult>
 		<ExpectedResult>
-			<Text>The connection establishment is aborted by the eID-Client.</Text>
+			<Text>The connection establishment is either aborted by the eID-Client, or the connection is closed immediately after creation, without sending any further data.</Text>
 		</ExpectedResult>
 		<ExpectedResult>
 			<Text>The eID-Client directs the browser to the "RefreshAddress".</Text>

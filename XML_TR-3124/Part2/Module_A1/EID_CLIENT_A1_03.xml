@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_A1_03</Title>
 	<Version>1.2</Version>
 	<Purpose>The test case for verifying the behavior of the eID-Client if the activation message is malformed, i. e. the TC Token URL is missing.</Purpose>
-	<Profile>OA</Profile>
+	<Profile>CLIENT_INTERFACE</Profile>
 	<Reference>TR-03124-1, Section 2.2 "Client-Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>
 	<TestStep>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cvcert.xsd">
+<root xmlns="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com cv_schema.xsd">
 
 	<keys>
 		<key name="CERT_CV_CVCA_1_KEY" create="false">
@@ -8,52 +8,60 @@
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_CVCA_2_FOR_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_CVCA_2_FOR_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_CVCA_2_FOR_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_LINK_2_A_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_LINK_2_A_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_LINK_2_A_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		<key name="CERT_CV_LINK_2_B_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+		<key name="CERT_CV_LINK_2_B_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_LINK_2_B_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_DV_2_A_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_DV_2_A_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_2_A_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		<key name="CERT_CV_DV_2_B_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+		<key name="CERT_CV_DV_2_B_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_DV_2_B_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		
-		<key name="CERT_CV_TERM_2_A_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+
+		<key name="CERT_CV_TERM_2_A_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_2_A_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		<key name="CERT_CV_TERM_2_B_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+		<key name="CERT_CV_TERM_2_B_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_2_B_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
-		<key name="CERT_CV_TERM_2_C_KEY" create="true"> <!-- WARNING: create=true overwrites existing keys! -->
+		<key name="CERT_CV_TERM_2_C_KEY" create="true">
+			<!-- WARNING: create=true overwrites existing keys! -->
 			<filePrivateKey>./certs/CERT_CV_TERM_2_C_KEY.pkcs8</filePrivateKey>
 			<algorithm>TA_ECDSA_SHA_256</algorithm>
 			<ecdsa>BRAINPOOL::p256r1</ecdsa>			
 		</key>
 	</keys>
-	
+
 	<!-- CERT_CV_LINK_2_A  -->
 	<cert>
 		<profileId>0</profileId>
@@ -102,7 +110,7 @@
 		<signKey>CERT_CV_CVCA_1_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_LINK_2_A.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_CVCA_2_B  -->
 	<cert>
 		<profileId>0</profileId>
@@ -151,7 +159,7 @@
 		<signKey>CERT_CV_LINK_2_A_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_CVCA_2_B.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_LINK_2_B  -->
 	<cert>
 		<profileId>0</profileId>
@@ -201,7 +209,7 @@
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_LINK_2_B.cvcert</outputFile>
 	</cert>
 
- 	<!-- CERT_CV_DV_2_A -->
+	<!-- CERT_CV_DV_2_A -->
 	<cert>
 		<profileId>0</profileId>
 		<certAuthRef>DECVCAeIDCTL020A</certAuthRef>
@@ -249,7 +257,7 @@
 		<signKey>CERT_CV_LINK_2_A_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_2_A.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_DV_2_B -->
 	<cert>
 		<profileId>0</profileId>
@@ -299,7 +307,7 @@
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_DV_2_B.cvcert</outputFile>
 	</cert>
 
-	
+
 	<!-- CERT_CV_TERM_2_A -->
 	<cert>
 		<profileId>0</profileId>
@@ -325,6 +333,7 @@
 				<commCerts>
 					<fileCommCert>./certs/CERT_TLS_ESERVICE_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_ESERVICE_1_NSOP.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_TCTOKEN_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_EIDSERVER_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_A.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_B.der</fileCommCert>
@@ -339,7 +348,7 @@
 		<signKey>CERT_CV_DV_2_A_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_2_A.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_2_B -->
 	<cert>
 		<profileId>0</profileId>
@@ -365,6 +374,7 @@
 				<commCerts>
 					<fileCommCert>./certs/CERT_TLS_ESERVICE_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_ESERVICE_1_NSOP.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_TCTOKEN_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_EIDSERVER_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_A.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_B.der</fileCommCert>
@@ -379,7 +389,7 @@
 		<signKey>CERT_CV_DV_2_A_KEY</signKey>
 		<outputFile createAdditionalHexFile="true">./certs/CERT_CV_TERM_2_B.cvcert</outputFile>
 	</cert>
-	
+
 	<!-- CERT_CV_TERM_2_C -->
 	<cert>
 		<profileId>0</profileId>
@@ -405,6 +415,7 @@
 				<commCerts>
 					<fileCommCert>./certs/CERT_TLS_ESERVICE_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_ESERVICE_1_NSOP.der</fileCommCert>
+					<fileCommCert>./certs/CERT_TLS_TCTOKEN_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_EIDSERVER_1.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_A.der</fileCommCert>
 					<fileCommCert>./certs/CERT_TLS_REDIRECT_1_B.der</fileCommCert>

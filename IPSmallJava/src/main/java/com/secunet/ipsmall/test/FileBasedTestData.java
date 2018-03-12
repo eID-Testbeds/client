@@ -26,7 +26,7 @@ import javax.xml.bind.DatatypeConverter;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.util.PrivateKeyFactory;
 
-import com.secunet.bouncycastle.crypto.tls.Certificate;
+import org.bouncycastle.crypto.tls.Certificate;
 import com.secunet.ipsmall.GlobalSettings;
 import com.secunet.ipsmall.eval.Evaluator;
 import com.secunet.ipsmall.eval.EvaluationConfig;
@@ -1993,7 +1993,7 @@ public class FileBasedTestData implements ITestData {
     }
 
     @Override
-    public boolean getResultIndeterminable() {
+    public boolean isResultIndeterminable() {
         return resultIndeterminable;
     }
 
@@ -2001,6 +2001,13 @@ public class FileBasedTestData implements ITestData {
     public String getResultIndeterminableReason() {
         return resultIndeterminableReason;
     }
+
+	@Override
+	public void setResultIndeterminableReason(String reason)
+	{
+		resultIndeterminableReason = reason;
+		resultIndeterminable = (reason != null);
+	}
 
     @Override
     public boolean isEac1ConfirmDialog() {

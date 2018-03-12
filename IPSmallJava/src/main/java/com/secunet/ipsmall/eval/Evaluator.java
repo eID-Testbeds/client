@@ -350,7 +350,7 @@ public class Evaluator {
         
         // check for occurrence and order of child nodes, check recursive the child
         String[] expectedChildNames = cfgs.get(startNode).getChildren();
-        int expactedOrderIndex = 0, index = 0, occurence = 0;
+        int expactedOrderIndex = 0, index = 0, occurence = 1;
         String lastChildNode = null;
         List<String> foundChilds = new ArrayList<>();
         
@@ -373,9 +373,14 @@ public class Evaluator {
         }
         
         Map<String, Integer> childNodeCounter = new HashMap<String, Integer>();
+
+        // get last index of an element node
+        int lastElementNodeIndex = node.getChildNodes().getLength() - 1;
+        while(lastElementNodeIndex > -1 && node.getChildNodes().item(lastElementNodeIndex).getNodeType() != 1) lastElementNodeIndex--;
         
         // iterate over children
-        while (index < node.getChildNodes().getLength()) {
+        while (index <= lastElementNodeIndex) {
+//        while (index < node.getChildNodes().getLength()) {
             Node child = node.getChildNodes().item(index);
             // skip text nodes etcpp
             if (child.getNodeType() != 1) {
@@ -409,10 +414,18 @@ public class Evaluator {
                             + "]");
                 // don't increase expactedOrderIndex!!
                 
-                // if new nodename reset occurrence and check if node was excepted
+            // if new nodename reset occurrence and check if node was excepted
             } else {
+            	// check minimum
+                if (lastChildNode != null && occurence < cfgs.get(lastChildNode).getMinOccurence()) {
+                    return new EvaluateResult(ResultType.OccurenceError, cfgs.get(lastChildNode).isForceFailOnError(), "XML Node " + lastChildNode
+                            + " occured too few", "" + occurence, "[" + cfgs.get(lastChildNode).getMinOccurence() + "," + cfgs.get(lastChildNode).getMaxOccurence()
+                            + "]");
+                }
+            	
                 lastChildNode = childName;
                 occurence = 1;
+
                 boolean increaseCounter = true;
                 // check if more children than expected
                 if (expactedOrderIndex > expectedChildNames.length) {
@@ -464,6 +477,15 @@ public class Evaluator {
                 if (increaseCounter)
                     expactedOrderIndex++;
             }
+
+
+            // check minimum
+            if ((index == lastElementNodeIndex) && (occurence < cfgs.get(childName).getMinOccurence())) {
+                return new EvaluateResult(ResultType.OccurenceError, cfgs.get(lastChildNode).isForceFailOnError(), "XML Node " + lastChildNode
+                        + " occured too few", "" + occurence, "[" + cfgs.get(lastChildNode).getMinOccurence() + "," + cfgs.get(lastChildNode).getMaxOccurence()
+                        + "]");
+            }
+            
             
             // check children
             if (cfgs.containsKey(childName)) {

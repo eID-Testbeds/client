@@ -1,11 +1,12 @@
 package com.secunet.ipsmall.tobuilder;
 
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import com.secunet.ipsmall.tls.BouncyCastleTlsHelper;
+import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+
 import com.secunet.ipsmall.tobuilder.ics.TLSSupportedCurveType;
 import com.secunet.ipsmall.tobuilder.ics.TLSSupportedSignatureAlgorithmType;
 import com.secunet.ipsmall.tobuilder.ics.TLSVersionType;
 import com.secunet.ipsmall.tobuilder.ics.TLSchannelType;
+import com.secunet.testbedutils.utilities.BouncyCastleTlsHelper;
 
 import java.util.ArrayList;
 import java.util.List;

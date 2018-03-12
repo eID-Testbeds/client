@@ -158,7 +158,8 @@ public class BuildTestObject {
         toSetups.add(new TestcaseE06TemplateSetup(settings)); // generate testcases from template for E_06.
         toSetups.add(new TestcaseTLSVersionTemplateSetup("EID_CLIENT_E_07_T", RelatedServer.eIDServer, settings)); // generate testcases from template for E_07.
         toSetups.add(new TestcaseE08TemplateSetup(settings)); // generate testcases from template for E_08.
-        toSetups.add(new TestcaseShortKeyTemplateSetup("EID_CLIENT_E_12_T", RelatedServer.eIDServer, settings)); // generate testcases from template for E_12.
+        toSetups.add(new TestcaseShortKeyTemplateSetup("EID_CLIENT_E_12_T_OPT_A", RelatedServer.eIDServer, settings)); // generate testcases from template for E_12.
+        toSetups.add(new TestcaseShortKeyTemplateSetup("EID_CLIENT_E_12_T_OPT_B", RelatedServer.eIDServer, settings)); // generate testcases from template for E_12.
         
         toSetups.add(new ResolveReferenceTestcasesSetup(settings)); // resolve reference testcases.
         toSetups.add(new ProfileSetup(settings)); // deactivate profiles.

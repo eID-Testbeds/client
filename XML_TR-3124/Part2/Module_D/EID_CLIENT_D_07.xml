@@ -4,7 +4,7 @@
 	<Title>Test case EID_CLIENT_D_07</Title>
 	<Version>1.2</Version>
 	<Purpose>This test evaluates the user interface in case the connection establishment fails.</Purpose>
-	<Profile>UI_ONLINE</Profile>
+	<Profile>USER_INTERFACE</Profile>
 	<Reference>TR-03124-1, Section 3.6 "User Interface"</Reference>
 	<Precondition>The eID-Client offers its services.</Precondition>
 	<TestStep>

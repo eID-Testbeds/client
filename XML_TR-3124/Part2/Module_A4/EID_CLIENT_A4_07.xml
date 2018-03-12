@@ -5,6 +5,7 @@
 	<Version>1.2</Version>
 	<Purpose>This test checks the behavior of the eID-Client in case the "RefreshAddress" from the TC Token and the "subjectURL" contained in the "CertificateDescription" extension of the eService certificate conform not to the Same-origin policy according to [RFC6454] and the response is not a https redirect.</Purpose>
 	<Profile>OA</Profile>
+	<Profile>REFRESH_REDIRECT</Profile>
 	<Reference>TR-03124-1, Section 2.5.4 "Return to the web-session"</Reference>
 	<Precondition>A single basic card reader is connected to the eID-Client system.</Precondition>
 	<Precondition>A single active eID-Card is connected to the card reader.</Precondition>

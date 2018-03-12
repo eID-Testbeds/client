@@ -1,91 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:certificateDefinitions xmlns:p="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com tlscert.xsd ">
-    
-    <p:certificateDefinition>
-        <p:name>TR03124-2-TLS-CA-RSA</p:name>
-        <p:serialNumberHex>0101</p:serialNumberHex>
-        <p:algorithmID>
-            <p:RSA keylength="4096">SHA256withRSA</p:RSA>
-        </p:algorithmID>
-        <p:notBefore>2014-01-01</p:notBefore>
-        <p:notAfter>2018-12-31</p:notAfter>
-        <p:issuer>
-            <p:commonName>TR03124-2-TLS-CA-RSA-1</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:country>DE</p:country>
-        </p:issuer>
-        <p:subject>
-            <p:commonName>TR03124-2-TLS-CA-RSA-1</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:country>DE</p:country>
-        </p:subject>
-        <p:extensions>
-            <p:keyUsage>
-                <p:cRLSign>true</p:cRLSign>
-                <p:keyCertSign>true</p:keyCertSign>
-            </p:keyUsage>
-            <p:basicConstraints>
-                <p:cA>true</p:cA>
-            </p:basicConstraints>
-        </p:extensions>
-    </p:certificateDefinition>
-    
-    <p:certificateDefinition>
-        <p:name>TR03124-2-TLS-CA-ECDSA</p:name>
-        <p:serialNumberHex>0201</p:serialNumberHex>
-        <p:algorithmID>
-            <p:ECDSA curve="secp256r1">SHA256withECDSA</p:ECDSA>
-        </p:algorithmID>
-        <p:notBefore>2014-01-01</p:notBefore>
-        <p:notAfter>2018-12-31</p:notAfter>
-        <p:issuer>
-            <p:commonName>TR03124-2-TLS-CA-ECDSA-1</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:country>DE</p:country>
-        </p:issuer>
-        <p:subject>
-            <p:commonName>TR03124-2-TLS-CA-ECDSA-1</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:country>DE</p:country>
-        </p:subject>
-        <p:extensions>
-            <p:keyUsage>
-                <p:cRLSign>true</p:cRLSign>
-                <p:keyCertSign>true</p:keyCertSign>
-            </p:keyUsage>
-            <p:basicConstraints>
-                <p:cA>true</p:cA>
-            </p:basicConstraints>
-        </p:extensions>
-    </p:certificateDefinition>
-    
-    <p:certificateDefinition>
-        <p:name>TR03124-2-TLS-CA-DSA</p:name>
-        <p:serialNumberHex>0301</p:serialNumberHex>
-        <p:algorithmID>
-            <p:DSA keylength="4096">SHA256withDSA</p:DSA>
-        </p:algorithmID>
-        <p:notBefore>2014-01-01</p:notBefore>
-        <p:notAfter>2018-12-31</p:notAfter>
-        <p:issuer>
-            <p:commonName>TR03124-2-TLS-CA-DSA-1</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:country>DE</p:country>
-        </p:issuer>
-        <p:subject>
-            <p:commonName>TR03124-2-TLS-CA-DSA-1</p:commonName>
-            <p:organization>secunet Security Networks AG</p:organization>
-            <p:country>DE</p:country>
-        </p:subject>
-        <p:extensions>
-            <p:keyUsage>
-                <p:cRLSign>true</p:cRLSign>
-                <p:keyCertSign>true</p:keyCertSign>
-            </p:keyUsage>
-            <p:basicConstraints>
-                <p:cA>true</p:cA>
-            </p:basicConstraints>
-        </p:extensions>
-    </p:certificateDefinition>
-    
+<p:certificateDefinitions xmlns:p="http://www.secunet.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.secunet.com tls_schema.xsd ">
+
+	<p:certificateDefinition>
+		<p:name>TR03124-2-TLS-CA-RSA</p:name>
+		<p:serialNumberHex>0101</p:serialNumberHex>
+		<p:keyAlgorithm>
+			<p:RSA>4096</p:RSA>
+		</p:keyAlgorithm>
+		<p:signatureAlgorithm>
+			<p:RSA>SHA256withRSA</p:RSA>
+		</p:signatureAlgorithm>
+		<p:issuer>
+			<p:commonName>TR03124-2-TLS-CA-RSA-1</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:country>DE</p:country>
+		</p:issuer>
+		<p:notBefore>2014-01-01</p:notBefore>
+		<p:notAfter>2018-12-31</p:notAfter>
+		<p:subject>
+			<p:commonName>TR03124-2-TLS-CA-RSA-1</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:country>DE</p:country>
+		</p:subject>
+		<p:extensions>
+			<p:keyUsage>
+				<p:cRLSign>true</p:cRLSign>
+				<p:keyCertSign>true</p:keyCertSign>
+			</p:keyUsage>
+			<p:basicConstraints>
+				<p:cA>true</p:cA>
+			</p:basicConstraints>
+			<p:basicConstraints>
+				<p:pathLenConstraint>1</p:pathLenConstraint>
+			</p:basicConstraints>
+		</p:extensions>
+	</p:certificateDefinition>
+
+	<p:certificateDefinition>
+		<p:name>TR03124-2-TLS-CA-ECDSA</p:name>
+		<p:serialNumberHex>0201</p:serialNumberHex>
+		<p:keyAlgorithm>
+			<p:ECDSA>secp256r1</p:ECDSA>
+		</p:keyAlgorithm>
+		<p:signatureAlgorithm>
+			<p:ECDSA>SHA256withECDSA</p:ECDSA>
+		</p:signatureAlgorithm>
+		<p:issuer>
+			<p:commonName>TR03124-2-TLS-CA-ECDSA-1</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:country>DE</p:country>
+		</p:issuer>
+		<p:notBefore>2014-01-01</p:notBefore>
+		<p:notAfter>2018-12-31</p:notAfter>
+		<p:subject>
+			<p:commonName>TR03124-2-TLS-CA-ECDSA-1</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:country>DE</p:country>
+		</p:subject>
+		<p:extensions>
+			<p:keyUsage>
+				<p:cRLSign>true</p:cRLSign>
+				<p:keyCertSign>true</p:keyCertSign>
+			</p:keyUsage>
+			<p:basicConstraints>
+				<p:cA>true</p:cA>
+			</p:basicConstraints>
+		</p:extensions>
+	</p:certificateDefinition>
+
+	<p:certificateDefinition>
+		<p:name>TR03124-2-TLS-CA-DSA</p:name>
+		<p:serialNumberHex>0301</p:serialNumberHex>
+		<p:keyAlgorithm>
+			<p:DSA>2048</p:DSA>
+		</p:keyAlgorithm>
+		<p:signatureAlgorithm>
+			<p:DSA>SHA256withDSA</p:DSA>
+		</p:signatureAlgorithm>
+		<p:issuer>
+			<p:commonName>TR03124-2-TLS-CA-DSA-1</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:country>DE</p:country>
+		</p:issuer>
+		<p:notBefore>2014-01-01</p:notBefore>
+		<p:notAfter>2018-12-31</p:notAfter>
+		<p:subject>
+			<p:commonName>TR03124-2-TLS-CA-DSA-1</p:commonName>
+			<p:organization>secunet Security Networks AG</p:organization>
+			<p:country>DE</p:country>
+		</p:subject>
+		<p:extensions>
+			<p:keyUsage>
+				<p:cRLSign>true</p:cRLSign>
+				<p:keyCertSign>true</p:keyCertSign>
+			</p:keyUsage>
+			<p:basicConstraints>
+				<p:cA>true</p:cA>
+			</p:basicConstraints>
+		</p:extensions>
+	</p:certificateDefinition>
+
 </p:certificateDefinitions>

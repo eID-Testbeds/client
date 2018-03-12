@@ -3,8 +3,9 @@ package com.secunet.ipsmall.tls;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.secunet.bouncycastle.crypto.tls.CipherSuite;
-import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import org.bouncycastle.crypto.tls.CipherSuite;
+import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.tobuilder.ics.TLSCipherSuiteType;
@@ -14,6 +15,7 @@ import com.secunet.ipsmall.tobuilder.ics.TLSVersionType;
 import com.secunet.ipsmall.tobuilder.ics.TLSchannelType;
 import com.secunet.ipsmall.tobuilder.ics.TLSchannelType.TLSVersion;
 import com.secunet.ipsmall.tobuilder.ics.TR031242ICS;
+import com.secunet.testbedutils.utilities.BouncyCastleTlsHelper;
 
 public class BouncyCastleTlsIcsMatcher {
 	private TR031242ICS ics = null;

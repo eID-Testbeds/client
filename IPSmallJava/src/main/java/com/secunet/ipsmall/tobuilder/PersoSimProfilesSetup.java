@@ -27,7 +27,7 @@ public class PersoSimProfilesSetup implements ITestObjectSetup {
     private static final String TEMPLATE_TRUSTPOINT1 = "ProfileTr03124_template_1.xml";
     private static final String TEMPLATE_TRUSTPOINT2 = "ProfileTr03124_template_2.xml";
 
-    private static final String PROFILE_SUFFIX = ".xml";
+    private static final String PROFILE_SUFFIX = ".perso";
 
     private static final String DEFAULT_PROFILE = "Default";
     private static final String DEFAULT_CERTIFICATE_FILENAME = "CERT_CV_CVCA_1.cvcert";

@@ -4,7 +4,9 @@
 	<Title>Test case EID_CLIENT_B_25</Title>
 	<Version>1.2</Version>
 	<Purpose>Positive test describing the PAOS communication between the eID-Client and the eID-Server in case the message "InitializeFramework" is used by the eID-Server.</Purpose>
-	<Profile>EAC</Profile><Profile>PAOS</Profile>
+	<Profile>EAC</Profile>
+  <Profile>PAOS</Profile>
+  <Profile>ECAPI_INITFW</Profile>
 	<Reference>TR-03112-3, Section 3.1.1 "InitializeFramework"</Reference>
 	<Reference>TR-03112-6, Section 3.2.5 "Transmit"</Reference>
 	<Reference>TR-03112-7, Section 2.6 "StartPAOS"</Reference>

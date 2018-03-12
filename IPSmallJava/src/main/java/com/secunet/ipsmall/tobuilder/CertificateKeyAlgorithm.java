@@ -1,7 +1,7 @@
 package com.secunet.ipsmall.tobuilder;
 
-import com.secunet.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
-import com.secunet.bouncycastle.crypto.tls.SignatureAlgorithm;
+import org.bouncycastle.crypto.tls.KeyExchangeAlgorithm;
+import org.bouncycastle.crypto.tls.SignatureAlgorithm;
 
 /**
  * Represents a certificate key algorithm.
