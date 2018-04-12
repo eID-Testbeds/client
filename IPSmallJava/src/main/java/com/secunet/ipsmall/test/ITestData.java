@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 
-import org.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
 import com.secunet.ipsmall.eval.EvaluationConfig;
 import com.secunet.ipsmall.test.ITestProtocolCallback.ITestEvent;
 import com.secunet.ipsmall.test.ITestProtocolCallback.SourceComponent;
@@ -87,6 +87,10 @@ public interface ITestData {
     public boolean useEIDServiceTLSPSK();
     
     public boolean isEIDServiceAttached();
+
+    public boolean isAttachedEIDServiceTlsSessionIdSupported();
+    public boolean isAttachedEIDServiceTlsSessionTicketSupported();
+    public boolean isAttachedEIDServiceTlsSessionResumptionAllowed();
     
     public boolean eIDServiceAccpetNonConformHTTP11Message();
     

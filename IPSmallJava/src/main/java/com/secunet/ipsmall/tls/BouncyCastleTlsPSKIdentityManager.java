@@ -2,7 +2,7 @@ package com.secunet.ipsmall.tls;
 
 import java.util.HashMap;
 
-import org.bouncycastle.crypto.tls.TlsPSKIdentityManager;
+import com.secunet.bouncycastle.crypto.tls.TlsPSKIdentityManager;
 import org.bouncycastle.util.Strings;
 
 public class BouncyCastleTlsPSKIdentityManager implements TlsPSKIdentityManager {

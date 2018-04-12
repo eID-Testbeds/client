@@ -1,17 +1,15 @@
 package com.secunet.ipsmall;
 
-import org.bouncycastle.crypto.tls.AlertDescription;
-import org.bouncycastle.crypto.tls.AlertLevel;
-import org.bouncycastle.crypto.tls.Certificate;
-import org.bouncycastle.crypto.tls.ProtocolVersion;
-import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import com.secunet.bouncycastle.crypto.tls.AlertDescription;
+import com.secunet.bouncycastle.crypto.tls.AlertLevel;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 
 import java.io.File;
 
-import com.secunet.ipsmall.http.Java7NanoHTTPSocketFactory;
 import com.secunet.ipsmall.http.NanoHTTPD;
 import com.secunet.ipsmall.http.NanoHTTPD.Response.Status;
-import com.secunet.ipsmall.log.IModuleLogger;
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.FileBasedTestData;
@@ -273,6 +271,12 @@ public class TCTokenProvider extends NanoHTTPD implements BouncyCastleTlsNotific
         logger.logState("TLS server selected DH parameters: " + BouncyCastleTlsHelper.convertDHParametersObjectToDHStandardGroupsString(dhParameters));
     }
     
+    @Override
+	public void notifySessionTicketExtension(byte[] sessionTicketData)
+	{
+        logger.logState("TLS client sent SessionTicket extension: " + (sessionTicketData == null ? "null" : ("length=" + sessionTicketData.length + " " + javax.xml.bind.DatatypeConverter.printHexBinary(sessionTicketData))));
+	}
+
     @Override
     public boolean hasFatalErrors() {
         return hasFatalErrors;

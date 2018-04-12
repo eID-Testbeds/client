@@ -26,7 +26,7 @@ import javax.xml.bind.DatatypeConverter;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.util.PrivateKeyFactory;
 
-import org.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
 import com.secunet.ipsmall.GlobalSettings;
 import com.secunet.ipsmall.eval.Evaluator;
 import com.secunet.ipsmall.eval.EvaluationConfig;
@@ -65,6 +65,11 @@ public class FileBasedTestData implements ITestData {
     public final static String c_eidServicePrivateKey = "eidservice.privatekey";
     public final static String c_eidServiceUsePSK = "eidservice.usepsk";
     public final static String c_eidServiceIsAttached = "eidservice.isAttached";
+    
+    public final static String c_eidServiceAttachedTlsSupportSessionId = "eidservice.attached.tls.supportSessionId";
+  	public final static String c_eidServiceAttachedTlsSupportSessionTicket = "eidservice.attached.tls.supportSessionTicket";
+	public final static String c_eidServiceAttachedTlsAllowSessionResumption = "eidservice.attached.tls.allowSessionResumption";   
+    
     public final static String c_eidServiceAcceptNonConformHTTP11Message = "eidservice.accept.non.conform.http11.messages";
 
     public final static String c_eidServiceCV_CVCA = "eidservice.cv.cvca";
@@ -262,6 +267,11 @@ public class FileBasedTestData implements ITestData {
     AsymmetricKeyParameter eidServicePrivateKey;
     boolean eidServiceUsePSK = false;
     boolean eidServiceIsAttached = false;
+
+    boolean eidServiceAttachedTlsSupportSessionId = false;
+    boolean eidServiceAttachedTlsSupportSessionTicket = false;
+    boolean eidServiceAttachedTlsAllowSessionResumption = false;
+    
     IPublishPSK pskCallback;
     boolean eidServiceAcceptNonConformHTTP11Message;
 
@@ -544,6 +554,11 @@ public class FileBasedTestData implements ITestData {
         eidServicePrivateKey = loadPrivateKeyBC(c_eidServicePrivateKey);
         eidServiceUsePSK = Boolean.parseBoolean(getPropertyValue(c_eidServiceUsePSK));
         eidServiceIsAttached = Boolean.parseBoolean(getPropertyValue(c_eidServiceIsAttached));
+
+        eidServiceAttachedTlsSupportSessionId = Boolean.parseBoolean(getPropertyValue(c_eidServiceAttachedTlsSupportSessionId));
+        eidServiceAttachedTlsSupportSessionTicket = Boolean.parseBoolean(getPropertyValue(c_eidServiceAttachedTlsSupportSessionTicket));
+        eidServiceAttachedTlsAllowSessionResumption = Boolean.parseBoolean(getPropertyValue(c_eidServiceAttachedTlsAllowSessionResumption));
+        
         eidServiceAcceptNonConformHTTP11Message = Boolean.parseBoolean(getPropertyValue(c_eidServiceAcceptNonConformHTTP11Message));
         eServiceHostname = getPropertyValue(c_eServiceHost);
         eServicePort = Integer.parseInt(getPropertyValue(c_eServicePort));
@@ -1263,6 +1278,24 @@ public class FileBasedTestData implements ITestData {
     }
 
     @Override
+	public boolean isAttachedEIDServiceTlsSessionIdSupported()
+	{
+		return eidServiceAttachedTlsSupportSessionId;
+	}
+
+	@Override
+	public boolean isAttachedEIDServiceTlsSessionTicketSupported()
+	{
+		return eidServiceAttachedTlsSupportSessionTicket;
+	}
+
+	@Override
+	public boolean isAttachedEIDServiceTlsSessionResumptionAllowed()
+	{
+		return eidServiceAttachedTlsAllowSessionResumption;
+	}
+
+	@Override
     public boolean eIDServiceAccpetNonConformHTTP11Message() {
         return eidServiceAcceptNonConformHTTP11Message;
     }

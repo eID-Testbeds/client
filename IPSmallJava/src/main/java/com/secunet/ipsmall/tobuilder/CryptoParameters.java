@@ -1,6 +1,6 @@
 package com.secunet.ipsmall.tobuilder;
 
-import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 
 import com.secunet.ipsmall.tobuilder.ics.TLSSupportedCurveType;
 import com.secunet.ipsmall.tobuilder.ics.TLSSupportedSignatureAlgorithmType;

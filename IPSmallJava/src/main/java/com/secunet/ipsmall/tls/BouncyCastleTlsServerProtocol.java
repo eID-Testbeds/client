@@ -6,8 +6,9 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.tls.TlsServer;
-import org.bouncycastle.crypto.tls.TlsServerProtocol;
+import com.secunet.bouncycastle.crypto.tls.TlsServer;
+import com.secunet.bouncycastle.crypto.tls.TlsServerProtocol;
+
 import com.secunet.ipsmall.log.Logger;
 
 public class BouncyCastleTlsServerProtocol extends TlsServerProtocol {

@@ -14,15 +14,16 @@ else
 	testbed_version=$(basename "$PWD")
 fi
 
-# !!!! NOTICE !!!!
-# component structure changed
-# you have to build and install CommonTestbedUtilities separately
-# !!!! NOTICE !!!!
-#echo "*** Build Dependecies ... ***"
-#cd CommonTestbedUtilities
-#mvn clean install
-#cp target/*.zip ../build/
-#cd ..
+echo "*** Build Dependecies ... ***"
+cd BouncyCastleTlsPatched
+mvn clean install
+cp target/*.zip ../build/
+cd ..
+
+cd CommonTestbedUtilities
+mvn clean install
+cp target/*.zip ../build/
+cd ..
 
 echo "*** Build Testbed ... ***"
 cd IPSmallJava

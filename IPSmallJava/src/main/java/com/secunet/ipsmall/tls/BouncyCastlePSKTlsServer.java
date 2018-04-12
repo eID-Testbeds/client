@@ -8,11 +8,11 @@ import org.bouncycastle.crypto.agreement.DHStandardGroups;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.DHParameters;
 import org.bouncycastle.jce.provider.X509CertificateObject;
-import org.bouncycastle.crypto.tls.Certificate;
-import org.bouncycastle.crypto.tls.CipherSuite;
-import org.bouncycastle.crypto.tls.DefaultTlsEncryptionCredentials;
-import org.bouncycastle.crypto.tls.ProtocolVersion;
-import org.bouncycastle.crypto.tls.TlsEncryptionCredentials;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.CipherSuite;
+import com.secunet.bouncycastle.crypto.tls.DefaultTlsEncryptionCredentials;
+import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import com.secunet.bouncycastle.crypto.tls.TlsEncryptionCredentials;
 
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;
 import com.secunet.ipsmall.log.Logger;

@@ -2,9 +2,9 @@ package com.secunet.ipsmall.tls;
 
 import org.bouncycastle.crypto.params.DHParameters;
 
-import org.bouncycastle.crypto.tls.Certificate;
-import org.bouncycastle.crypto.tls.ProtocolVersion;
-import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 
 public interface BouncyCastleTlsNotificationListener {
     
@@ -47,5 +47,7 @@ public interface BouncyCastleTlsNotificationListener {
     public void notifyEnabledMaximumVersion(final ProtocolVersion maximumVersion);
     
     public void notifySelectedDHParameters(final DHParameters dhParameters);
+    
+    public void notifySessionTicketExtension(final byte[] sessionTicketData);
     
 }

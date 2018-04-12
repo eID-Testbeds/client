@@ -12,9 +12,11 @@ import java.util.List;
 
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 
-import org.bouncycastle.crypto.tls.Certificate;
-import org.bouncycastle.crypto.tls.CipherSuite;
-import org.bouncycastle.crypto.tls.ProtocolVersion;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.CipherSuite;
+import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+
+import com.secunet.ipsmall.AttachedEIDServer;
 import com.secunet.ipsmall.http.ExternalServerSocketFactory;
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.test.ITestData.PROTOCOLS;
@@ -35,6 +37,10 @@ public class BouncyCastleNanoHTTPDSocketFactory implements ExternalServerSocketF
     String m_forcedCurve = null;
     String m_forcedSignatureAndHashAlgorithm = null;
     
+    boolean eidServiceAttachedTlsSupportSessionId = false;
+    boolean eidServiceAttachedTlsSupportSessionTicket = false;
+    boolean eidServiceAttachedTlsAllowSessionResumption = false;
+    
     public BouncyCastleNanoHTTPDSocketFactory(BouncyCastleTlsNotificationListener listener, Certificate certificate, AsymmetricKeyParameter serverKey) {
         m_serverCertificateChain = certificate;
         m_serverKey = serverKey;
@@ -42,12 +48,14 @@ public class BouncyCastleNanoHTTPDSocketFactory implements ExternalServerSocketF
         
         m_cipherSuites = new ArrayList<String>();
         m_cipherSuites.add("TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256");
+        m_cipherSuites.add("TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256");
     }
     
     public void enablePSK() {
         usePSK = true;
         m_cipherSuites.clear();
-        m_cipherSuites.add("TLS_RSA_PSK_WITH_AES_256_CBC_SHA");
+        m_cipherSuites.add("TLS_RSA_PSK_WITH_AES_256_CBC_SHA"); 
+        m_cipherSuites.add("TLS_RSA_PSK_WITH_AES_128_CBC_SHA256"); 
     }
     
     public void enableCiphers(List<String> cipherSuites) {
@@ -67,7 +75,22 @@ public class BouncyCastleNanoHTTPDSocketFactory implements ExternalServerSocketF
         m_forcedSignatureAndHashAlgorithm = signatureAndHashAlgorithm;
     }
 
-    private ProtocolVersion getProtocolMinimumVersion(List<String> protocols) {
+    public void setEidServiceAttachedTlsSupportSessionId(boolean eidServiceAttachedTlsSupportSessionId)
+	{
+		this.eidServiceAttachedTlsSupportSessionId = eidServiceAttachedTlsSupportSessionId;
+	}
+
+	public void setEidServiceAttachedTlsSupportSessionTicket(boolean eidServiceAttachedTlsSupportSessionTicket)
+	{
+		this.eidServiceAttachedTlsSupportSessionTicket = eidServiceAttachedTlsSupportSessionTicket;
+	}
+
+	public void setEidServiceAttachedTlsAllowSessionResumption(boolean eidServiceAttachedTlsAllowSessionResumption)
+	{
+		this.eidServiceAttachedTlsAllowSessionResumption = eidServiceAttachedTlsAllowSessionResumption;
+	}
+
+	private ProtocolVersion getProtocolMinimumVersion(List<String> protocols) {
         // SSLv2 not supported by BouncyCastle
         // TLS1.2 apparently not fully supported by BouncyCastle
         if (containsIgnoreCase(protocols, PROTOCOLS.sslv3.toString())) {
@@ -137,6 +160,13 @@ public class BouncyCastleNanoHTTPDSocketFactory implements ExternalServerSocketF
 
             BouncyCastleTlsServer tlsServer = new BouncyCastleTlsServer(m_serverKey, m_serverCertificateChain);
             tlsServer.addNotificationListener(m_listener);
+            
+            if(m_listener instanceof AttachedEIDServer)
+            {
+            	tlsServer.setEnableSessionIdSupport(eidServiceAttachedTlsSupportSessionId);
+            	tlsServer.setEnableSessionTicketSupport(eidServiceAttachedTlsSupportSessionTicket);
+            	tlsServer.setAllowSessionResumption(eidServiceAttachedTlsAllowSessionResumption);
+            }
             
             if (protocols != null && protocols.size() > 0) {
                 tlsServer.setAllowedProtocolVersions(getProtocolMinimumVersion(protocols), getProtocolMaximumVersion(protocols));

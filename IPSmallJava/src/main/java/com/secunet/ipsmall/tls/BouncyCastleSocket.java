@@ -11,7 +11,7 @@ import java.security.SecureRandom;
 
 import org.bouncycastle.util.Strings;
 
-import org.bouncycastle.crypto.tls.TlsServer;
+import com.secunet.bouncycastle.crypto.tls.TlsServer;
 
 public class BouncyCastleSocket extends Socket {
     

@@ -923,6 +923,9 @@ public class TestRunner implements ITestProtocolCallback {
                     // may
                     // be part of an exceptional test flow)
                     continue;
+                } else if (testStep == TestStep.SERVER_ADDRESS && testData.isEIDServiceAttached()) {
+                    // SERVER_ADDRESS is skipped for attached eID server, should never happen
+                    continue;
                 } else {
                     // else: each test-step is usually added once, but there are
                     // some which might occur 0..n or 0..1, see Jira

@@ -1,12 +1,11 @@
 package com.secunet.ipsmall.util;
 
-import org.bouncycastle.crypto.tls.ProtocolVersion;
-
+import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
 import com.secunet.ipsmall.test.ITestData.PROTOCOLS;
 
 public class BouncyCastleTlsUtils {
     
-    /**
+	/**
      * Converts a configuration string for TLS versions to the corresponding BouncyCastle ProtocolVersion object.
      * If conversion fails, throws a RuntimeException.
      * @param protocol String as defined by enumeration {@link PROTOCOLS}

@@ -26,6 +26,7 @@ public class EIDServerWebServer {
     private ITestData testData = null;
     
     private boolean attached = false;
+    private ITestSession attachedSessionData = null;
     
     private Object parent = null;
     
@@ -105,6 +106,11 @@ public class EIDServerWebServer {
                         logger.logState("Unknown Session", LogLevel.Error);
                         return new Response(Status.BAD_REQUEST, "Unknown Session", testData.chunkedTransfer());
                     }
+                    
+                    attachedSessionData = sessionData;
+                }
+                else {
+                    sessionData = attachedSessionData;
                 }
             }
             else {

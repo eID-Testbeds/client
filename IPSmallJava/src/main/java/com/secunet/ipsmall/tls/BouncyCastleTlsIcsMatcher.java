@@ -3,8 +3,8 @@ package com.secunet.ipsmall.tls;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bouncycastle.crypto.tls.CipherSuite;
-import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import com.secunet.bouncycastle.crypto.tls.CipherSuite;
+import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 
 import com.secunet.ipsmall.log.Logger;
 import com.secunet.ipsmall.log.IModuleLogger.LogLevel;

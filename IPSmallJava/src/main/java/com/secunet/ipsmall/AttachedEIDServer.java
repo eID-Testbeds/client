@@ -1,11 +1,11 @@
 package com.secunet.ipsmall;
 
 import org.bouncycastle.crypto.params.DHParameters;
-import org.bouncycastle.crypto.tls.AlertDescription;
-import org.bouncycastle.crypto.tls.AlertLevel;
-import org.bouncycastle.crypto.tls.Certificate;
-import org.bouncycastle.crypto.tls.ProtocolVersion;
-import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import com.secunet.bouncycastle.crypto.tls.AlertDescription;
+import com.secunet.bouncycastle.crypto.tls.AlertLevel;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
 
 import com.secunet.ipsmall.http.NanoHTTPD;
 import com.secunet.ipsmall.log.IModuleLogger.ConformityResult;
@@ -55,6 +55,11 @@ public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotif
             if(testData.getEServiceTLSSignatureAlgorithm() != null && !testData.getEServiceTLSSignatureAlgorithm().isEmpty()) {
                 factory.setForcedSignatureAlgorithm(testData.getEServiceTLSSignatureAlgorithm());
             }
+            
+            factory.setEidServiceAttachedTlsSupportSessionId(testData.isAttachedEIDServiceTlsSessionIdSupported());
+            factory.setEidServiceAttachedTlsSupportSessionTicket(testData.isAttachedEIDServiceTlsSessionTicketSupported());
+            factory.setEidServiceAttachedTlsAllowSessionResumption(testData.isAttachedEIDServiceTlsSessionResumptionAllowed());
+            
             externalServerSocketFactory = factory;
         } catch (Exception e) {
             if (testData.useModifiedSSL()) {
@@ -267,6 +272,12 @@ public class AttachedEIDServer extends NanoHTTPD implements BouncyCastleTlsNotif
         logger.logState("TLS server selected DH parameters: " + BouncyCastleTlsHelper.convertDHParametersObjectToDHStandardGroupsString(dhParameters));
     }
     
+    @Override
+	public void notifySessionTicketExtension(byte[] sessionTicketData)
+	{
+        logger.logState("TLS client sent SessionTicket extension: " + (sessionTicketData == null ? "null" : ("length=" + sessionTicketData.length + " " + javax.xml.bind.DatatypeConverter.printHexBinary(sessionTicketData))));
+	}
+
     @Override
     public boolean hasFatalErrors() {
         return hasFatalErrors;

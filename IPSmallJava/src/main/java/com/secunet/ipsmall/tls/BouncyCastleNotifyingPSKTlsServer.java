@@ -7,14 +7,14 @@ import java.util.Vector;
 
 import org.bouncycastle.crypto.params.DHParameters;
 
-import org.bouncycastle.crypto.tls.Certificate;
-import org.bouncycastle.crypto.tls.PSKTlsServer;
-import org.bouncycastle.crypto.tls.ProtocolVersion;
-import org.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
-import org.bouncycastle.crypto.tls.TlsECCUtils;
-import org.bouncycastle.crypto.tls.TlsExtensionsUtils;
-import org.bouncycastle.crypto.tls.TlsPSKIdentityManager;
-import org.bouncycastle.crypto.tls.TlsUtils;
+import com.secunet.bouncycastle.crypto.tls.Certificate;
+import com.secunet.bouncycastle.crypto.tls.PSKTlsServer;
+import com.secunet.bouncycastle.crypto.tls.ProtocolVersion;
+import com.secunet.bouncycastle.crypto.tls.SignatureAndHashAlgorithm;
+import com.secunet.bouncycastle.crypto.tls.TlsECCUtils;
+import com.secunet.bouncycastle.crypto.tls.TlsExtensionsUtils;
+import com.secunet.bouncycastle.crypto.tls.TlsPSKIdentityManager;
+import com.secunet.bouncycastle.crypto.tls.TlsUtils;
 
 /**
  * This class maps BouncyCastle TLS events from class DefaultTlsServer to an external notification listener interface.
@@ -270,6 +270,14 @@ public class BouncyCastleNotifyingPSKTlsServer extends PSKTlsServer implements B
             listener.notifySelectedDHParameters(dhParameters);
         }
     }
+
+    @Override
+	public void sendNotificationSessionTicketExtension(byte[] sessionTicketData)
+	{
+        for(BouncyCastleTlsNotificationListener listener : listeners) {
+            listener.notifySessionTicketExtension(sessionTicketData);
+        }
+	}
     // END implementation of BouncyCastleTlsNotificationProducer
 
 }
